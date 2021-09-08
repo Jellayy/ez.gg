@@ -3,7 +3,7 @@ from asyncio import sleep
 
 import willump
 
-from champselect import preferences
+import champselect.preferences as preferences
 
 
 async def create_lobby(client):
