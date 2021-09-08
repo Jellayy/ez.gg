@@ -1,6 +1,7 @@
 import asyncio
 import willump
 import requests
+import utils.runes
 
 
 def id_to_name(champ_id):
@@ -18,7 +19,13 @@ async def main():
         champ_select_json = await champ_select.json()
         if list(champ_select_json.keys())[0] != 'errorCode':
             champion = await client.request('get', '/lol-champ-select/v1/current-champion')
-            print(id_to_name(str(await champion.json())))
+            champion = await champion.json()
+            print(champion)
+            if str(champion) != "0":
+                champion = id_to_name(str(champion))
+                print(champion)
+                await utils.runes.set_rune_page(client, champion)
+                break
         else:
             print("Not in champ select")
 

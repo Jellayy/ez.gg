@@ -1,5 +1,6 @@
 import asyncio
 from asyncio import sleep
+import utils.runes as runes
 
 import willump
 
@@ -27,6 +28,7 @@ async def main():
         await functions.lobby(client)
         await functions.pick_champ(client)
         await functions.lock_in(client)
+        await runes.set_rune_page(client, "annie")
 
     elif not await functions.can_start(client):
         print("Cannot start queue, exiting program")
