@@ -1,6 +1,6 @@
 primaryRole = 'JUNGLE'
 secondaryRole = 'MIDDLE'
-queueID = '420'
+queueID = '840'
 champion = '1'
 
 

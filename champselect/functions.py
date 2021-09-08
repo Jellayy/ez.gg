@@ -1,4 +1,5 @@
 import asyncio
+from asyncio import sleep
 
 import willump
 
@@ -47,6 +48,17 @@ async def start_queue(client):
         await start_queue(client)
     else:
         print(queue.status)
+
+async def queue_type(client):
+    call = '/lol-lobby/v1/parties/gamemode'
+    queue = await client.request('GET', call)
+    data = await queue.json()
+    if queue.status == 404:
+        print("You are not currently in a lobby")
+        return False
+    elif queue.status == 200:
+        print("You are in lobby type", data['queueId'])
+    return data['queueId']
 
 async def queue_pop(client):
     call = '/lol-matchmaking/v1/ready-check'
@@ -154,3 +166,36 @@ async def is_lobby(client):
         return True
     elif lobby.status == 404:
         return False
+
+
+async def is_lobby(client):
+    call = '/lol-lobby/v2/lobby'
+    lobby = await client.request('GET', call)
+    print(lobby.status)
+    if lobby.status == 200:
+        return True
+    elif lobby.status == 404:
+        return False
+
+async def lobby(client):
+    call = '/lol-champ-select/v1/session'
+    lobby = await client.request('GET', call)
+    print(await lobby.json())
+
+async def pick_champ(client):
+    call = '/lol-champ-select/v1/session/actions/1'
+    pick = await client.request('PATCH', call, data ={
+        "actorCellId":0,
+        "championId":2,
+        "completed":False,
+        "id":1,
+        "isAllyAction":True,
+        "isInProgress":True,
+        "pickTurn":1,
+        "type":"lock"
+     } )
+    print(await pick.json())
+async def lock_in(client):
+    call = '/lol-champ-select/v1/session/actions/1/complete'
+    locked = await client.request('POST', call)
+    print(await locked.json())

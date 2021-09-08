@@ -1,4 +1,5 @@
 import asyncio
+from asyncio import sleep
 
 import willump
 
@@ -11,6 +12,24 @@ async def main():
 
     await functions.create_lobby(client)
     await functions.select_roles(client)
+    await functions.queue_type(client)
+    if await functions.can_start(client):
+        await functions.start_queue(client)
+        while not await functions.queue_pop(client):
+            print("queue has not popped yet")
+            await sleep(5)
+        await functions.accept_queue(client)
+        while not await functions.is_champ_select(client):
+            print("not quite champ select")
+            await sleep(1)
+        print('maid it to champ select')
+        await sleep(5)
+        await functions.lobby(client)
+        await functions.pick_champ(client)
+        await functions.lock_in(client)
+
+    elif not await functions.can_start(client):
+        print("Cannot start queue, exiting program")
 
 
 
