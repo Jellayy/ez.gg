@@ -23,10 +23,10 @@ async def main():
         while not await functions.is_champ_select(client):
             print("not quite champ select")
             await sleep(1)
-        print('maid it to champ select')
+        print('made it to champ select')
         await sleep(5)
         await functions.lobby(client)
-        await functions.pick_champ(client)
+        await functions.pick_champ(client, await functions.lobby(client))
         await functions.lock_in(client)
         await runes.set_rune_page(client, "annie")
 

@@ -178,24 +178,20 @@ async def is_lobby(client):
         return False
 
 async def lobby(client):
-    call = '/lol-champ-select/v1/session'
+    call = '/lol-lobby-team-builder/champ-select/v1/session'
     lobby = await client.request('GET', call)
-    print(await lobby.json())
+    data = await lobby.json()
+    print(data['localPlayerCellId'])
+    return data['localPlayerCellId']
 
-async def pick_champ(client):
-    call = '/lol-champ-select/v1/session/actions/1'
+async def pick_champ(client, actorcellid):
+    call = '/lol-lobby-team-builder/champ-select/v1/session/actions/1'
     pick = await client.request('PATCH', call, data ={
-        "actorCellId":0,
-        "championId":2,
-        "completed":False,
-        "id":1,
-        "isAllyAction":True,
-        "isInProgress":True,
-        "pickTurn":1,
-        "type":"lock"
+        "actorCellId":actorcellid,
+        "championId":1
      } )
     print(await pick.json())
 async def lock_in(client):
-    call = '/lol-champ-select/v1/session/actions/1/complete'
+    call = '/lol-lobby-team-builder/champ-select/v1/session/actions/1/complete'
     locked = await client.request('POST', call)
     print(await locked.json())
