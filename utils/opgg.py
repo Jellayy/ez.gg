@@ -3,6 +3,7 @@ import bs4
 import asyncio
 
 
+# Uses BS4 to scrape OP.GG champion pages for recommended rune IDs
 async def get_rune_page(champion):
     champion = champion.lower()
     r = requests.get(f'https://na.op.gg/champion/{champion}/')
@@ -36,6 +37,9 @@ async def get_rune_page(champion):
     return runes
 
 
+########################################################################################################################
+# TESTING
+########################################################################################################################
 async def main():
     print(await get_rune_page("annie"))
 
