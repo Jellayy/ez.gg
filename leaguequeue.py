@@ -24,10 +24,9 @@ async def main():
         #     print("not quite champ select")
         #     await sleep(1)
         # print('made it to champ select')
-        await sleep(5)
         await functions.lobby(client)
         await functions.pick_champ(client, await functions.lobby(client))
-        await functions.lock_in(client)
+        await functions.lock_in(client, await functions.lobby(client))
         await runes.set_rune_page(client, "annie")
 
     elif not await functions.can_start(client):

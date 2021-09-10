@@ -32,6 +32,7 @@ async def select_roles(client):
         error = await roles.json()
         print(error.get("message"))
 
+
 async def start_queue(client):
     call = '/lol-lobby/v2/lobby/matchmaking/search'
     queue = await client.request('POST', call)
@@ -49,6 +50,7 @@ async def start_queue(client):
     else:
         print(queue.status)
 
+
 async def queue_type(client):
     call = '/lol-lobby/v1/parties/gamemode'
     queue = await client.request('GET', call)
@@ -59,6 +61,7 @@ async def queue_type(client):
     elif queue.status == 200:
         print("You are in lobby type", data['queueId'])
     return data['queueId']
+
 
 async def queue_pop(client):
     call = '/lol-matchmaking/v1/ready-check'
@@ -78,6 +81,7 @@ async def queue_pop(client):
     else:
         print("Yikes, we shouldn't be here")
 
+
 async def queue(client):
     if not await queue_pop(client):
         print("The queue has not popped yet, waiting 5 seconds before querying again")
@@ -88,6 +92,7 @@ async def queue(client):
         print("Queue has popped, preparing to accept")
         await accept_queue(client)
         return True
+
 
 async def accept_queue(client):
     call = '/lol-matchmaking/v1/ready-check/accept'
@@ -103,6 +108,7 @@ async def accept_queue(client):
     else:
         print("Queue has been accepted")
 
+
 async def is_lobby_leader(client):
     call = '/lol-lobby/v2/lobby'
     lobby = await client.request('GET', call)
@@ -115,6 +121,7 @@ async def is_lobby_leader(client):
     elif not leader:
         return False
 
+
 async def is_champ_select(client):
     call = '/lol-champ-select/v1/session'
     champselect = await client.request('GET', call)
@@ -123,6 +130,7 @@ async def is_champ_select(client):
         return False
     elif champselect.status == 200:
         return True
+
 
 async def can_start(client):
     call = '/lol-lobby/v2/lobby/matchmaking/search-state/'
@@ -138,6 +146,7 @@ async def can_start(client):
         print("Cannot start queue")
         return False
 
+
 async def penalty_time(client):
     call = '/lol-lobby/v2/lobby/matchmaking/search-state/'
     lobby = await client.request('GET', call)
@@ -145,6 +154,7 @@ async def penalty_time(client):
     error = response.get('errors')
     timeleft = error[0]['penaltyTimeRemaining']
     return timeleft
+
 
 async def is_in_queue(client):
     call = '/lol-lobby/v2/lobby/matchmaking/search-state'
@@ -158,6 +168,7 @@ async def is_in_queue(client):
     elif state == "Invalid":
         return False
 
+
 async def is_lobby(client):
     call = '/lol-lobby/v2/lobby'
     lobby = await client.request('GET', call)
@@ -176,22 +187,28 @@ async def is_lobby(client):
         return True
     elif lobby.status == 404:
         return False
+
 
 async def lobby(client):
     call = '/lol-lobby-team-builder/champ-select/v1/session'
     lobby = await client.request('GET', call)
     data = await lobby.json()
+    print(data)
     print(data['localPlayerCellId'])
     return data['localPlayerCellId']
 
+
 async def pick_champ(client, actorcellid):
-    call = '/lol-lobby-team-builder/champ-select/v1/session/actions/1'
-    pick = await client.request('PATCH', call, data ={
-        "actorCellId":actorcellid,
-        "championId":1
-     } )
+    call = f'/lol-lobby-team-builder/champ-select/v1/session/actions/{actorcellid}'
+    pick = await client.request('PATCH', call, data={
+        "actorCellId": actorcellid,
+        "championId": 1,
+        "type": "pick"
+    })
     print(await pick.json())
-async def lock_in(client):
-    call = '/lol-lobby-team-builder/champ-select/v1/session/actions/1/complete'
+
+
+async def lock_in(client, actorcellid):
+    call = f'/lol-lobby-team-builder/champ-select/v1/session/actions/{actorcellid}/complete'
     locked = await client.request('POST', call)
     print(await locked.json())
