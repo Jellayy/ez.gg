@@ -14,7 +14,6 @@ async def get_current_page_id(client):
 async def set_rune_page(client, champion):
     current_page_id = await get_current_page_id(client)
     new_rune_ids = await opgg.get_rune_page(champion)
-    print(new_rune_ids)
     selected_perk_ids = [new_rune_ids[0], new_rune_ids[1], new_rune_ids[2], new_rune_ids[3], new_rune_ids[4],
                          new_rune_ids[5], new_rune_ids[6], new_rune_ids[7], new_rune_ids[8]]
     primary_style_id = new_rune_ids[9]

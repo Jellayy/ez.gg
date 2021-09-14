@@ -1,33 +1,38 @@
 import asyncio
 import willump
 import requests
-import utils.runes
+import utils.runes as runes
+import utils.ddragon as ddragon
 
 
-def id_to_name(champ_id):
-    r = requests.get('http://ddragon.leagueoflegends.com/cdn/11.17.1/data/en_US/champion.json').json()
-    for champion in r['data'].items():
-        if champion[1]['key'] == champ_id:
-            return champion[1]['name']
-    return "No Champion Selected"
+# TODO: Rate limiting champ select check and champion pulling to 1sec reeeealy helped cpu usage a lot(0% pretty much), could probably go even further with a passive mode that only checks for champ select every 30sec-1min or so that can permanently run in the background without worry
+async def wait_for_champ_select(client):
+    while True:
+        check_for_champ_select = await (await client.request('get', '/lol-champ-select/v1/session')).json()
+        if list(check_for_champ_select.keys())[0] != 'errorCode':
+            return True
+        await asyncio.sleep(1)
+
+
+async def get_champion_pick(client):
+    while True:
+        champion_check = await (await client.request('get', '/lol-champ-select/v1/current-champion')).json()
+        if str(champion_check) != "0":
+            champion = ddragon.champ_id_to_name(str(champion_check))
+            return champion
+        await asyncio.sleep(1)
 
 
 async def main():
     client = await willump.start()
-    while True:
-        champ_select = await client.request('get', '/lol-champ-select/v1/session')
-        champ_select_json = await champ_select.json()
-        if list(champ_select_json.keys())[0] != 'errorCode':
-            champion = await client.request('get', '/lol-champ-select/v1/current-champion')
-            champion = await champion.json()
-            print(champion)
-            if str(champion) != "0":
-                champion = id_to_name(str(champion))
-                print(champion)
-                await utils.runes.set_rune_page(client, champion)
-                break
-        else:
-            print("Not in champ select")
+
+    await wait_for_champ_select(client)
+    print("ENTERED CHAMP SELECT")
+    pick = await get_champion_pick(client)
+    print(f"PICKED {pick.upper()}")
+    await runes.set_rune_page(client, pick)
+    print("RUNE PAGE SET")
+
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
