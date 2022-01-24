@@ -6,7 +6,9 @@ import asyncio
 # Uses BS4 to scrape OP.GG champion pages for recommended rune IDs
 async def get_rune_page(champion):
     champion = champion.lower()
-    r = requests.get(f'https://na.op.gg/champion/{champion}/')
+    # Faking a user agent so that op.gg doesn't give 403 Forbidden on html requests
+    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+    r = requests.get(f'https://na.op.gg/champion/{champion}/', headers=headers)
     r_soup = bs4.BeautifulSoup(r.text, 'html.parser')
 
     runes = []
