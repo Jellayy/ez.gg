@@ -26,14 +26,11 @@ async def auto_queue_accept():
     while await functions.is_in_queue(client):
         await functions.queue(client)
     await sleep(10)
-    if functions.is_in_queue(client):
-        print("presumably someone did not accept queue, going back to waiting to accept queue")
-        await auto_queue_accept()
-
     if functions.is_champ_select(client):
         print("I think we made it to champ select, moving on to next step")
-
-
+    elif functions.is_in_queue(client):
+        print("presumably someone did not accept queue, going back to waiting to accept queue")
+        await auto_queue_accept()
 
     await willump.Willump.close(client)
     print("Closed willump")

@@ -43,7 +43,7 @@ async def get_rune_page(champion):
 # TESTING
 ########################################################################################################################
 async def main():
-    print(await get_rune_page("annie"))
+    print(await get_rune_page("akshan"))
 
 
 if __name__ == '__main__':

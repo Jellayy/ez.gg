@@ -3,6 +3,7 @@
 import curses
 import champ_identifier
 import asyncio
+import champselect.state_engine as state_engine
 
 
 ########################################################################################################################
@@ -75,6 +76,36 @@ def print_rune_generator_menu(screen, text_pass):
 
 
 ########################################################################################################################
+#                                                    Autopilot Menu
+########################################################################################################################
+def print_autopilot_menu(screen, text_pass):
+    # Color Pairs
+    curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
+    curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
+    curses.init_pair(3, curses.COLOR_YELLOW, curses.COLOR_BLACK)
+
+    # Get terminal dimensions
+    h, w = screen.getmaxyx()
+
+    # Print Title Text
+    screen.clear()
+    text = "EZ.GG Alpha v0.0 - Autopilot"
+    x = w // 2 - len(text) // 2
+    y = h // 2
+    screen.attron(curses.color_pair(3))
+    screen.addstr(y, x, text)
+    screen.attron(curses.color_pair(1))
+
+    # Print Text Pass
+    x = w // 2 - len(text_pass) // 2
+    y = (h // 2) + 1
+    screen.addstr(y, x, text_pass)
+
+    # Refresh
+    screen.refresh()
+
+
+########################################################################################################################
 #                                                   Driver Function
 ########################################################################################################################
 def main(screen):
@@ -87,7 +118,9 @@ def main(screen):
     # Set color scheme
     screen.attron(curses.color_pair(1))
 
+    #################
     # Main Menu Start
+    #################
     menu_exit = 0
     menu_index = 0
     while menu_exit == 0:
@@ -98,7 +131,9 @@ def main(screen):
         elif key == curses.KEY_DOWN and menu_index < 3:
             menu_index += 1
         elif key == curses.KEY_ENTER or key in [10, 13]:
+            ###########################
             # Rune Generator Menu Start
+            ###########################
             if menu_index == 0:
                 print_rune_generator_menu(screen, "Waiting for champion lock in...")
                 loop = asyncio.get_event_loop()
@@ -109,10 +144,27 @@ def main(screen):
                     key = screen.getch()
                     if key == curses.KEY_ENTER or key in [10, 13]:
                         runes_menu_exit = 1
-
             elif menu_index == 1:
-                # Champselect
-                break
+                ######################
+                # Autopilot Menu Start
+                ######################
+                print_autopilot_menu(screen, "Creating Lobby...")
+                loop = asyncio.get_event_loop()
+                loop.run_until_complete(state_engine.create_lobby())
+                print_autopilot_menu(screen, "Starting Queue...")
+                loop.run_until_complete(state_engine.start_queue())
+                print_autopilot_menu(screen, "Waiting for Queue...")
+                loop.run_until_complete(state_engine.auto_queue_accept())
+                print_autopilot_menu(screen, "Locking in champion...")
+                loop.run_until_complete(state_engine.instalock_champ())
+                print_autopilot_menu(screen, "Getting rune page...")
+                loop.run_until_complete(champ_identifier.main())
+                autopilot_menu_exit = 0
+                while autopilot_menu_exit == 0:
+                    print_autopilot_menu(screen, "Runes set! Press ENTER to exit")
+                    key = screen.getch()
+                    if key == curses.KEY_ENTER or key in [10, 13]:
+                        autopilot_menu_exit = 1
             elif menu_index == 2:
                 # Debug
                 break

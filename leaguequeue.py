@@ -10,9 +10,9 @@ from champselect import functions
 
 async def main():
 
-    # await state_engine.create_lobby()
-    # await state_engine.start_queue()
-    # await state_engine.auto_queue_accept()
+    await state_engine.create_lobby()
+    await state_engine.start_queue()
+    await state_engine.auto_queue_accept()
     await state_engine.instalock_champ()
 
 

@@ -202,7 +202,7 @@ async def pick_champ(client, actorcellid):
     call = f'/lol-lobby-team-builder/champ-select/v1/session/actions/{actorcellid}'
     pick = await client.request('PATCH', call, data={
         "actorCellId": actorcellid,
-        "championId": 1,
+        "championId": 122,
         "type": "pick"
     })
     print(await pick.json())
