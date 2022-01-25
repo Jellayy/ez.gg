@@ -1,36 +1,49 @@
 import asyncio
 from asyncio import sleep
 import utils.runes as runes
+from champselect import state_engine
 
-import willump
+
 
 from champselect import functions
 
 
 async def main():
-    client = await willump.start()
+
+    # await state_engine.create_lobby()
+    # await state_engine.start_queue()
+    # await state_engine.auto_queue_accept()
+    await state_engine.instalock_champ()
 
 
-    await functions.create_lobby(client)
-    await functions.select_roles(client)
-    await functions.queue_type(client)
-    if await functions.can_start(client):
-        await functions.start_queue(client)
-        while not await functions.queue_pop(client):
-            print("queue has not popped yet")
-            await sleep(5)
-        await functions.accept_queue(client)
-        while not await functions.is_champ_select(client):
-            print("not quite champ select")
-            await sleep(1)
-        print('made it to champ select')
-        await functions.lobby(client)
-        await functions.pick_champ(client, await functions.lobby(client))
-        await functions.lock_in(client, await functions.lobby(client))
-        await runes.set_rune_page(client, "annie")
 
-    elif not await functions.can_start(client):
-        print("Cannot start queue, exiting program")
+    # client = await willump.start()
+    #
+    # #create a lobby
+    # await functions.create_lobby(client)
+    # #select roles
+    # await functions.select_roles(client)
+    # #get lobby type
+    # await functions.queue_type(client)
+    # if await functions.can_start(client) and await functions.is_lobby_leader(client):
+    #     await functions.start_queue(client)
+    # #     while not await functions.queue_pop(client):
+    # #         print("queue has not popped yet")
+    # #         await sleep(5)
+    # #     await functions.accept_queue(client)
+    # #     while not await functions.is_champ_select(client):
+    # #         print("not quite champ select")
+    # #         await sleep(1)
+    # #     print('made it to champ select')
+    # #     await functions.lobby(client)
+    # #     await functions.pick_champ(client, await functions.lobby(client))
+    # #     await functions.lock_in(client, await functions.lobby(client))
+    # #     await runes.set_rune_page(client, "annie")
+    # #
+    # elif not await functions.can_start(client):
+    #     print("Cannot start queue, exiting program")
+
+
 
 
 
