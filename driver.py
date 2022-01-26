@@ -4,6 +4,7 @@ import curses
 import champ_identifier
 import asyncio
 import champselect.state_engine as state_engine
+import utils.runes as runes
 
 
 ########################################################################################################################
@@ -135,12 +136,16 @@ def main(screen):
             # Rune Generator Menu Start
             ###########################
             if menu_index == 0:
-                print_rune_generator_menu(screen, "Waiting for champion lock in...")
+                print_rune_generator_menu(screen, "Waiting for champ select...")
                 loop = asyncio.get_event_loop()
-                loop.run_until_complete(champ_identifier.main())
+                loop.run_until_complete(champ_identifier.wait_for_champ_select())
+                print_rune_generator_menu(screen, "Waiting for lock in...")
+                champ = loop.run_until_complete(champ_identifier.get_champion_pick())
+                print_rune_generator_menu(screen, f"Generating {champ} runes...")
+                loop.run_until_complete(runes.set_rune_page(champ))
                 runes_menu_exit = 0
                 while runes_menu_exit == 0:
-                    print_rune_generator_menu(screen, "Runes set! Press ENTER to exit.")
+                    print_rune_generator_menu(screen, f"{champ} runes set! Press ENTER to exit.")
                     key = screen.getch()
                     if key == curses.KEY_ENTER or key in [10, 13]:
                         runes_menu_exit = 1
@@ -157,11 +162,12 @@ def main(screen):
                 loop.run_until_complete(state_engine.auto_queue_accept())
                 print_autopilot_menu(screen, "Locking in champion...")
                 loop.run_until_complete(state_engine.instalock_champ())
-                print_autopilot_menu(screen, "Getting rune page...")
-                loop.run_until_complete(champ_identifier.main())
+                champ = loop.run_until_complete(champ_identifier.get_champion_pick())
+                print_autopilot_menu(screen, f"Generating {champ} runes...")
+                loop.run_until_complete(runes.set_rune_page(champ))
                 autopilot_menu_exit = 0
                 while autopilot_menu_exit == 0:
-                    print_autopilot_menu(screen, "Runes set! Press ENTER to exit")
+                    print_autopilot_menu(screen, f"{champ} runes set! Press ENTER to exit.")
                     key = screen.getch()
                     if key == curses.KEY_ENTER or key in [10, 13]:
                         autopilot_menu_exit = 1

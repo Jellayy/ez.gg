@@ -11,7 +11,8 @@ async def get_current_page_id(client):
 
 
 # Uses op.gg scraper and local LCU API to update current rune page with recommended for a given champion
-async def set_rune_page(client, champion):
+async def set_rune_page(champion):
+    client = await willump.start()
     current_page_id = await get_current_page_id(client)
     new_rune_ids = await opgg.get_rune_page(champion)
     selected_perk_ids = [new_rune_ids[0], new_rune_ids[1], new_rune_ids[2], new_rune_ids[3], new_rune_ids[4],
@@ -23,6 +24,7 @@ async def set_rune_page(client, champion):
                                                       'selectedPerkIds': selected_perk_ids, 'subStyleId': sub_style_id})
     # Error Handling for non-editable default page selected
     set_rune_page_result = await set_rune_page_result.json()
+    await willump.Willump.close(client)
     if set_rune_page_result is None:
         return True
     else:
@@ -33,8 +35,7 @@ async def set_rune_page(client, champion):
 # TESTING
 ########################################################################################################################
 async def main():
-    client = await willump.start()
-    result = await set_rune_page(client, "draven")
+    result = await set_rune_page("draven")
     if result:
         print("Rune Page Set")
     else:
