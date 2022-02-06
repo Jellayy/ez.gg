@@ -24,7 +24,7 @@ async def set_rune_page(champion):
                                                       'selectedPerkIds': selected_perk_ids, 'subStyleId': sub_style_id})
     # Error Handling for non-editable default page selected
     set_rune_page_result = await set_rune_page_result.json()
-    await willump.Willump.close(client)
+    await client.close()
     if set_rune_page_result is None:
         return True
     else:

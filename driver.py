@@ -5,6 +5,7 @@ import champ_identifier
 import asyncio
 import champselect.state_engine as state_engine
 import utils.runes as runes
+import utils.sum_spells as sum_spells
 
 
 ########################################################################################################################
@@ -143,9 +144,11 @@ def main(screen):
                 champ = loop.run_until_complete(champ_identifier.get_champion_pick())
                 print_rune_generator_menu(screen, f"Generating {champ} runes...")
                 loop.run_until_complete(runes.set_rune_page(champ))
+                print_rune_generator_menu(screen, f"Generating {champ} summoner spells...")
+                loop.run_until_complete(sum_spells.set_sum_spells(champ))
                 runes_menu_exit = 0
                 while runes_menu_exit == 0:
-                    print_rune_generator_menu(screen, f"{champ} runes set! Press ENTER to exit.")
+                    print_rune_generator_menu(screen, f"{champ} runes & spells set! Press ENTER to exit.")
                     key = screen.getch()
                     if key == curses.KEY_ENTER or key in [10, 13]:
                         runes_menu_exit = 1
@@ -165,9 +168,11 @@ def main(screen):
                 champ = loop.run_until_complete(champ_identifier.get_champion_pick())
                 print_autopilot_menu(screen, f"Generating {champ} runes...")
                 loop.run_until_complete(runes.set_rune_page(champ))
+                print_autopilot_menu(screen, f"Generating {champ} summoner spells...")
+                loop.run_until_complete(sum_spells.set_sum_spells(champ))
                 autopilot_menu_exit = 0
                 while autopilot_menu_exit == 0:
-                    print_autopilot_menu(screen, f"{champ} runes set! Press ENTER to exit.")
+                    print_autopilot_menu(screen, f"{champ} runes & spells set! Press ENTER to exit.")
                     key = screen.getch()
                     if key == curses.KEY_ENTER or key in [10, 13]:
                         autopilot_menu_exit = 1

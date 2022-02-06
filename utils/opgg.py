@@ -39,11 +39,31 @@ async def get_rune_page(champion):
     return runes
 
 
+# Uses BS4 to scrape OP.GG champion pages for recommended summoner spell IDs
+async def get_sum_spells(champion):
+    champion = champion.lower()
+    # Faking a user agent so that op.gg doesn't give 403 Forbidden on html requests
+    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+    r = requests.get(f'https://na.op.gg/champion/{champion}/', headers=headers)
+    r_soup = bs4.BeautifulSoup(r.text, 'html.parser')
+
+    spells = []
+    data = r_soup.find_all("li", {"class": "champion-stats__list__item"}, limit=2)
+    for item in data:
+        str_item = str(item)
+        img = str_item.split("\n")[1]
+        img_split = img.split("/")[6]
+        img_split = img_split.split(".")[0]
+        spells.append(img_split)
+
+    return spells
+
 ########################################################################################################################
 # TESTING
 ########################################################################################################################
 async def main():
     print(await get_rune_page("akshan"))
+    print(await get_sum_spells("annie"))
 
 
 if __name__ == '__main__':
