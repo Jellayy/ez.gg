@@ -8,33 +8,23 @@ async def get_rune_page(champion):
     champion = champion.lower()
     # Faking a user agent so that op.gg doesn't give 403 Forbidden on html requests
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
-    r = requests.get(f'https://na.op.gg/champion/{champion}/', headers=headers)
-    r_soup = bs4.BeautifulSoup(r.text, 'html.parser')
+    r = requests.get(f'https://na.op.gg/champions/{champion}/', headers=headers)
+    r_soup = bs4.BeautifulSoup(r.text, 'lxml')
 
     runes = []
-    data = r_soup.find_all("div", {"class": "perk-page__item--active"}, limit=6)
-    for element in data:
-        str_element = str(element)
-        lines = str_element.splitlines()
-        for line in lines:
-            if line.__contains__("img"):
-                line_split = line.split("/")[6]
-                line_split = line_split.split(".")[0]
-                runes.append(int(line_split))
+    # Keystone
+    data = r_soup.find_all("div", {"class": "css-1w13bvn e495vw30"}, limit=1)
+    runes.append(str(data).split("img")[1].split("/")[6].split(".")[0])
 
-    data = r_soup.find_all("img", {"class": "active"}, limit=3)
-    for img in data:
-        str_img = str(img)
-        str_split = str_img.split("/")[6]
-        str_split = str_split.split(".")[0]
-        runes.append(int(str_split))
+    # Primary and Secondary Tree
+    data = r_soup.find_all("div", {"class": "css-l5ga7x e495vw30"}, limit=5)
+    for entry in data:
+        runes.append(str(entry).split("img")[1].split("/")[6].split(".")[0])
 
-    data = r_soup.find_all("img", {"class": "perk-page__image"}, limit=2)
-    for img in data:
-        str_img = str(img)
-        str_split = str_img.split("/")[6]
-        str_split = str_split.split(".")[0]
-        runes.append(int(str_split))
+    # Perk Tree
+    data = r_soup.find_all("img", {"class": "css-atqrr"}, limit=3)
+    for entry in data:
+        runes.append(str(entry).split("/")[6].split(".")[0])
 
     return runes
 
@@ -44,17 +34,15 @@ async def get_sum_spells(champion):
     champion = champion.lower()
     # Faking a user agent so that op.gg doesn't give 403 Forbidden on html requests
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
-    r = requests.get(f'https://na.op.gg/champion/{champion}/', headers=headers)
+    r = requests.get(f'https://na.op.gg/champions/{champion}/', headers=headers)
     r_soup = bs4.BeautifulSoup(r.text, 'html.parser')
 
     spells = []
-    data = r_soup.find_all("li", {"class": "champion-stats__list__item"}, limit=2)
-    for item in data:
-        str_item = str(item)
-        img = str_item.split("\n")[1]
-        img_split = img.split("/")[6]
-        img_split = img_split.split(".")[0]
-        spells.append(img_split)
+    data = r_soup.find_all("ul", {"class": "css-wc914 e1jyy41s0"}, limit=1)
+    data = str(data).split("img")
+    data.pop(0)
+    for entry in data:
+        spells.append(entry.split("/")[6].split(".")[0])
 
     return spells
 
@@ -62,7 +50,7 @@ async def get_sum_spells(champion):
 # TESTING
 ########################################################################################################################
 async def main():
-    print(await get_rune_page("akshan"))
+    print(await get_rune_page("annie"))
     print(await get_sum_spells("annie"))
 
 
