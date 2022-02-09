@@ -16,15 +16,22 @@ async def get_rune_page(champion):
     data = r_soup.find_all("div", {"class": "css-1w13bvn e495vw30"}, limit=1)
     runes.append(str(data).split("img")[1].split("/")[6].split(".")[0])
 
-    # Primary and Secondary Tree
+    # Primary and Secondary Tree Perks
     data = r_soup.find_all("div", {"class": "css-l5ga7x e495vw30"}, limit=5)
     for entry in data:
         runes.append(str(entry).split("img")[1].split("/")[6].split(".")[0])
 
-    # Perk Tree
+    # Flex Perk Tree
     data = r_soup.find_all("img", {"class": "css-atqrr"}, limit=3)
     for entry in data:
         runes.append(str(entry).split("/")[6].split(".")[0])
+
+    # Keystone and Secondary Tree
+    data = r_soup.find_all("div", {"class": "item item_mark"}, limit=2)
+    data = str(data).split("img")
+    data.pop(0)
+    for entry in data:
+        runes.append(entry.split("/")[6].split(".")[0])
 
     return runes
 
