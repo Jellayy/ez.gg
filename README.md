@@ -32,5 +32,7 @@ No.
 But in all reality, as undocumented as they are, the client API endpoints used in EZ.GG are exactly as accessible as the ones Riot does allow other tools to use. The great part about EZ.GG is we aren't distributing this closed-source for monetization. This is open-source software you're either downloading or pulling yourself. I'd love to see Riot try and throw a takedown at open-source software using openly available API calls.
 <br><br>
 However, for the sake of your own Riot account, use at your own risk.
+<br><br>
+<sub>If Riot for some reason blocks the API calls their own client frontend uses, we WILL remake this with machine vision out of spite. Come at us riot (with job offers).<sub>
 ## Contributing
 Go ahead.
