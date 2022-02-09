@@ -18,7 +18,7 @@ async def main():
     await state_engine.pick_champ()
     # await state_engine.ban_champ()
     # await state_engine.get_gameflow()
-    # await runes.set_rune_page("kalista")
+    await runes.set_rune_page("udyr")
 
 
 

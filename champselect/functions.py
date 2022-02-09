@@ -206,6 +206,7 @@ async def get_player_id(client):
     print(user_id)
     return user_id
 
+
 async def get_actor_id(client):
     call = '/lol-lobby-team-builder/champ-select/v1/session'
     lobby = await client.request('GET', call)
@@ -238,10 +239,10 @@ async def ban_champ(client, actorcellid):
     })
     print(await pick.json())
 
+
 async def gameflow_session(client):
     call = '/lol-gameflow/v1/session'
     gameflow = await client.request('GET', call)
     data = await gameflow.json()
     print(data)
     return data
-
