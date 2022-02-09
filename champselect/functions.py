@@ -189,11 +189,29 @@ async def is_lobby(client):
         return False
 
 
-async def lobby(client):
+async def get_player_id(client):
     call = '/lol-lobby-team-builder/champ-select/v1/session'
     lobby = await client.request('GET', call)
     data = await lobby.json()
-    print(data)
+    # print(data)
+    print(data['localPlayerCellId'])
+    user_id = 0
+    for crap in data['actions']:
+        print(crap)
+        for player in crap:
+            print(player)
+            if player['actorCellId'] == data['localPlayerCellId']:
+                print(player['id'])
+                user_id = player['id']
+    print(user_id)
+    return user_id
+
+
+async def get_actor_id(client):
+    call = '/lol-lobby-team-builder/champ-select/v1/session'
+    lobby = await client.request('GET', call)
+    data = await lobby.json()
+    # print(data)
     print(data['localPlayerCellId'])
     return data['localPlayerCellId']
 
@@ -201,8 +219,7 @@ async def lobby(client):
 async def pick_champ(client, actorcellid):
     call = f'/lol-lobby-team-builder/champ-select/v1/session/actions/{actorcellid}'
     pick = await client.request('PATCH', call, data={
-        "actorCellId": actorcellid,
-        "championId": 122,
+        "championId": 1,
         "type": "pick"
     })
     print(await pick.json())
@@ -212,3 +229,20 @@ async def lock_in(client, actorcellid):
     call = f'/lol-lobby-team-builder/champ-select/v1/session/actions/{actorcellid}/complete'
     locked = await client.request('POST', call)
     print(await locked.json())
+
+
+async def ban_champ(client, actorcellid):
+    call = f'/lol-lobby-team-builder/champ-select/v1/session/actions/{actorcellid}'
+    pick = await client.request('PATCH', call, data={
+        "championId": 2,
+        "type": "ban"
+    })
+    print(await pick.json())
+
+
+async def gameflow_session(client):
+    call = '/lol-gameflow/v1/session'
+    gameflow = await client.request('GET', call)
+    data = await gameflow.json()
+    print(data)
+    return data

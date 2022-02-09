@@ -10,10 +10,15 @@ from champselect import functions
 
 async def main():
 
-    await state_engine.create_lobby()
-    await state_engine.start_queue()
-    await state_engine.auto_queue_accept()
-    await state_engine.instalock_champ()
+    # await state_engine.create_lobby()
+    # await state_engine.start_queue()
+    # await state_engine.auto_queue_accept()
+    # await state_engine.instalock_champ()
+
+    await state_engine.pick_champ()
+    # await state_engine.ban_champ()
+    # await state_engine.get_gameflow()
+    await runes.set_rune_page("udyr")
 
 
 

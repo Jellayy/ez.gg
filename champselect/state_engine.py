@@ -49,7 +49,35 @@ async def start_queue():
 async def instalock_champ():
     client = await willump.start()
     print("Opened willump")
-    await functions.pick_champ(client, await functions.lobby(client))
-    await functions.lock_in(client, await functions.lobby(client))
+    await functions.pick_champ(client, await functions.get_player_id(client))
+    await functions.lock_in(client, await functions.get_player_id(client))
+    await willump.Willump.close(client)
+    print("Closed willump")
+
+
+async def pick_champ():
+    client = await willump.start()
+    print("Opened willump")
+    await functions.get_player_id(client)
+    await functions.pick_champ(client, await functions.get_player_id(client))
+
+    await functions.lock_in(client, await functions.get_player_id(client))
+    await willump.Willump.close(client)
+    print("Closed willump")
+
+
+async def ban_champ():
+    client = await willump.start()
+    print("Opened willump")
+    await functions.ban_champ(client, await functions.get_actor_id(client))
+    await functions.lock_in(client, await functions.get_actor_id(client))
+    await willump.Willump.close(client)
+    print("Closed willump")
+
+
+async def get_gameflow():
+    client = await willump.start()
+    print("Opened willump")
+    await functions.gameflow_session(client)
     await willump.Willump.close(client)
     print("Closed willump")
