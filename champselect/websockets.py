@@ -54,8 +54,9 @@ async def champselect_listener(data):
 
         if data['data']['timer']['phase'] == "BAN_PICK":
             print("We're in picking or banning phase")
-            await state_engine.pick_champ()
             await state_engine.ban_champ()
+            await state_engine.pick_champ()
+
 
 
     except:
@@ -82,13 +83,13 @@ async def main():
 
     all_events_subscription = await wllp.subscribe('OnJsonApiEvent', default_handler=default_message_handler)
 
-    # wllp.subscription_filter_endpoint(all_events_subscription, '/lol-matchmaking/v1/ready-check',
-    #                                   handler=queue_acceptor)
-    # wllp.subscription_filter_endpoint(all_events_subscription, '/lol-champ-select/v1/session',
-    #                                   handler=champselect_listener)
-    # wllp.subscription_filter_endpoint(all_events_subscription, '/lol-lobby/v2/lobby', handler=position_listener)
-    # wllp.subscription_filter_endpoint(all_events_subscription, '/lol-lobby-team-builder/champ-select/v1/session',
-    #                                   handler=printing_listener)
+    wllp.subscription_filter_endpoint(all_events_subscription, '/lol-matchmaking/v1/ready-check',
+                                      handler=queue_acceptor)
+    wllp.subscription_filter_endpoint(all_events_subscription, '/lol-champ-select/v1/session',
+                                      handler=champselect_listener)
+    wllp.subscription_filter_endpoint(all_events_subscription, '/lol-lobby/v2/lobby', handler=position_listener)
+    wllp.subscription_filter_endpoint(all_events_subscription, '/lol-lobby-team-builder/champ-select/v1/session',
+                                      handler=printing_listener)
     wllp.subscription_filter_endpoint(all_events_subscription, '/lol-gameflow/v1/gameflow-phase', handler=gameflow_handler)
 
     while True:
