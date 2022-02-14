@@ -194,16 +194,16 @@ async def get_player_id(client):
     lobby = await client.request('GET', call)
     data = await lobby.json()
     # print(data)
-    print(data['localPlayerCellId'])
+    # print(data['localPlayerCellId'])
     user_id = 0
     for crap in data['actions']:
-        print(crap)
+        # print(crap)
         for player in crap:
-            print(player)
+            # print(player)
             if player['actorCellId'] == data['localPlayerCellId']:
-                print(player['id'])
+                # print(player['id'])
                 user_id = player['id']
-    print(user_id)
+    # print(user_id)
     return user_id
 
 
@@ -212,14 +212,14 @@ async def get_actor_id(client):
     lobby = await client.request('GET', call)
     data = await lobby.json()
     # print(data)
-    print(data['localPlayerCellId'])
+    # print(data['localPlayerCellId'])
     return data['localPlayerCellId']
 
 
-async def pick_champ(client, actorcellid):
+async def pick_champ(client, actorcellid, championid):
     call = f'/lol-lobby-team-builder/champ-select/v1/session/actions/{actorcellid}'
     pick = await client.request('PATCH', call, data={
-        "championId": 1,
+        "championId": championid,
         "type": "pick"
     })
     print(await pick.json())
@@ -231,10 +231,10 @@ async def lock_in(client, actorcellid):
     print(await locked.json())
 
 
-async def ban_champ(client, actorcellid):
+async def ban_champ(client, actorcellid, banid):
     call = f'/lol-lobby-team-builder/champ-select/v1/session/actions/{actorcellid}'
     pick = await client.request('PATCH', call, data={
-        "championId": 2,
+        "championId": banid,
         "type": "ban"
     })
     print(await pick.json())

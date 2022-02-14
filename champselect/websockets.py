@@ -8,16 +8,14 @@ import state_engine
 
 
 async def default_message_handler(data):
-    # print(data['eventType'] + ' ' + data['uri'])
-    # print(json.dumps(data, indent=4, sort_keys=True))
-    # f = open("yeet.txt", "a")
-    # f.write(data['eventType'] + ' ' + data['uri']+"\n" + json.dumps(data, indent=4, sort_keys=True) + "\n")
     pass
 
 
 async def printing_listener(data):
-    print(data['eventType'] + ' ' + data['uri'])
-    print(json.dumps(data, indent=4, sort_keys=True))
+    # print(data['eventType'] + ' ' + data['uri'])
+    # print(json.dumps(data, indent=4, sort_keys=True))
+    f = open("yeet1.txt", "a")
+    f.write(data['eventType'] + ' ' + data['uri'] + "\n" + json.dumps(data, indent=4, sort_keys=True) + "\n")
 
 
 async def queue_acceptor(data):
@@ -42,27 +40,44 @@ async def position_listener(data):
         print("at least it's broken and you know it frikkin gays")
 
 
-async def champselect_listener(data):
-    try:
-        # print(data['eventType'] + ' ' + data['uri'])
-        # print(json.dumps(data, indent=4, sort_keys=True))
+# async def champselect_listener(data):
+#     try:
+#         # print(data['eventType'] + ' ' + data['uri'])
+#         # print(json.dumps(data, indent=4, sort_keys=True))
+#
+#         if data['data']['timer']['phase'] == "PLANNING":
+#             print("We're in planning phase")
+#             time_in_sec = data['data']['timer']
+#             await state_engine.pick_champ()
+#
+#
+#         if data['data']['timer']['phase'] == "BAN_PICK":
+#             print("We're in picking or banning phase")
+#             await state_engine.ban_champ()
+#             await state_engine.pick_champ()
+#
+#
+#
+#     except:
+#         print("something's wrong I can feel it.")
+#         # if data['eventType']:
+#         #     print(data['data']['timer']['phase'])
 
-        if data['data']['timer']['phase'] == "PLANNING":
-            print("We're in planning phase")
-            await state_engine.pick_champ()
+async def summoner_listener(data):
+    # print(data['data'])
+    # print(data['eventType'] + ' ' + data['uri'])
+    if data['data']['isSelf'] and data['data']['isPickIntenting']:
+        print("Pick Intenting Champion")
+        await state_engine.pick_champ()
 
+    if data['data']['isSelf'] and data['data']['activeActionType'] == "ban":
+        print("Banning Champion")
+        await state_engine.ban_champ()
 
-        if data['data']['timer']['phase'] == "BAN_PICK":
-            print("We're in picking or banning phase")
-            await state_engine.ban_champ()
-            await state_engine.pick_champ()
+    if data['data']['isSelf'] and data['data']['activeActionType'] == "pick":
+        print("Picking Champion")
+        await state_engine.pick_champ()
 
-
-
-    except:
-        print("something's wrong I can feel it.")
-        # if data['eventType']:
-        #     print(data['data']['timer']['phase'])
 
 async def gameflow_handler(data):
     global actor_id, player_id
@@ -73,10 +88,6 @@ async def gameflow_handler(data):
         player_id = await functions.get_player_id(wllp)
 
 
-
-
-
-
 async def main():
     global wllp
     wllp = await willump.start()
@@ -85,12 +96,17 @@ async def main():
 
     wllp.subscription_filter_endpoint(all_events_subscription, '/lol-matchmaking/v1/ready-check',
                                       handler=queue_acceptor)
-    wllp.subscription_filter_endpoint(all_events_subscription, '/lol-champ-select/v1/session',
-                                      handler=champselect_listener)
-    wllp.subscription_filter_endpoint(all_events_subscription, '/lol-lobby/v2/lobby', handler=position_listener)
-    wllp.subscription_filter_endpoint(all_events_subscription, '/lol-lobby-team-builder/champ-select/v1/session',
-                                      handler=printing_listener)
-    wllp.subscription_filter_endpoint(all_events_subscription, '/lol-gameflow/v1/gameflow-phase', handler=gameflow_handler)
+    # wllp.subscription_filter_endpoint(all_events_subscription, '/lol-champ-select/v1/session',
+    #                                   handler=champselect_listener)
+    wllp.subscription_filter_endpoint(all_events_subscription, '/lol-champ-select/v1/summoners/',
+                                      handler=summoner_listener)
+    # wllp.subscription_filter_endpoint(all_events_subscription, '/lol-champ-select/v1/summoners/',
+    #                                   handler=printing_listener)
+    # wllp.subscription_filter_endpoint(all_events_subscription, '/lol-lobby/v2/lobby', handler=position_listener)
+    # wllp.subscription_filter_endpoint(all_events_subscription, '/lol-lobby-team-builder/champ-select/v1/session',
+    #                                   handler=printing_listener)
+    wllp.subscription_filter_endpoint(all_events_subscription, '/lol-gameflow/v1/gameflow-phase',
+                                      handler=gameflow_handler)
 
     while True:
         await asyncio.sleep(10)

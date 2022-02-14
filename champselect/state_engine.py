@@ -1,6 +1,7 @@
 import asyncio
 from asyncio import sleep
 import utils.runes as runes
+import champselect.preferences as preferences
 
 import willump
 
@@ -49,7 +50,7 @@ async def start_queue():
 async def instalock_champ():
     client = await willump.start()
     print("Opened willump")
-    await functions.pick_champ(client, await functions.get_player_id(client))
+    await functions.pick_champ(client, await functions.get_player_id(client), preferences.champion)
     await functions.lock_in(client, await functions.get_player_id(client))
     await willump.Willump.close(client)
     print("Closed willump")
@@ -58,10 +59,7 @@ async def instalock_champ():
 async def pick_champ():
     client = await willump.start()
     print("Opened willump")
-    await functions.get_player_id(client)
-    await functions.pick_champ(client, await functions.get_player_id(client))
-
-    await functions.lock_in(client, await functions.get_player_id(client))
+    await functions.pick_champ(client, await functions.get_player_id(client), preferences.champion)
     await willump.Willump.close(client)
     print("Closed willump")
 
@@ -69,8 +67,7 @@ async def pick_champ():
 async def ban_champ():
     client = await willump.start()
     print("Opened willump")
-    await functions.ban_champ(client, await functions.get_actor_id(client))
-    await functions.lock_in(client, await functions.get_actor_id(client))
+    await functions.ban_champ(client, await functions.get_actor_id(client), preferences.ban)
     await willump.Willump.close(client)
     print("Closed willump")
 
