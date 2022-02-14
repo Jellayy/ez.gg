@@ -102,7 +102,7 @@ async def main():
                                       handler=summoner_listener)
     # wllp.subscription_filter_endpoint(all_events_subscription, '/lol-champ-select/v1/summoners/',
     #                                   handler=printing_listener)
-    # wllp.subscription_filter_endpoint(all_events_subscription, '/lol-lobby/v2/lobby', handler=position_listener)
+    wllp.subscription_filter_endpoint(all_events_subscription, '/lol-lobby/v2/lobby', handler=position_listener)
     # wllp.subscription_filter_endpoint(all_events_subscription, '/lol-lobby-team-builder/champ-select/v1/session',
     #                                   handler=printing_listener)
     wllp.subscription_filter_endpoint(all_events_subscription, '/lol-gameflow/v1/gameflow-phase',
