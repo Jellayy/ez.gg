@@ -59,7 +59,7 @@ async def instalock_champ():
 async def pick_champ():
     client = await willump.start()
     print("Opened willump")
-    await functions.pick_champ(client, await functions.get_player_id(client), preferences.champion)
+    await functions.pick_champ(client, await functions.get_player_id(client), int(preferences.champion))
     await functions.lock_in(client, await functions.get_player_id(client))
     await willump.Willump.close(client)
     print("Closed willump")
@@ -68,8 +68,8 @@ async def pick_champ():
 async def ban_champ():
     client = await willump.start()
     print("Opened willump")
-    await functions.ban_champ(client, await functions.get_actor_id(client), preferences.ban)
-    await functions.lock_in(client, await functions.get_player_id(client))
+    await functions.ban_champ(client, await functions.get_actor_id(client), int(preferences.ban))
+    await functions.lock_in(client, await functions.get_actor_id(client))
     await willump.Willump.close(client)
     print("Closed willump")
 
