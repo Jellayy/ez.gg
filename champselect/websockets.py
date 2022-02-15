@@ -3,8 +3,8 @@ import json
 import asyncio
 from champselect import functions
 import logging
-import preferences
-import state_engine
+import champselect.preferences as preferences
+import champselect.state_engine as state_engine
 
 
 async def default_message_handler(data):

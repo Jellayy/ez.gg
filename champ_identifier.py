@@ -17,7 +17,9 @@ async def wait_for_champ_select():
 
 
 async def get_champion_pick():
+    print('1')
     client = await willump.start()
+    print('2')
     while True:
         champion_check = await (await client.request('get', '/lol-champ-select/v1/current-champion')).json()
         if str(champion_check) != "0":
@@ -29,8 +31,8 @@ async def get_champion_pick():
 
 async def main():
 
-    await wait_for_champ_select()
-    print("ENTERED CHAMP SELECT")
+    # await wait_for_champ_select()
+    # print("ENTERED CHAMP SELECT")
     pick = await get_champion_pick()
     print(f"PICKED {pick.upper()}")
     client = await willump.start()

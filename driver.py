@@ -177,7 +177,7 @@ def main(screen):
                     if key == curses.KEY_ENTER or key in [10, 13]:
                         autopilot_menu_exit = 1
             elif menu_index == 2:
-                # Debug
+                # uh
                 break
             elif menu_index == 3:
                 menu_exit = 1
