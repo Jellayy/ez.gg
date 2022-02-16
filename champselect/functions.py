@@ -255,12 +255,14 @@ async def get_pickable_champs(client):
     print(data)
     return data
 
+
 async def get_disabled_champs(client):
     call = '/lol-champ-select/v1/disabled-champion-ids'
     disabled_champs = await client.request('GET', call)
     data = await disabled_champs.json()
     print(data)
     return data
+
 
 async def get_current_champ(client):
     call = '/lol-champ-select/v1/current-champion'
@@ -269,7 +271,10 @@ async def get_current_champ(client):
     print(data)
     return data
 
-# async def get_champ_grid(client, id):
-#     call = f'/lol-champ-select/v1/grid-champions/{id}'
-#     champ_grid = await client.request('GET', call)
-#     data = await champ_grid
+
+async def get_champ_grid(client, id):
+    call = f'/lol-champ-select/v1/grid-champions/{id}'
+    champ_grid = await client.request('GET', call)
+    data = await champ_grid.json()
+    print(data)
+    return data
