@@ -251,6 +251,6 @@ async def gameflow_session(client):
 async def get_pickable_champs(client):
     call = '/lol-champ-select/v1/pickable-champion-ids'
     pickable_champs = await client.request('GET', call)
-    data = await pickable_champs
+    data = await pickable_champs.json()
     print(data)
     return data
