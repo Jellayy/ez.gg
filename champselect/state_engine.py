@@ -65,7 +65,6 @@ async def hover_champ():
     # print("Closed willump")
 
 
-
 async def pick_champ():
     client = await willump.start()
     # print("Opened willump")
