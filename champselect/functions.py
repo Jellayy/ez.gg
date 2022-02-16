@@ -265,6 +265,11 @@ async def get_disabled_champs(client):
 async def get_current_champ(client):
     call = '/lol-champ-select/v1/current-champion'
     current_champ = await client.request('GET', call)
-    data = await current_champ.json()
+    data = await current_champ
     print(data)
     return data
+
+# async def get_champ_grid(client, id):
+#     call = f'/lol-champ-select/v1/grid-champions/{id}'
+#     champ_grid = await client.request('GET', call)
+#     data = await champ_grid
