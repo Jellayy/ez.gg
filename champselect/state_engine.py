@@ -70,10 +70,12 @@ async def pick_champ():
     # print("Opened willump")
     player_id = await functions.get_player_id(client)
     pickable_champion_ids = await functions.get_pickable_champs(client)
-    if int(preferences.champion) in pickable_champion_ids:
-        await functions.pick_champ(client, player_id, int(preferences.champion))
-    else:
-        await functions.pick_champ(client, player_id, int(random.choice(pickable_champion_ids)))
+    disabled_champion_ids = await functions.get_disabled_champs(client)
+    preferred_champion = int(preferences.champion)
+    while preferred_champion in disabled_champion_ids:
+        preferred_champion = int(random.choice(pickable_champion_ids))
+
+    await functions.pick_champ(client, player_id, preferred_champion)
     await functions.lock_in(client, player_id)
     await willump.Willump.close(client)
     # print("Closed willump")

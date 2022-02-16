@@ -254,3 +254,10 @@ async def get_pickable_champs(client):
     data = await pickable_champs.json()
     print(data)
     return data
+
+async def get_disabled_champs(client):
+    call = '/lol-champ-select/v1/disabled-champion-ids'
+    disabled_champs = await client.request('GET', call)
+    data = await disabled_champs.json()
+    print(data)
+    return data
