@@ -31,14 +31,15 @@ async def get_champion_pick():
 
 async def main():
 
-    # await wait_for_champ_select()
-    # print("ENTERED CHAMP SELECT")
+    await wait_for_champ_select()
+    print("ENTERED CHAMP SELECT")
     pick = await get_champion_pick()
     print(f"PICKED {pick.upper()}")
     client = await willump.start()
     await runes.set_rune_page(pick)
     await willump.Willump.close(client)
     print("RUNE PAGE SET")
+    return f'{pick} runes complete!'
 
 
 if __name__ == '__main__':

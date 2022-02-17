@@ -1,14 +1,15 @@
 import eel
 import asyncio
-import champselect.websockets as websockets
+import champ_identifier
 
 
 @eel.expose
 def rune_generator():
     print("owo")
-    asyncio.run(websockets.main())
+    text = asyncio.run(champ_identifier.main())
+    return text
 
 
 # eel init
 eel.init('utils/ui', allowed_extensions=['.js', '.html'])
-eel.start('main.html', size=(600, 600))
+eel.start('main.html', size=(1000, 600))

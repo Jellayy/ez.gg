@@ -12,6 +12,8 @@ body {
     min-height: 100vh;
     width: 100%;
     overflow: hidden;
+    background: #0e191b;
+    color: #ffffff;
 }
 
 .sidebar {
@@ -101,6 +103,7 @@ body {
     opacity: 0;
     pointer-events: none;
     display: block;
+    color: black;
 }
 
 .sidebar.active ul li .tooltip {
@@ -121,6 +124,10 @@ body {
     transition: all 0.4s ease;
     border-radius: 12px;
     white-space: nowrap;
+}
+
+.sidebar ul li a.active {
+    background: #0e191b;
 }
 
 .sidebar ul li a:hover {

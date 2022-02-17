@@ -3,7 +3,8 @@ $(document).ready(function() {
         rune_generator();
     })
 
-    function rune_generator() {
-        eel.rune_generator();
+    async function rune_generator() {
+        let n = await eel.rune_generator()();
+        console.log(n)
     }
 })

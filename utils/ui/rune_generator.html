@@ -30,14 +30,14 @@
             </div>
             <ul class="nav_list">
                 <li>
-                    <a href="#" class="active">
+                    <a href="main.html">
                         <i class="fa-solid fa-house"></i>
                         <span class="links_name">Home</span>
                     </a>
                     <span class="tooltip">Home</span>
                 </li>
                 <li>
-                    <a href="rune_generator.html">
+                    <a href="#" class="active">
                         <i class="fa-solid fa-arrows-rotate"></i>
                         <span class="links_name">Rune Generator</span>
                     </a>
@@ -61,11 +61,15 @@
         </div>
 
         <!--Page Content-->
-        <div class="home_content">
-            <p style="text-align: center;">Home page, idk</p>
+        <div class="home_content" style="text-align: center;">
+            <h2>Press button and pray for runes</h2>
+            <input type="button" id="rune_generator_button" value="start praying">
+            <span id="runes_feedback"></span>
         </div>
 
         <!--Sidebar Driver JS Init-->
         <script type="text/javascript" src="sidebar.js"></script>
+        <!--Javascript Init-->
+        <script type="text/javascript" src="main.js"></script>
     </body>
 </html>
