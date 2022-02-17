@@ -17,6 +17,7 @@ body {
 }
 
 .sidebar {
+    z-index: 100000;
     position: fixed;
     top: 0;
     left: 0;
@@ -165,4 +166,58 @@ body {
 .sidebar.active ~ .home_content {
     width: calc(100% - 240px);
     left: 240px;
+}
+
+.wrapper {
+    margin: 15px;
+}
+
+.title_box {
+    padding: 10px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.title_box p {
+    font-size: 20px;
+    color: #f4dd93;
+}
+
+.two-col-grid {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.box {
+    background: #202124;
+    padding: 10px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.button {
+    padding: 9px 25px;
+    background-color: #2288ff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease 0s;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.button[disabled] {
+    background-color: #0e191b;
+}
+
+.button:hover {
+    background-color: rgba(0, 136, 169, 0.8);
+}
+
+.button[disabled]:hover {
+    background-color: #0e191b;
 }

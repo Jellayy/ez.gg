@@ -1,13 +1,29 @@
 import eel
 import asyncio
 import champ_identifier
+from utils import runes, sum_spells
+
+
+# Rune Generator Functions
+@eel.expose
+def wait_for_champ_select():
+    asyncio.run(champ_identifier.wait_for_champ_select())
 
 
 @eel.expose
-def rune_generator():
-    print("owo")
-    text = asyncio.run(champ_identifier.main())
-    return text
+def get_champion_pick():
+    pick = asyncio.run(champ_identifier.get_champion_pick())
+    return pick
+
+
+@eel.expose
+def set_rune_page(champ):
+    asyncio.run(runes.set_rune_page(champ))
+
+
+@eel.expose
+def set_sum_spells(champ):
+    asyncio.run(sum_spells.set_sum_spells(champ))
 
 
 # eel init
