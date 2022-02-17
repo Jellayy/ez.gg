@@ -8,11 +8,64 @@
 
         <!--jQuery Init-->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+        <!--Stylesheet-->
+        <link rel="stylesheet" href="style.css">
+
+        <!--Fontawesome icon init-->
+        <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
+
+        <!--Favicon-->
+        <link rel="icon" href="assets/favicon.png">
     </head>
     <body>
-        <h1>This better work bro</h1>
-        <input type="button" id="rune_generator_button" value="start praying">
 
+        <div class="sidebar">
+            <div class="logo_content">
+                <div class="logo">
+                    <div class="logo_name">EZ.GG</div>
+                </div>
+                <i class="fa-solid fa-bars" id="sidebar-btn"></i>
+            </div>
+            <ul class="nav_list">
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                        <span class="links_name">Rune Generator</span>
+                    </a>
+                    <span class="tooltip">Rune Generator</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-compass"></i>
+                        <span class="links_name">Autopilot</span>
+                    </a>
+                    <span class="tooltip">Autopilot</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-terminal"></i>
+                        <span class="links_name">Debug</span>
+                    </a>
+                    <span class="tooltip">Debug</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="home_content">
+            <p>Scary testing button</p>
+            <input type="button" id="rune_generator_button" value="start praying">
+        </div>
+
+
+
+
+        
+        <input type="button" id="rune_generator_button" value="start praying">
+        
+
+        <!--Sidebar Driver JS Init-->
+        <script type="text/javascript" src="sidebar.js"></script>
         <!--Javascript Init-->
         <script type="text/javascript" src="main.js"></script>
     </body>
