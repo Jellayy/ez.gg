@@ -1,7 +1,7 @@
 primaryRole = 'JUNGLE'
 secondaryRole = 'MIDDLE'
 queueID = '430'
-champion = '1'
-ban = '2'
+champion = '238'
+ban = '157'
 
 
