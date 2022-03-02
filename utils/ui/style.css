@@ -227,7 +227,7 @@ body.preload *{
 }
 
 .button[disabled] {
-    background-color: #0e191b;
+    background-color: #202124;
 }
 
 .button:hover {
@@ -235,22 +235,24 @@ body.preload *{
 }
 
 .button[disabled]:hover {
-    background-color: #0e191b;
+    background-color: #202124;
 }
 
 .progress {
     position: relative;
-    width: 500px;
+    width: 700px;
     height: 25px;
-    background-color: rgba(0, 136, 169, 0.8);
+    background-color: #202124;
     border-radius: 50px;
     overflow: hidden;
+    margin: 20px;
 }
 
 .progress__fill {
     width: 0%;
     height: 100%;
     background-color: #2288ff;
+    transition: all 0.5s ease-in-out;
 }
 
 .progress__text {

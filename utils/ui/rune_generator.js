@@ -12,17 +12,17 @@ $(document).ready(function() {
         // Wait for champ select
         $('#rune_generator_status').html("Waiting for Champ Select");
         await eel.wait_for_champ_select()();
-        update_progress_bar(5);
+        update_progress_bar(10);
 
         // Wait for lock-in
         $('#rune_generator_status').html("Waiting for Lock-In");
         let champ = await eel.get_champion_pick()();
-        update_progress_bar(10);
+        update_progress_bar(20);
 
         // Generate and set rune page
         $('#rune_generator_status').html("Generating " + champ + " Runes...");
         await eel.set_rune_page(champ)();
-        update_progress_bar(75);
+        update_progress_bar(70);
 
         // Generate and set summoner spells
         $('#rune_generator_status').html("Generating " + champ + " Summoner Spells...");
