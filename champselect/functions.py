@@ -227,28 +227,7 @@ async def gameflow_session(client):
     return data
 
 
-async def get_pickable_champs(client):
-    call = '/lol-champ-select/v1/pickable-champion-ids'
-    pickable_champs = await client.request('GET', call)
-    data = await pickable_champs.json()
-    print(data)
-    return data
 
-
-async def get_disabled_champs(client):
-    call = '/lol-champ-select/v1/disabled-champion-ids'
-    disabled_champs = await client.request('GET', call)
-    data = await disabled_champs.json()
-    print(data)
-    return data
-
-
-async def get_current_champ(client):
-    call = '/lol-champ-select/v1/current-champion'
-    current_champ = await client.request('GET', call)
-    data = await current_champ
-    print(data)
-    return data
 
 
 async def get_champ_grid(client, id):

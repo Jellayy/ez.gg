@@ -65,33 +65,10 @@ async def hover_champ():
     # print("Closed willump")
 
 
-async def pick_champ():
-    client = await willump.start()
-    # print("Opened willump")
-    player_id = await functions.get_player_id(client)
-    pickable_champion_ids = await functions.get_pickable_champs(client)
-    preferred_champion = int(preferences.champion)
-    champ_grid = await functions.get_champ_grid(client, preferred_champion)
-    champ_banned = champ_grid['selectionStatus']['isBanned']
-    while champ_banned:
-        preferred_champion = int(random.choice(pickable_champion_ids))
-        champ_grid = await functions.get_champ_grid(client, preferred_champion)
-        champ_banned = champ_grid['selectionStatus']['isBanned']
-
-    await functions.pick_champ(client, player_id, preferred_champion)
-    await functions.lock_in(client, player_id)
-    await willump.Willump.close(client)
-    # print("Closed willump")
 
 
-async def ban_champ():
-    client = await willump.start()
-    # print("Opened willump")
-    actor_id = await functions.get_actor_id(client)
-    await functions.ban_champ(client, actor_id, int(preferences.ban))
-    await functions.lock_in(client, actor_id)
-    await willump.Willump.close(client)
-    # print("Closed willump")
+
+
 
 
 async def get_gameflow():
