@@ -5,7 +5,10 @@ import asyncio
 
 # Uses BS4 to scrape OP.GG champion pages for recommended rune IDs
 async def get_rune_page(champion):
+    # Formatting champion name for url insertion
     champion = champion.lower()
+    champion = champion.replace("'" ,"").replace(" ", "")
+
     # Faking a user agent so that op.gg doesn't give 403 Forbidden on html requests
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
     r = requests.get(f'https://na.op.gg/champions/{champion}/', headers=headers)
@@ -41,7 +44,10 @@ async def get_rune_page(champion):
 
 # Uses BS4 to scrape OP.GG champion pages for recommended summoner spell IDs
 async def get_sum_spells(champion):
+    # Formatting champion name for url insertion
     champion = champion.lower()
+    champion = champion.replace("'", "").replace(" ", "")
+
     # Faking a user agent so that op.gg doesn't give 403 Forbidden on html requests
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
     r = requests.get(f'https://na.op.gg/champions/{champion}/', headers=headers)
@@ -62,11 +68,11 @@ async def get_sum_spells(champion):
 async def main():
     # Should return ELEVEN perks
     # Example: ['8112', '8126', '8138', '8105', '8226', '8233', '5008', '5008', '5003', '8100', '8200']
-    print(await get_rune_page("annie"))
+    print(await get_rune_page("Cho'Gath"))
 
     # Should return TWO perks
     # Example: ['SummonerFlash', 'SummonerDot']
-    print(await get_sum_spells("annie"))
+    print(await get_sum_spells("Cho'Gath"))
 
 
 if __name__ == '__main__':

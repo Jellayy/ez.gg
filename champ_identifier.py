@@ -37,6 +37,7 @@ async def main():
     await runes.set_rune_page(pick)
     await willump.Willump.close(client)
     print("RUNE PAGE SET")
+    return f'{pick} runes complete!'
 
 
 if __name__ == '__main__':
