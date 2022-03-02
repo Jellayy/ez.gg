@@ -18,10 +18,10 @@
         <!--Favicon-->
         <link rel="icon" href="assets/favicon.png">
     </head>
-    <body>
+    <body class="preload">
 
         <!--Sidebar-->
-        <div class="sidebar">
+        <div class="sidebar active">
             <div class="logo_content">
                 <div class="logo">
                     <div class="logo_name">EZ.GG</div>
@@ -63,19 +63,14 @@
         <!--Page Content-->
         <div class="home_content">
             <div class="wrapper">
-                <div class="title_box">
-                    <p>Rune Generator</p>
+                <span id="rune_generator_status"></span>
+
+                <div class="progress">
+                    <div class="progress__fill"></div>
+                    <span class="progress__text">0%</span>
                 </div>
-                <div class="two-col-grid">
-                    <div class="box">
-                        <p>Automatically apply runes and summoner spells for your champion from OP.GG after you lock in</p>
-                        <br>
-                        <input type="button" value="START" id="rune_generator_btn" class="button">
-                    </div>
-                    <div class="box">
-                        <span id="rune_generator_status"></span>
-                    </div>
-                </div>
+
+                <input type="button" value="START" id="rune_generator_btn" class="button">
             </div>
         </div>
 
