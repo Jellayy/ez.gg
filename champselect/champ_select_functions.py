@@ -117,7 +117,7 @@ async def pick_champ():
     pickable_champion_ids = await get_pickable_champs(client)
     preferred_champion = int(preferences.champion)
     champ_grid = await get_champ_grid(client, preferred_champion)
-    champ_banned = champ_grid['selectionStatus']['isBanned']
+    champ_banned = champ_grid['selectionStatus']['pickedByOtherOrBanned']
     if champ_banned and preferences.dodge:
         print("champ is banned, not selecting anything")
 
