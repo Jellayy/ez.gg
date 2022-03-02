@@ -3,8 +3,9 @@ import json
 import asyncio
 from champselect import functions
 import logging
-import champselect.preferences as preferences
-import champselect.state_engine as state_engine
+import preferences
+import state_engine
+import champ_select_functions
 
 
 async def default_message_handler(data):
@@ -68,24 +69,25 @@ async def summoner_listener(data):
     # print(data['eventType'] + ' ' + data['uri'])
     if data['data']['isSelf'] and data['data']['isPickIntenting']:
         print("Pick Intenting Champion")
-        await state_engine.pick_champ()
+        await champ_select_functions.hover_champ()
 
     if data['data']['isSelf'] and data['data']['activeActionType'] == "ban":
         print("Banning Champion")
-        await state_engine.ban_champ()
+        await champ_select_functions.ban_champ()
 
     if data['data']['isSelf'] and data['data']['activeActionType'] == "pick":
         print("Picking Champion")
-        await state_engine.pick_champ()
+        await champ_select_functions.pick_champ()
 
 
 async def gameflow_handler(data):
-    global actor_id, player_id
-    if data["data"] == "Matchmaking":
-        actor_id, player_id = 0, 0
-    if data["data"] == "ChampSelect":
-        actor_id = await functions.get_actor_id(wllp)
-        player_id = await functions.get_player_id(wllp)
+    # global actor_id, player_id
+    # if data["data"] == "Matchmaking":
+    #     actor_id, player_id = 0, 0
+    # if data["data"] == "ChampSelect":
+    #     actor_id = await functions.get_actor_id(wllp)
+    #     player_id = await functions.get_player_id(wllp)
+    pass
 
 
 async def main():

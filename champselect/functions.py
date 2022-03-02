@@ -189,31 +189,10 @@ async def is_lobby(client):
         return False
 
 
-async def get_player_id(client):
-    call = '/lol-lobby-team-builder/champ-select/v1/session'
-    lobby = await client.request('GET', call)
-    data = await lobby.json()
-    # print(data)
-    # print(data['localPlayerCellId'])
-    user_id = 0
-    for crap in data['actions']:
-        # print(crap)
-        for player in crap:
-            # print(player)
-            if player['actorCellId'] == data['localPlayerCellId']:
-                # print(player['id'])
-                user_id = player['id']
-    # print(user_id)
-    return user_id
 
 
-async def get_actor_id(client):
-    call = '/lol-lobby-team-builder/champ-select/v1/session'
-    lobby = await client.request('GET', call)
-    data = await lobby.json()
-    # print(data)
-    # print(data['localPlayerCellId'])
-    return data['localPlayerCellId']
+
+
 
 
 async def pick_champ(client, actorcellid, championid):
@@ -244,5 +223,16 @@ async def gameflow_session(client):
     call = '/lol-gameflow/v1/session'
     gameflow = await client.request('GET', call)
     data = await gameflow.json()
+    print(data)
+    return data
+
+
+
+
+
+async def get_champ_grid(client, id):
+    call = f'/lol-champ-select/v1/grid-champions/{id}'
+    champ_grid = await client.request('GET', call)
+    data = await champ_grid.json()
     print(data)
     return data

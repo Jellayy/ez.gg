@@ -1,7 +1,8 @@
-primaryRole = 'JUNGLE'
-secondaryRole = 'MIDDLE'
+primaryRole = 'MIDDLE'
+secondaryRole = 'JUNGLE'
 queueID = '430'
-champion = '238'
-ban = '157'
+champion = '1'
+ban = '119'
+dodge = False
 
 
