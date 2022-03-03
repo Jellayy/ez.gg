@@ -2,8 +2,7 @@ import eel
 import asyncio
 import champ_identifier
 from utils import runes, sum_spells
-from champselect import websockets
-from champselect import champ_select_functions
+from configparser import ConfigParser
 
 
 # Rune Generator Functions
@@ -28,16 +27,6 @@ def set_sum_spells(champ):
     asyncio.run(sum_spells.set_sum_spells(champ))
 
 
-@eel.expose
-def gays():
-    loop = asyncio.get_event_loop()
-    try:
-        loop.run_until_complete(websockets.main())
-    except KeyboardInterrupt:
-
-        print()
-
 # eel init
 eel.init('utils/ui', allowed_extensions=['.js', '.html'])
-eel.browsers.set_path('chrome', 'C:/Users/Benjamin Huth/AppData/Local/Vivaldi/Application/vivaldi.exe')
 eel.start('main.html', size=(1000, 600))

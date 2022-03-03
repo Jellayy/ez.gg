@@ -4,23 +4,15 @@ $(document).ready(function() {
     function get_roles() {
         return [$('#primaryrole').val(), $('#secondaryrole').val()]
     }
-    $('#autopilot_btn').on('click', function() {
-        eel.gays();
-    })
-    // // Role selector handlers
-    // $('#primaryrole').on('change', function() {
-    //     eel.autopilot_settings('primary_role', this.value);
-    // })
-    // $('#secondaryrole').on('change', function() {
-    //     eel.autopilot_settings('secondary_role', this.value);
-    // })
 
-    // // Misc setting handlers
-    // $('#queueaccept').on('change', function() {
-    //     eel.autopilot_settings('queueaccept', $('#queueaccept').is(':checked'));
-    // })
-    // $('#lockin').on('change', function() {
-    //     eel.autopilot_settings('lockin', $('#lockin').is(':checked'));
-    // })
+    eel.expose(get_queue_prefrence);
+    function get_queue_prefrence() {
+        return $('#queueaccept').is(':checked');
+    }
+
+    eel.expose(get_lock_in_prefrence);
+    function get_queue_prefrence() {
+        return $('#lockin').is(':checked');
+    }
 
 })
