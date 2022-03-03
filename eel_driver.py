@@ -2,6 +2,7 @@ import eel
 import asyncio
 import champ_identifier
 from utils import runes, sum_spells
+from champselect import websockets
 
 
 # Rune Generator Functions
