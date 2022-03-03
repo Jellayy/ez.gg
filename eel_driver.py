@@ -28,13 +28,17 @@ def set_sum_spells(champ):
 
 
 @eel.expose
-def set_roles(ordinal, position):
+def autopilot_settings(setting, value):
     config = ConfigParser()
     config.read('utils\\autopilot.ini')
-    if ordinal == 'primary':
-        config.set('AUTOPILOT', 'primaryrole', position)
-    elif ordinal == 'secondary':
-        config.set('AUTOPILOT', 'secondaryrole', position)
+    if setting == 'primary_role':
+        config.set('AUTOPILOT', 'primaryrole', value)
+    elif setting == 'secondary_role':
+        config.set('AUTOPILOT', 'secondaryrole', value)
+    elif setting == 'queueaccept':
+        config.set('AUTOPILOT', 'queueaccept', str(value))
+    elif setting == 'lockin':
+        config.set('AUTOPILOT', 'lockin', str(value))
     with open('utils\\autopilot.ini', 'w') as f:
         config.write(f)
 
