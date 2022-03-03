@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     eel.expose(get_roles);
     function get_roles() {
-        return [$('#primaryrole').value, $('#secondaryrole').value]
+        return [$('#primaryrole').val()), $('#secondaryrole').val()]
     }
 
     // // Role selector handlers
