@@ -4,7 +4,9 @@ $(document).ready(function() {
     function get_roles() {
         return [$('#primaryrole').val(), $('#secondaryrole').val()]
     }
-
+    $('#autopilot_btn').on('click', function() {
+        eel.gays();
+    })
     // // Role selector handlers
     // $('#primaryrole').on('change', function() {
     //     eel.autopilot_settings('primary_role', this.value);

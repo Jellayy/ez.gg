@@ -2,7 +2,8 @@ import eel
 import asyncio
 import champ_identifier
 from utils import runes, sum_spells
-from configparser import ConfigParser
+from champselect import websockets
+from champselect import champ_select_functions
 
 
 # Rune Generator Functions
@@ -28,21 +29,15 @@ def set_sum_spells(champ):
 
 
 @eel.expose
-def autopilot_settings(setting, value):
-    config = ConfigParser()
-    config.read('utils\\autopilot.ini')
-    if setting == 'primary_role':
-        config.set('AUTOPILOT', 'primaryrole', value)
-    elif setting == 'secondary_role':
-        config.set('AUTOPILOT', 'secondaryrole', value)
-    elif setting == 'queueaccept':
-        config.set('AUTOPILOT', 'queueaccept', str(value))
-    elif setting == 'lockin':
-        config.set('AUTOPILOT', 'lockin', str(value))
-    with open('utils\\autopilot.ini', 'w') as f:
-        config.write(f)
+def gays():
+    loop = asyncio.get_event_loop()
+    try:
+        loop.run_until_complete(websockets.main())
+    except KeyboardInterrupt:
 
+        print()
 
 # eel init
 eel.init('utils/ui', allowed_extensions=['.js', '.html'])
+eel.browsers.set_path('chrome', 'C:/Users/Benjamin Huth/AppData/Local/Vivaldi/Application/vivaldi.exe')
 eel.start('main.html', size=(1000, 600))

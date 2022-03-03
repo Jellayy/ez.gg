@@ -1,8 +1,8 @@
 aiohttp==3.8.1
-aiosignal @ file:///tmp/build/80754af9/aiosignal_1637843061372/work
+aiosignal
 async-timeout==4.0.2
-attrs @ file:///opt/conda/conda-bld/attrs_1642510447205/work
-beautifulsoup4 @ file:///tmp/build/80754af9/beautifulsoup4_1631874778482/work
+attrs
+beautifulsoup4
 bottle==0.12.19
 bottle-websocket==0.2.9
 certifi==2021.10.8
@@ -14,7 +14,7 @@ future==0.18.2
 gevent==21.12.0
 gevent-websocket==0.10.1
 greenlet==1.1.2
-idna @ file:///tmp/build/80754af9/idna_1637925883363/work
+idna
 lxml==4.7.1
 multidict==6.0.2
 psutil==5.9.0
@@ -22,7 +22,7 @@ pycparser==2.21
 pyparsing==3.0.7
 requests==2.27.1
 six==1.16.0
-soupsieve @ file:///tmp/build/80754af9/soupsieve_1636706018808/work
+soupsieve
 urllib3==1.26.8
 webencodings==0.5.1
 whichcraft==0.6.1

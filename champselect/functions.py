@@ -1,6 +1,6 @@
 import asyncio
 from asyncio import sleep
-
+import eel
 import willump
 
 import champselect.preferences as preferences
@@ -20,12 +20,14 @@ async def create_lobby(client):
 
 
 async def select_roles(client):
+    gays = eel.get_roles()()
+    print(gays)
     call = '/lol-lobby/v2/lobby/members/localMember/position-preferences'
-    positions = {"firstPreference": preferences.primaryRole,
-                 "secondPreference": preferences.secondaryRole}
+    positions = {"firstPreference": gays[0],
+                 "secondPreference": gays[1]}
     roles = await client.request('PUT', call, data=positions)
     if roles.status == 201:
-        print("Assigned roles, primary:", preferences.primaryRole, " secondary:", preferences.secondaryRole)
+        print("Assigned roles, primary:", gays[0], " secondary:", gays[1])
     else:
         print("Assigning roles failed, primary:", preferences.primaryRole, " secondary:", preferences.secondaryRole)
         print("Error code:", roles.status)
