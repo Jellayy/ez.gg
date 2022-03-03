@@ -11,7 +11,7 @@ $(document).ready(function() {
     }
 
     eel.expose(get_lock_in_prefrence);
-    function get_queue_prefrence() {
+    function get_lock_in_prefrence() {
         return $('#lockin').is(':checked');
     }
 
