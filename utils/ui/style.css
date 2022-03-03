@@ -261,3 +261,54 @@ body.preload *{
     right: 10px;
     transform: translateY(-50%);
 }
+
+.setting-label {
+    display: inline-block;
+    background-color: #202124;
+    color: #ffffff;
+    border-radius: 50px;
+    white-space: nowrap;
+    margin: 3px 0px;
+    user-select: none;
+    transition: all .2s;
+}
+
+.setting-label {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.setting-label::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 12px;
+    padding: 2px 6px 2px 2px;
+    content: "\f00d";
+    transition: transform .3s ease-in-out;
+}
+
+.setting:checked + label::before {
+    content: "\f00c";
+    transform: rotate(-360deg);
+    transition: transform .3s ease-in-out;
+}
+
+.setting:checked + label {
+    background-color: #2288ff;
+    color: #fff;
+    transition: all .2s;
+}
+
+.setting {
+    display: absolute;
+    position: absolute;
+    opacity: 0;
+}
+
+.setting:hover + label {
+    background-color: rgba(0, 136, 169, 0.8);
+}
