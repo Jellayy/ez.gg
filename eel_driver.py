@@ -2,7 +2,7 @@ import eel
 import asyncio
 import champ_identifier
 from utils import runes, sum_spells
-from champselect import websockets
+from configparser import ConfigParser
 
 
 # Rune Generator Functions
@@ -25,6 +25,18 @@ def set_rune_page(champ):
 @eel.expose
 def set_sum_spells(champ):
     asyncio.run(sum_spells.set_sum_spells(champ))
+
+
+@eel.expose
+def set_roles(ordinal, position):
+    config = ConfigParser()
+    config.read('utils\\autopilot.ini')
+    if ordinal == 'primary':
+        config.set('AUTOPILOT', 'primaryrole', position)
+    elif ordinal == 'secondary':
+        config.set('AUTOPILOT', 'secondaryrole', position)
+    with open('utils\\autopilot.ini', 'w') as f:
+        config.write(f)
 
 
 # eel init

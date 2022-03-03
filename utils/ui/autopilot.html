@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>EZ.GG Alpha v0.0</title>
+
+        <!-- Expose eel -->
+        <script type="text/javascript" src="/eel.js"></script>
+
+        <!--jQuery Init-->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+        <!--Stylesheet-->
+        <link rel="stylesheet" href="style.css">
+
+        <!--Fontawesome icon init-->
+        <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
+
+        <!--Favicon-->
+        <link rel="icon" href="assets/favicon.png">
+    </head>
+    <body class="preload">
+
+        <!--Sidebar-->
+        <div class="sidebar active">
+            <div class="logo_content">
+                <div class="logo">
+                    <div class="logo_name">EZ.GG</div>
+                </div>
+                <i class="fa-solid fa-bars" id="sidebar-btn"></i>
+            </div>
+            <ul class="nav_list">
+                <li>
+                    <a href="main.html">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="links_name">Home</span>
+                    </a>
+                    <span class="tooltip">Home</span>
+                </li>
+                <li>
+                    <a href="rune_generator.html">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                        <span class="links_name">Rune Generator</span>
+                    </a>
+                    <span class="tooltip">Rune Generator</span>
+                </li>
+                <li>
+                    <a href=href="#" class="active">
+                        <i class="fa-solid fa-compass"></i>
+                        <span class="links_name">Autopilot</span>
+                    </a>
+                    <span class="tooltip">Autopilot</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-terminal"></i>
+                        <span class="links_name">Debug</span>
+                    </a>
+                    <span class="tooltip">Debug</span>
+                </li>
+            </ul>
+        </div>
+
+        <!--Page Content-->
+        <div class="home_content">
+            <div class="wrapper">
+                <span id="rune_generator_status">&nbsp</span>
+
+                <div class="progress">
+                    <div class="progress__fill"></div>
+                    <span class="progress__text">0%</span>
+                </div>
+
+                <input type="button" value="START" id="autopilot_btn" class="button"><br><br>
+
+                <input type="checkbox" name="queueaccept" value="Auto Queue Accept">
+                <label for="queueaccept">Auto Queue Accept &nbsp;</label>
+                <input type="checkbox" name="lockin" value="Auto Lock-In">
+                <label for="lockin">Auto Lock-In</label><br>
+
+                <label for="primaryrole">Primary Role</label>
+                <select id="primaryrole">
+                    <option disabled selected value>Select</option>
+                    <option value="top">Top</option>
+                    <option value="jungle">Jungle</option>
+                    <option value="mid">Mid</option>
+                    <option value="bottom">Bottom</option>
+                    <option value="support">Subhuman</option>
+                    <option value="fill">Fill</option>
+                </select>
+                <label for="secondaryrole">Secondary Role</label>
+                <select id="secondaryrole">
+                    <option disabled selected value>Select</option>
+                    <option value="top">Top</option>
+                    <option value="jungle">Jungle</option>
+                    <option value="mid">Mid</option>
+                    <option value="bottom">Bottom</option>
+                    <option value="support">Subhuman</option>
+                    <option value="fill">Fill</option>
+                </select>
+            </div>
+        </div>
+
+        <!--Sidebar Driver JS Init-->
+        <script type="text/javascript" src="sidebar.js"></script>
+        <!--Javascript Init-->
+        <script type="text/javascript" src="autopilot.js"></script>
+    </body>
+</html>
