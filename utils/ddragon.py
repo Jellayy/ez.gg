@@ -16,6 +16,15 @@ def champ_id_to_name(champ_id):
     return None
 
 
+# Queries ddragon for champion ID given name
+def champ_name_to_id(champ_name):
+    r = requests.get(f'http://ddragon.leagueoflegends.com/cdn/{get_latest_version()}/data/en_US/champion.json').json()
+    for champion in r['data'].items():
+        if champion[1]['name'] == champ_name:
+            return champion[1]['key']
+    return None
+
+
 # Queries ddragon for summoner spell ID given name
 def summoner_name_to_id(summoner_name):
     r = requests.get(f'https://ddragon.leagueoflegends.com/cdn/{get_latest_version()}/data/en_US/summoner.json').json()
@@ -23,3 +32,6 @@ def summoner_name_to_id(summoner_name):
         if summoner[0] == summoner_name:
             return summoner[1]['key']
     return None
+
+
+
