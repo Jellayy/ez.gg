@@ -1,6 +1,6 @@
 ![EZ.GG Banner](img/readme-banner.png)
 <br><br>
-Have you ever been in a League of Legends queue or in the middle of champion select when it suddenly hits you: I wish I could grab a snack right now but what if I miss queue? What if I dont lock in my champion in time? EZ.GG (formerly known as SnackTime) is the ultimate League of Legends queuing to champion select toolkit.
+blitz.gg rip-off bad program gg ez
 ## Demo
 ![EZ.GG Demo](img/Animation.gif)
 ## Features
