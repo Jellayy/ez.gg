@@ -312,3 +312,61 @@ body.preload *{
 .setting:hover + label {
     background-color: rgba(0, 136, 169, 0.8);
 }
+
+input[type=text] {
+    background-color: #202124;
+    color: #fff;
+    padding: 9px 25px;
+    border: none;
+    width: 170px;
+    border-radius: 50px;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+
+[type=radio] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+[type=radio] + img {
+    cursor: pointer;
+    filter: grayscale(1);
+    transition: all 0.5s;
+}
+
+[type=radio]:checked + img {
+    filter: grayscale(0);
+}
+
+form {
+    text-align: left;
+}
+
+form span {
+    margin-left: 20px;
+    margin-right: 10px;
+    font-size: 20px;
+    line-height: 15px;
+}
+
+form label {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#firstpos {
+    margin-top: 60px;
+}
+
+#secondpos {
+    margin-top: 20px;
+}
+
+.status {
+    margin-top: 60px;
+}

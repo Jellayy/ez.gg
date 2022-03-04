@@ -1,8 +1,7 @@
 import eel
 import asyncio
 import champ_identifier
-from utils import runes, sum_spells
-from configparser import ConfigParser
+from utils import runes, sum_spells, ddragon
 
 
 # Rune Generator Functions
@@ -25,6 +24,11 @@ def set_rune_page(champ):
 @eel.expose
 def set_sum_spells(champ):
     asyncio.run(sum_spells.set_sum_spells(champ))
+
+
+@eel.expose
+def get_all_champs():
+    return ddragon.get_all_champs()
 
 
 # eel init
