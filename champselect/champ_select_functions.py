@@ -3,6 +3,7 @@ import random
 from asyncio import sleep
 import willump
 import champselect.preferences as preferences
+import eel
 
 
 async def get_actor_id(client):
@@ -63,6 +64,7 @@ async def get_champ_grid(client, id):
 
 
 async def intent_champ(client, actorcellid, championid):
+
     call = f'/lol-lobby-team-builder/champ-select/v1/session/actions/{actorcellid}'
     pick = await client.request('PATCH', call, data={
         "championId": championid,
@@ -72,7 +74,7 @@ async def intent_champ(client, actorcellid, championid):
         print(await pick.status)
         print("champion hovered")
     else:
-        print(await pick.json())
+        print(await pick.json(), "gays gays gays")
 
 
 async def lock_in(client, actorcellid):
@@ -94,40 +96,54 @@ async def hover_ban(client, actorcellid, banid):
 
 
 async def hover_champ():
-    client = await willump.start()
-    # print("Opened willump")
-    player_id = await get_player_id(client)
-    await intent_champ(client, player_id, int(preferences.champion))
-    await willump.Willump.close(client)
+    try:
+        if eel.get_lock_in_preference()():
+            client = await willump.start()
+            # print("Opened willump")
+            player_id = await get_player_id(client)
+            await intent_champ(client, player_id, int(preferences.champion))
+            await willump.Willump.close(client)
+    except:
+        print("Something went wrong while hovering champ")
     # print("Closed willump")
 
 async def ban_champ():
-    client = await willump.start()
-    # print("Opened willump")
-    actor_id = await get_actor_id(client)
-    await hover_ban(client, actor_id, int(preferences.ban))
-    await lock_in(client, actor_id)
-    await willump.Willump.close(client)
-    # print("Closed willump")
+    try:
+        if eel.get_lock_in_preference()():
+            client = await willump.start()
+            print("Opened willump")
+            print("Banning champ")
+            actor_id = await get_actor_id(client)
+            await hover_ban(client, actor_id, int(preferences.ban))
+            await lock_in(client, actor_id)
+            await willump.Willump.close(client)
+            print("Closed willump")
+    except:
+        print("Something went wrong while banning champ")
 
 async def pick_champ():
-    client = await willump.start()
-    # print("Opened willump")
-    player_id = await get_player_id(client)
-    pickable_champion_ids = await get_pickable_champs(client)
-    preferred_champion = int(preferences.champion)
-    champ_grid = await get_champ_grid(client, preferred_champion)
-    champ_banned = champ_grid['selectionStatus']['pickedByOtherOrBanned']
-    if champ_banned and preferences.dodge:
-        print("champ is banned, not selecting anything")
-
-    else:
-        while champ_banned:
-            preferred_champion = int(random.choice(pickable_champion_ids))
+    try:
+        if eel.get_lock_in_preference()():
+            client = await willump.start()
+            # print("Opened willump")
+            player_id = await get_player_id(client)
+            pickable_champion_ids = await get_pickable_champs(client)
+            preferred_champion = eel.get_pick_preferences()()
             champ_grid = await get_champ_grid(client, preferred_champion)
-            champ_banned = champ_grid['selectionStatus']['isBanned']
+            champ_banned = champ_grid['selectionStatus']['pickedByOtherOrBanned']
+            if champ_banned and preferences.dodge:
+                print("champ is banned, not selecting anything")
 
-        await intent_champ(client, player_id, preferred_champion)
-        await lock_in(client, player_id)
-    await willump.Willump.close(client)
+            else:
+                while champ_banned:
+                    preferred_champion = int(random.choice(pickable_champion_ids))
+                    champ_grid = await get_champ_grid(client, preferred_champion)
+                    champ_banned = champ_grid['selectionStatus']['isBanned']
+
+                await intent_champ(client, player_id, preferred_champion)
+                await lock_in(client, player_id)
+            await willump.Willump.close(client)
+    except:
+        print("Something went wrong picking champ")
+
     # print("Closed willump")

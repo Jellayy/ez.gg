@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+    $('#autopilot_btn').on('click', function() {
+        autopilot();
+    })
+
     // Populate champion selection fields with all champions
     async function get_champs() {
         let champs = await eel.get_all_champs()();
@@ -8,6 +12,9 @@ $(document).ready(function() {
         }
     }
     get_champs();
+
+    async function autopilot() {
+        await eel.run_autopilot()();}
 
     // On firstpos change
     $('#firstpos input').on('change', function() {
@@ -25,16 +32,16 @@ $(document).ready(function() {
     function get_roles() {
         return [$('input[name=firstpos]:checked', '#firstpos').val(), $('input[name=secondpos]:checked', '#secondpos').val()]
     }
-    eel.expose(get_queue_prefrence);
-    function get_queue_prefrence() {
+    eel.expose(get_queue_preference);
+    function get_queue_preference() {
         return $('#queueaccept').is(':checked');
     }
-    eel.expose(get_lock_in_prefrence);
-    function get_lock_in_prefrence() {
+    eel.expose(get_lock_in_preference);
+    function get_lock_in_preference() {
         return $('#lockin').is(':checked');
     }
-    eel.expose(get_pick_prefrences);
-    function get_pick_prefrences() {
+    eel.expose(get_pick_preferences);
+    function get_pick_preferences() {
         return [$('#firstpos_firstpick').val(), $('#firstpos_secondpick').val(), $('#secondpos_firstpick').val(), $('#secondpos_secondpick').val()]
     }
     eel.expose(get_ban_prefrences);
