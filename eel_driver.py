@@ -42,5 +42,4 @@ def run_autopilot():
 
 # eel init
 eel.init('utils/ui', allowed_extensions=['.js', '.html'])
-eel.browsers.set_path('chrome', 'C:\\Users\\Benjamin Huth\\AppData\\Local\\Vivaldi\\Application\\vivaldi.exe')
 eel.start('main.html', size=(1000, 600))

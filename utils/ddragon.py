@@ -25,6 +25,15 @@ def champ_name_to_id(champ_name):
     return None
 
 
+# Queries all champ names from ddragon
+def get_all_champs():
+    r = requests.get(f'http://ddragon.leagueoflegends.com/cdn/{get_latest_version()}/data/en_US/champion.json').json()
+    champs = []
+    for champion in r['data']:
+        champs.append(champion)
+    return champs
+
+
 # Queries ddragon for summoner spell ID given name
 def summoner_name_to_id(summoner_name):
     r = requests.get(f'https://ddragon.leagueoflegends.com/cdn/{get_latest_version()}/data/en_US/summoner.json').json()
