@@ -359,14 +359,27 @@ form label {
     margin-right: 5px;
 }
 
-#firstpos {
-    margin-top: 60px;
+.disabled {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
-#secondpos {
+#firstpick {
     margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#secondpick {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .status {
-    margin-top: 60px;
+    margin-top: 20px;
+}
+
+.section {
+    margin-bottom: 20px;
 }

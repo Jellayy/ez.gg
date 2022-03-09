@@ -67,82 +67,88 @@
                 <datalist id="champs"></datalist>
 
                 <!-- Settings -->
-                <input type="checkbox" id="queueaccept" value="Auto Queue Accept" class="setting">
-                <label for="queueaccept" class="setting-label">Auto Queue Accept &nbsp;</label>
-                <input type="checkbox" id="lockin" value="Auto Lock-In" class="setting">
-                <label for="lockin" class="setting-label">Auto Lock-In</label>
-                <input type="checkbox" id="runes" value="Auto Runes + Spells" class="setting">
-                <label for="runes" class="setting-label">Auto Runes + Spells</label>
+                <div class="section">
+                    <input type="checkbox" id="queueaccept" value="Auto Queue Accept" class="setting">
+                    <label for="queueaccept" class="setting-label">Auto Queue Accept &nbsp;</label>
+                    <input type="checkbox" id="lockin" value="Auto Lock-In" class="setting">
+                    <label for="lockin" class="setting-label">Auto Lock-In</label>
+                    <input type="checkbox" id="runes" value="Auto Runes + Spells" class="setting">
+                    <label for="runes" class="setting-label">Auto Runes + Spells</label>
+                </div>
 
-                <!-- Primary Role -->
-                <form id="firstpos">
-                    <span>Primary Role</span>
-                    <label>
-                        <input type="radio" name="firstpos" value="TOP">
-                        <img src="assets/img/positions/icon-position-top.png" style="width: 23px;">
-                    </label>
-                    <label>
-                        <input type="radio" name="firstpos" value="JUNGLE">
-                        <img src="assets/img/positions/icon-position-jungle.png" style="width: 23px;">
-                    </label>
-                    <label>
-                        <input type="radio" name="firstpos" value="MIDDLE">
-                        <img src="assets/img/positions/icon-position-middle.png" style="width: 23px;">
-                    </label>
-                    <label>
-                        <input type="radio" name="firstpos" value="BOTTOM">
-                        <img src="assets/img/positions/icon-position-bottom.png" style="width: 23px;">
-                    </label>
-                    <label>
-                        <input type="radio" name="firstpos" value="SUPPORT">
-                        <img src="assets/img/positions/icon-position-utility.png" style="width: 23px;">
-                    </label>
-                    <label>
-                        <input type="radio" name="firstpos" value="FILL">
-                        <img src="assets/img/positions/icon-position-fill.png" style="width: 23px;">
-                    </label>
-                </form>
+                <div id="firstpick" class="disabled">
+                    <!-- Primary Role -->
+                    <form id="firstpos">
+                        <span>Primary Role</span>
+                        <label>
+                            <input type="radio" name="firstpos" value="TOP">
+                            <img src="assets/img/positions/icon-position-top.png" style="width: 23px;">
+                        </label>
+                        <label>
+                            <input type="radio" name="firstpos" value="JUNGLE">
+                            <img src="assets/img/positions/icon-position-jungle.png" style="width: 23px;">
+                        </label>
+                        <label>
+                            <input type="radio" name="firstpos" value="MIDDLE">
+                            <img src="assets/img/positions/icon-position-middle.png" style="width: 23px;">
+                        </label>
+                        <label>
+                            <input type="radio" name="firstpos" value="BOTTOM">
+                            <img src="assets/img/positions/icon-position-bottom.png" style="width: 23px;">
+                        </label>
+                        <label>
+                            <input type="radio" name="firstpos" value="SUPPORT">
+                            <img src="assets/img/positions/icon-position-utility.png" style="width: 23px;">
+                        </label>
+                        <label>
+                            <input type="radio" name="firstpos" value="FILL">
+                            <img src="assets/img/positions/icon-position-fill.png" style="width: 23px;">
+                        </label>
+                    </form>
 
-                <!-- Primary Champs and Bans -->
-                <input type="text" list="champs" placeholder="First Pick" id="firstpos_firstpick">
-                <input type="text" list="champs" placeholder="Second Pick" id="firstpos_secondpick">
-                <input type="text" list="champs" placeholder="First Ban" id="firstpos_firstban">
-                <input type="text" list="champs" placeholder="Second Ban" id="firstpos_secondban">
+                    <!-- Primary Champs and Bans -->
+                    <input type="text" list="champs" placeholder="First Pick" id="firstpos_firstpick" class="champentrybox">
+                    <input type="text" list="champs" placeholder="Second Pick" id="firstpos_secondpick" class="champentrybox">
+                    <input type="text" list="champs" placeholder="First Ban" id="firstpos_firstban" class="champentrybox">
+                    <input type="text" list="champs" placeholder="Second Ban" id="firstpos_secondban" class="champentrybox">
+                </div>
 
-                <!-- Secondary Role -->
-                <form id="secondpos">
-                    <span>Secondary Role</span>
-                    <label>
-                        <input type="radio" name="secondpos" value="TOP">
-                        <img src="assets/img/positions/icon-position-top.png" style="width: 23px;">
-                    </label>
-                    <label>
-                        <input type="radio" name="secondpos" value="JUNGLE">
-                        <img src="assets/img/positions/icon-position-jungle.png" style="width: 23px;">
-                    </label>
-                    <label>
-                        <input type="radio" name="secondpos" value="MIDDLE">
-                        <img src="assets/img/positions/icon-position-middle.png" style="width: 23px;">
-                    </label>
-                    <label>
-                        <input type="radio" name="secondpos" value="BOTTOM">
-                        <img src="assets/img/positions/icon-position-bottom.png" style="width: 23px;">
-                    </label>
-                    <label>
-                        <input type="radio" name="secondpos" value="SUPPORT">
-                        <img src="assets/img/positions/icon-position-utility.png" style="width: 23px;">
-                    </label>
-                    <label>
-                        <input type="radio" name="secondpos" value="FILL">
-                        <img src="assets/img/positions/icon-position-fill.png" style="width: 23px;">
-                    </label>
-                </form>
+                <div id="secondpick" class="disabled">
+                    <!-- Secondary Role -->
+                    <form id="secondpos">
+                        <span>Secondary Role</span>
+                        <label>
+                            <input type="radio" name="secondpos" value="TOP">
+                            <img src="assets/img/positions/icon-position-top.png" style="width: 23px;">
+                        </label>
+                        <label>
+                            <input type="radio" name="secondpos" value="JUNGLE">
+                            <img src="assets/img/positions/icon-position-jungle.png" style="width: 23px;">
+                        </label>
+                        <label>
+                            <input type="radio" name="secondpos" value="MIDDLE">
+                            <img src="assets/img/positions/icon-position-middle.png" style="width: 23px;">
+                        </label>
+                        <label>
+                            <input type="radio" name="secondpos" value="BOTTOM">
+                            <img src="assets/img/positions/icon-position-bottom.png" style="width: 23px;">
+                        </label>
+                        <label>
+                            <input type="radio" name="secondpos" value="SUPPORT">
+                            <img src="assets/img/positions/icon-position-utility.png" style="width: 23px;">
+                        </label>
+                        <label>
+                            <input type="radio" name="secondpos" value="FILL">
+                            <img src="assets/img/positions/icon-position-fill.png" style="width: 23px;">
+                        </label>
+                    </form>
 
-                <!-- Secondary Champs and Bans -->
-                <input type="text" list="champs" placeholder="First Pick" id="secondpos_firstpick">
-                <input type="text" list="champs" placeholder="Second Pick" id="secondpos_secondpick">
-                <input type="text" list="champs" placeholder="First Ban" id="secondpos_firstban">
-                <input type="text" list="champs" placeholder="Second Ban" id="secondpos_secondban">
+                    <!-- Secondary Champs and Bans -->
+                    <input type="text" list="champs" placeholder="First Pick" id="secondpos_firstpick" class="champentrybox">
+                    <input type="text" list="champs" placeholder="Second Pick" id="secondpos_secondpick" class="champentrybox">
+                    <input type="text" list="champs" placeholder="First Ban" id="secondpos_firstban" class="champentrybox">
+                    <input type="text" list="champs" placeholder="Second Ban" id="secondpos_secondban" class="champentrybox">
+                </div>
 
                 <div class="status">
                     <span id="autopilot_status">&nbsp</span>
@@ -152,7 +158,7 @@
                     </div>
                 </div>
 
-                <input type="button" value="START" id="autopilot_btn" class="button"><br><br>
+                <input type="button" value="START" id="autopilot_btn" class="button" disabled>
             </div>
         </div>
 
