@@ -4,6 +4,10 @@ $(document).ready(function() {
         autopilot();
     })
 
+    async function autopilot() {
+        await eel.run_autopilot()();
+    }
+
     // Populate champion selection fields with all champions
     async function get_champs() {
         let champs = await eel.get_all_champs()();
@@ -13,25 +17,101 @@ $(document).ready(function() {
     }
     get_champs();
 
-    async function autopilot() {
-        await eel.run_autopilot()();}
+    // Auto queue accept button handler
+    $('#queueaccept').change(function() {
+        button_ready_check();
+    })
+
+    // Auto Lock-in button handler
+    $('#lockin').change(function() {
+        if(this.checked) {
+            $("#firstpick").removeClass('disabled')
+        }
+        else {
+            $("#firstpick").addClass('disabled')
+            $("#secondpick").addClass('disabled')
+        }
+
+        button_ready_check();
+    })
 
     // On firstpos change
     $('#firstpos input').on('change', function() {
-        console.log($('input[name=firstpos]:checked', '#firstpos').val());
-        console.log($('#firstpos_firstpick').val());
+        if($('input[name=firstpos]:checked').val() != 'FILL') {
+            $("#secondpick").removeClass('disabled')
+        }
+        else {
+            $("#secondpick").addClass('disabled')
+        }
+
+        button_ready_check();
     })
 
     // On secondpos change
     $('#secondpos input').on('change', function() {
-        console.log($('input[name=secondpos]:checked', '#secondpos').val());
+        button_ready_check();
     })
 
-    // Expose selections
-    eel.expose(get_roles);
-    function get_roles() {
-        return [$('input[name=firstpos]:checked', '#firstpos').val(), $('input[name=secondpos]:checked', '#secondpos').val()]
+    // On champ entry box change
+    $('.champentrybox').on('input', function() {
+        button_ready_check();
+    })
+
+    function button_ready_check() {
+        // Is auto lock-in selected?
+        if($('#lockin').is(':checked')) {
+            // Is first role selected?
+            if($('input[name=firstpos]:checked', '#firstpos').val() != undefined) {
+                // Are first role champs selected?
+                if($('#firstpos_firstpick').val() && $('#firstpos_secondpick').val() && $('#firstpos_firstban').val() && $('#firstpos_secondban').val()) {
+                    // Is first role fill?
+                    if($('input[name=firstpos]:checked', '#firstpos').val() == 'FILL') {
+                        // All ok, enable button
+                        $('#autopilot_btn').prop("disabled", false);
+                    }
+                    else {
+                        // Is second role selected?
+                        if($('input[name=secondpos]:checked', '#secondpos').val() != undefined) {
+                            // Is second role different from first role?
+                            if($('input[name=secondpos]:checked', '#secondpos').val() != $('input[name=firstpos]:checked', '#firstpos').val()) {
+                                // Are second role champs selected?
+                                if($('#secondpos_firstpick').val() && $('#secondpos_secondpick').val() && $('#secondpos_firstban').val() && $('#secondpos_secondban').val()) {
+                                    // All ok, enable button
+                                    $('#autopilot_btn').prop("disabled", false);
+                                }
+                                else {
+                                    $('#autopilot_btn').prop("disabled", true);
+                                }
+                            }
+                            else {
+                                $('#autopilot_btn').prop("disabled", true);
+                            }
+                        }
+                        else {
+                            $('#autopilot_btn').prop("disabled", true);
+                        }
+                    }
+                }
+                else {
+                    $('#autopilot_btn').prop("disabled", true);
+                }
+            }
+            else {
+                $('#autopilot_btn').prop("disabled", true);
+            }
+        }
+        else {
+            // Is auto queue accept selected?
+            if($('#queueaccept').is(':checked')) {
+                $('#autopilot_btn').prop("disabled", false);
+            }
+            else {
+                $('#autopilot_btn').prop("disabled", true);
+            }
+        }
     }
+
+    // Expose selections
     eel.expose(get_queue_preference);
     function get_queue_preference() {
         return $('#queueaccept').is(':checked');
@@ -39,6 +119,14 @@ $(document).ready(function() {
     eel.expose(get_lock_in_preference);
     function get_lock_in_preference() {
         return $('#lockin').is(':checked');
+    }
+    eel.expose(get_runes_preference);
+    function get_runes_preference() {
+        return $('#runes').is(':checked');
+    }
+    eel.expose(get_roles);
+    function get_roles() {
+        return [$('input[name=firstpos]:checked', '#firstpos').val(), $('input[name=secondpos]:checked', '#secondpos').val()]
     }
     eel.expose(get_pick_preferences);
     function get_pick_preferences() {
