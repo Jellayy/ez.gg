@@ -41,7 +41,8 @@ $(document).ready(function() {
     $('#ban').change(function() {
         if(this.checked) {
             $('#firstposbans').removeClass('disabled')
-            if($('input[name=firstpos]:checked').val() != 'FILL') {
+            if($('input[name=firstpos]:checked').val() != 'FILL' && $('input[name=firstpos]:checked').val() != undefined) {
+                console.log($('input[name=firstpos]:checked').val())
                 $('#secondposbans').removeClass('disabled')
             }
         }
