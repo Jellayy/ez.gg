@@ -32,6 +32,10 @@ $(document).ready(function() {
             $("#firstpick").addClass('disabled')
             $("#secondpick").addClass('disabled')
             $('#firstpospicks').addClass('disabled')
+            $('#secondpospicks').addClass('disabled')
+            $('#secondposbans').addClass('disabled')
+            $('input[name=firstpos]:checked').prop('checked', false)
+            $('input[name=secondpos]:checked').prop('checked', false)
         }
 
         button_ready_check();
