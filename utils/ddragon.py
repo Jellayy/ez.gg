@@ -29,8 +29,8 @@ def champ_name_to_id(champ_name):
 def get_all_champs():
     r = requests.get(f'http://ddragon.leagueoflegends.com/cdn/{get_latest_version()}/data/en_US/champion.json').json()
     champs = []
-    for champion in r['data']:
-        champs.append(champion)
+    for champion in r['data'].items():
+        champs.append(champion[1]['name'])
     return champs
 
 
