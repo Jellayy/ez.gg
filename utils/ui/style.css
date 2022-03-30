@@ -364,6 +364,8 @@ form label {
     opacity: 0;
     width: 0;
     height: 0;
+    display: none;
+    visibility: hidden;
 }
 
 #firstpick {
@@ -382,4 +384,10 @@ form label {
 
 .section {
     margin-bottom: 20px;
+}
+
+.champpicks {
+    width: fit-content;
+    margin: 0;
+    display: inline-block;
 }
