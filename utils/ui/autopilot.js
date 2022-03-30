@@ -200,8 +200,8 @@ $(document).ready(function() {
     function get_pick_preferences() {
         return [$('#firstpos_firstpick').val(), $('#firstpos_secondpick').val(), $('#secondpos_firstpick').val(), $('#secondpos_secondpick').val()]
     }
-    eel.expose(get_ban_prefrences);
-    function get_ban_prefrences() {
+    eel.expose(get_ban_preferences);
+    function get_ban_preferences() {
         return [$('#firstpos_firstban').val(), $('#firstpos_secondban').val(), $('#secondpos_firstban').val(), $('#secondpos_secondban').val()]
     }
 
