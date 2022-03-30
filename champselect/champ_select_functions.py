@@ -5,6 +5,8 @@ import willump
 import champselect.preferences as preferences
 import eel
 
+import utils.ddragon
+
 
 async def get_actor_id(client):
     call = '/lol-lobby-team-builder/champ-select/v1/session'
@@ -94,6 +96,14 @@ async def hover_ban(client, actorcellid, banid):
     })
     print(await pick.json())
 
+# async def report_champ_select(wllp, report_ids):
+#     for id in report_ids:
+#         call = f'/lol-player-report-sender/v1/champ-select-reports/puuid/{id}/category/1'
+#         report = await wllp.request('POST', call, data ={""})
+#         print(await report.json())
+
+
+
 
 async def hover_champ():
     try:
@@ -109,12 +119,16 @@ async def hover_champ():
 
 async def ban_champ():
     try:
-        if eel.get_lock_in_preference()():
+        if eel.get_auto_ban_preference()():
             client = await willump.start()
             print("Opened willump")
             print("Banning champ")
             actor_id = await get_actor_id(client)
-            await hover_ban(client, actor_id, int(preferences.ban))
+            champ_to_ban_list = eel.get_ban_preferences()()
+            print(champ_to_ban_list)
+            champ_to_ban = utils.ddragon.champ_name_to_id(champ_to_ban_list[0])
+            print(champ_to_ban)
+            await hover_ban(client, actor_id, champ_to_ban)
             await lock_in(client, actor_id)
             await willump.Willump.close(client)
             print("Closed willump")

@@ -2,6 +2,7 @@ import asyncio
 from asyncio import sleep
 import eel
 import willump
+import utils
 
 import champselect.preferences as preferences
 

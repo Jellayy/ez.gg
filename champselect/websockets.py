@@ -32,11 +32,12 @@ async def queue_acceptor(data):
 
 async def position_listener(data):
     try:
-        print(data['eventType'] + ' ' + data['uri'])
-        if data['data']['localMember']['firstPositionPreference'] == "UNSELECTED" or data['data']['localMember'][
-            'secondPositionPreference'] == "UNSELECTED":
+        if eel.get_queue_preference()():
+        # print(data['eventType'] + ' ' + data['uri'])
+        # if data['data']['localMember']['firstPositionPreference'] == "UNSELECTED" or data['data']['localMember'][
+        #     'secondPositionPreference'] == "UNSELECTED":
             await functions.select_roles(wllp)
-            await functions.start_queue(wllp)
+            # await functions.start_queue(wllp)
     except:
         print("at least it's broken and you know it frikkin gays")
 
@@ -44,10 +45,10 @@ async def position_listener(data):
 
 async def summoner_listener(data):
 
-    print('are here')
+    # print('are here')
     try:
-        print(data['data'])
-        print(data['eventType'] + ' ' + data['uri'])
+        # print(data['data'])
+        # print(data['eventType'] + ' ' + data['uri'])
         if data['data']['isSelf'] and data['data']['isPickIntenting']:
             print("Pick Intenting Champion")
             await champ_select_functions.hover_champ()
@@ -61,6 +62,20 @@ async def summoner_listener(data):
             await champ_select_functions.pick_champ()
     except:
         print("something went wrong in summoner listener with data")
+
+# async def report_listener(data):
+#     try:
+#         reports = []
+#         for puids in data['data']['myTeam']:
+#             reports.append(puids['summonerId'])
+#
+#         print(reports)
+#         await champ_select_functions.report_champ_select(wllp, reports)
+#     except:
+#         print("something went wrong with report listener")
+
+
+
 
 
 async def main():
@@ -76,6 +91,9 @@ async def main():
 
     wllp.subscription_filter_endpoint(all_events_subscription, '/lol-champ-select/v1/summoners/',
                                       handler=summoner_listener)
+    # wllp.subscription_filter_endpoint(all_events_subscription, '/lol-champ-select/v1/session',
+    #                                   handler=report_listener)
+
 
     while True:
         await asyncio.sleep(10)
