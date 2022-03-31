@@ -32,7 +32,7 @@ async def queue_acceptor(data):
 
 async def position_listener(data):
     try:
-        if eel.get_queue_preference()():
+        if eel.get_lock_in_preference()():
         # print(data['eventType'] + ' ' + data['uri'])
         # if data['data']['localMember']['firstPositionPreference'] == "UNSELECTED" or data['data']['localMember'][
         #     'secondPositionPreference'] == "UNSELECTED":
