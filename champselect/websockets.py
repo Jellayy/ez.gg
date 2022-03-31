@@ -1,8 +1,10 @@
 import eel
 import willump
 import json
+from utils import runes, sum_spells, ddragon
 import asyncio
 from champselect import functions
+import champ_identifier
 import logging
 from champselect import champ_select_functions
 
@@ -60,6 +62,11 @@ async def summoner_listener(data):
         if data['data']['isSelf'] and data['data']['activeActionType'] == "pick":
             print("Picking Champion")
             await champ_select_functions.pick_champ()
+        if data['data']['isSelf'] and data['data']['areSummonerActionsComplete']:
+            print("Generating Runes")
+            pick = await champ_identifier.get_champion_pick()
+            await runes.set_rune_page(pick)
+            await sum_spells.set_sum_spells(pick)
     except:
         print("something went wrong in summoner listener with data")
 
