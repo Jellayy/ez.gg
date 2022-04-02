@@ -39,6 +39,9 @@ async def get_rune_page(champion):
     for entry in data:
         runes.append(entry.split("/")[6].split(".")[0])
 
+    # Logging
+    print(f"OP.GG Scraper: {champion} Page: {runes} Generated!")
+
     return runes
 
 
@@ -60,6 +63,9 @@ async def get_sum_spells(champion):
     for entry in data:
         spells.append(entry.split("/")[6].split(".")[0])
 
+    # Logging
+    print(f"OP.GG Scraper: {champion} Spells: {spells} Generated!")
+
     return spells
 
 ########################################################################################################################
@@ -68,11 +74,11 @@ async def get_sum_spells(champion):
 async def main():
     # Should return ELEVEN perks
     # Example: ['8112', '8126', '8138', '8105', '8226', '8233', '5008', '5008', '5003', '8100', '8200']
-    print(await get_rune_page("Cho'Gath"))
+    await get_rune_page("Cho'Gath")
 
     # Should return TWO perks
     # Example: ['SummonerFlash', 'SummonerDot']
-    print(await get_sum_spells("Cho'Gath"))
+    await get_sum_spells("Cho'Gath")
 
 
 if __name__ == '__main__':

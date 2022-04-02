@@ -82,10 +82,7 @@ async def intent_champ(client, actorcellid, championid):
 async def lock_in(client, actorcellid):
     call = f'/lol-lobby-team-builder/champ-select/v1/session/actions/{actorcellid}/complete'
     locked = await client.request('POST', call)
-    if locked.status == 200:
-        print(await locked.json())
-    else:
-        print(await locked.json())
+    return locked.status
 
 
 async def hover_ban(client, actorcellid, banid):
@@ -94,7 +91,7 @@ async def hover_ban(client, actorcellid, banid):
         "championId": banid,
         "type": "ban"
     })
-    print(await pick.json())
+    return pick.status
 
 # async def report_champ_select(wllp, report_ids):
 #     for id in report_ids:
@@ -107,33 +104,44 @@ async def hover_ban(client, actorcellid, banid):
 
 async def hover_champ():
     try:
-        if eel.get_lock_in_preference()():
-            client = await willump.start()
-            # print("Opened willump")
-            player_id = await get_player_id(client)
-            await intent_champ(client, player_id, int(preferences.champion))
-            await willump.Willump.close(client)
+        client = await willump.start()
+        # print("Opened willump")
+        player_id = await get_player_id(client)
+        await intent_champ(client, player_id, int(preferences.champion))
+        await willump.Willump.close(client)
     except:
-        print("Something went wrong while hovering champ")
+        print("Champ Select: Something went wrong while hovering champ")
     # print("Closed willump")
 
-async def ban_champ():
+
+async def ban_champ(client):
     try:
-        if eel.get_auto_ban_preference()():
-            client = await willump.start()
-            print("Opened willump")
-            print("Banning champ")
-            actor_id = await get_actor_id(client)
-            champ_to_ban_list = eel.get_ban_preferences()()
-            print(champ_to_ban_list)
-            champ_to_ban = utils.ddragon.champ_name_to_id(champ_to_ban_list[0])
-            print(champ_to_ban)
-            await hover_ban(client, actor_id, champ_to_ban)
-            await lock_in(client, actor_id)
-            await willump.Willump.close(client)
-            print("Closed willump")
+        # Get champ select actor ID
+        actor_id = await get_actor_id(client)
+
+        # Obtain Ban Preferences from UI
+        champ_to_ban_list = eel.get_ban_preferences()()
+        champ_to_ban = utils.ddragon.champ_name_to_id(champ_to_ban_list[0])
+
+        # Hover Ban
+        result = await hover_ban(client, actor_id, champ_to_ban)
+        if result == 204:
+            print(f"Champ Select: Ban hovered (Status {result})")
+        elif result == 500:
+            print(f"Champ Select: Ban already hovered (Status {result})")
+        else:
+            print(f"ERROR: Champ Select: Ban hover failed with status {result}")
+
+        # Lock In Ban
+        result = await lock_in(client, actor_id)
+        if result == 204:
+            print(f"Champ Select: {champ_to_ban_list[0]} Banned! (Status {result})")
+        elif result == 500:
+            print(f"Champ Select: Already banned (Status {result})")
+        else:
+            print(f"ERROR: Champ Select: Ban lock in failed with status {result}")
     except:
-        print("Something went wrong while banning champ")
+        print("ERROR: Champ Select: Unknown error while banning champion")
 
 async def pick_champ():
     try:

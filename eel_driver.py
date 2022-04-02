@@ -46,6 +46,7 @@ def run_autopilot():
 
 loop = asyncio.new_event_loop()
 websocket = threading.Thread(name='websocket', target=worker, args=(loop,))
+websocket.daemon = True
 websocket.start()
 
 

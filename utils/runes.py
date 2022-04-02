@@ -11,8 +11,7 @@ async def get_current_page_id(client):
 
 
 # Uses op.gg scraper and local LCU API to update current rune page with recommended for a given champion
-async def set_rune_page(champion):
-    client = await willump.start()
+async def set_rune_page(client, champion):
     current_page_id = await get_current_page_id(client)
     new_rune_ids = await opgg.get_rune_page(champion)
     selected_perk_ids = [new_rune_ids[0], new_rune_ids[1], new_rune_ids[2], new_rune_ids[3], new_rune_ids[4],
@@ -23,23 +22,25 @@ async def set_rune_page(champion):
                                                 data={'name': f"EZ.GG: {champion}", 'primaryStyleId': primary_style_id,
                                                       'selectedPerkIds': selected_perk_ids, 'subStyleId': sub_style_id})
     # Error Handling for non-editable default page selected
-    set_rune_page_result = await set_rune_page_result.json()
-    await client.close()
-    if set_rune_page_result is None:
-        return True
+    if set_rune_page_result.status == 201:
+        print(f"Rune Generator: {champion} Runes Set! (Status {set_rune_page_result.status})")
+    elif set_rune_page_result.status == 404:
+        print(f"ERROR: Rune Generator: Status {set_rune_page_result.status} when setting rune page! (Do you have a non-editable default page selected?)")
     else:
-        return False
+        print(f"ERROR: Rune Generator: Rune page application failed with status {set_rune_page_result.status}")
 
 
 ########################################################################################################################
 # TESTING
 ########################################################################################################################
 async def main():
-    result = await set_rune_page("draven")
-    if result:
-        print("Rune Page Set")
-    else:
-        print("Error - Default page selected")
+    willup = await willump.start()
+    result = await set_rune_page(willup, "draven")
+    # if result:
+    #     print("Rune Page Set")
+    # else:
+    #     print("Error - Default page selected")
+    await willup.close()
 
 
 if __name__ == '__main__':
