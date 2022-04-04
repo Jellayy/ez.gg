@@ -120,11 +120,36 @@ async def ban_champ(client):
         actor_id = await get_actor_id(client)
 
         # Obtain Ban Preferences from UI
-        champ_to_ban_list = eel.get_ban_preferences()()
-        champ_to_ban = utils.ddragon.champ_name_to_id(champ_to_ban_list[0])
+        ban_preferences = eel.get_ban_preferences()()
+        ban_list = []
+        for champ in ban_preferences:
+            if champ != '':
+                ban_list.append({'name': champ,
+                                 'id': int(utils.ddragon.champ_name_to_id(champ))})
+
+        # Add none ban in case all bans are hovered
+        ban_list.append({'name': 'None', 'id': -1})
+        print(f"Champ Select: Ban List: {ban_list}")
+
+        # Get Team Picks
+        team_picks = []
+        result = await client.request('GET', '/lol-champ-select/v1/session/')
+        result_json = await result.json()
+        for player in result_json['myTeam']:
+            team_picks.append(player['championPickIntent'])
+        print(f"Champ Select: Team Hovers: {team_picks}")
+
+        # Check if you're banning a teammate pick
+        confirmed_ban_list = []
+        for ban in ban_list:
+            if ban['id'] in team_picks:
+                print(f"Champ Select: {ban['name']} hovered by teammate, skipping")
+            else:
+                confirmed_ban_list.append(ban)
+        print(f"Champ Select: Confirmed Ban List: {confirmed_ban_list}")
 
         # Hover Ban
-        result = await hover_ban(client, actor_id, champ_to_ban)
+        result = await hover_ban(client, actor_id, confirmed_ban_list[0]['id'])
         if result == 204:
             print(f"Champ Select: Ban hovered (Status {result})")
         elif result == 500:
@@ -135,13 +160,13 @@ async def ban_champ(client):
         # Lock In Ban
         result = await lock_in(client, actor_id)
         if result == 204:
-            print(f"Champ Select: {champ_to_ban_list[0]} Banned! (Status {result})")
+            print(f"Champ Select: {confirmed_ban_list[0]['name']} Banned! (Status {result})")
         elif result == 500:
             print(f"Champ Select: Already banned (Status {result})")
         else:
             print(f"ERROR: Champ Select: Ban lock in failed with status {result}")
-    except:
-        print("ERROR: Champ Select: Unknown error while banning champion")
+    except Exception as e:
+        print(f"ERROR: Champ Select: Got error {e} while banning champion")
 
 async def pick_champ():
     try:

@@ -86,7 +86,7 @@ async def champ_select(data):
         # TODO: Implement auto champion picks (currently uses old preferences file)
         # Pick Stage
         if data['data']['isSelf'] and data['data']['activeActionType'] == "pick":
-            print("Champ Select: DEBUG: Pick Stage")
+            print("Champ Select: Pick Stage")
             if eel.get_lock_in_preference()():
                 await champ_select_functions.pick_champ()
             else:
@@ -108,6 +108,8 @@ async def champ_select(data):
 
     except TypeError:
         print("ERROR: Champ Select: NO DATA - This should never happen tbh")
+    except:
+        print("bad things")
 
 # async def report_listener(data):
 #     try:

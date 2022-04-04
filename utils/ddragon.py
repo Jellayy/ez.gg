@@ -22,7 +22,7 @@ def champ_name_to_id(champ_name):
     for champion in r['data'].items():
         if champion[1]['name'] == champ_name:
             return champion[1]['key']
-    return None
+    return '-1'
 
 
 # Queries all champ names from ddragon
@@ -41,6 +41,5 @@ def summoner_name_to_id(summoner_name):
         if summoner[0] == summoner_name:
             return summoner[1]['key']
     return None
-
 
 
