@@ -1,7 +1,7 @@
 import eel
 import asyncio
 import champ_identifier
-from utils import runes, sum_spells, ddragon
+from utils import runes, sum_spells, ddragon, summoner_info
 from champselect import websockets
 import threading
 
@@ -32,9 +32,16 @@ def set_sum_spells(champ):
 def get_all_champs():
     return ddragon.get_all_champs()
 
+
+@eel.expose
+def get_summoner_info():
+    return asyncio.run(summoner_info.get_summoner())
+
+  
 def worker(loop):
     asyncio.set_event_loop(loop)
     loop.run_until_complete(websockets.main())
+
 
 @eel.expose
 def run_autopilot():
