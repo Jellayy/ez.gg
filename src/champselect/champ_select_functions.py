@@ -1,11 +1,9 @@
-import asyncio
 import random
-from asyncio import sleep
 import willump
-import champselect.preferences as preferences
+import src.champselect.preferences as preferences
 import eel
 
-import utils.ddragon
+import src.utils.ddragon
 
 
 async def get_actor_id(client):
@@ -125,7 +123,7 @@ async def ban_champ(client):
         for champ in ban_preferences:
             if champ != '':
                 ban_list.append({'name': champ,
-                                 'id': int(utils.ddragon.champ_name_to_id(champ))})
+                                 'id': int(src.utils.ddragon.champ_name_to_id(champ))})
 
         # Add none ban in case all bans are hovered
         ban_list.append({'name': 'None', 'id': -1})

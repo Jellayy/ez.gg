@@ -1,7 +1,6 @@
 import eel
 import asyncio
-import champ_identifier
-from utils import runes, sum_spells, ddragon, summoner_info
+from src.utils import ddragon, runes, sum_spells, summoner_info, champ_identifier
 from champselect import websockets
 import threading
 

@@ -1,11 +1,9 @@
 import eel
 import willump
-from utils import runes, sum_spells
+from src.utils import runes, sum_spells
 import asyncio
-from champselect import functions
+from src.champselect import functions, champ_select_functions
 import logging
-from champselect import champ_select_functions
-
 
 # Used for testing mode (bypasses ui checks)
 testing = False

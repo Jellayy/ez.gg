@@ -1,10 +1,7 @@
-import asyncio
 from asyncio import sleep
 import eel
-import willump
-import utils
 
-import champselect.preferences as preferences
+import src.champselect.preferences as preferences
 
 
 async def create_lobby(client):
