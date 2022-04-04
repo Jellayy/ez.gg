@@ -28,7 +28,6 @@ webencodings==0.5.1
 whichcraft==0.6.1
 willump==1.2.6
 wincertstore==0.2
-windows-curses==2.3.0
 yarl==1.7.2
 zope.event==4.5.0
 zope.interface==5.4.0
