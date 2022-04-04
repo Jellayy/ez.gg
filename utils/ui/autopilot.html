@@ -64,7 +64,9 @@
         <div class="home_content">
             <div class="wrapper">
                 <!-- Champion Datalist -->
-                <datalist id="champs"></datalist>
+                <datalist id="champs">
+                    <option value="None">
+                </datalist>
 
                 <!-- Settings -->
                 <div class="section">
@@ -72,6 +74,8 @@
                     <label for="queueaccept" class="setting-label">Auto Queue Accept &nbsp;</label>
                     <input type="checkbox" id="lockin" value="Auto Lock-In" class="setting">
                     <label for="lockin" class="setting-label">Auto Lock-In</label>
+                    <input type="checkbox" id="ban" value="Auto Lock-In" class="setting">
+                    <label for="ban" class="setting-label">Auto Ban</label>
                     <input type="checkbox" id="runes" value="Auto Runes + Spells" class="setting">
                     <label for="runes" class="setting-label">Auto Runes + Spells</label>
                 </div>
@@ -105,12 +109,20 @@
                             <img src="assets/img/positions/icon-position-fill.png" style="width: 23px;">
                         </label>
                     </form>
+                </div>
 
-                    <!-- Primary Champs and Bans -->
-                    <input type="text" list="champs" placeholder="First Pick" id="firstpos_firstpick" class="champentrybox">
-                    <input type="text" list="champs" placeholder="Second Pick" id="firstpos_secondpick" class="champentrybox">
-                    <input type="text" list="champs" placeholder="First Ban" id="firstpos_firstban" class="champentrybox">
-                    <input type="text" list="champs" placeholder="Second Ban" id="firstpos_secondban" class="champentrybox">
+                <div>
+                    <!-- Primary Champs -->
+                    <div id="firstpospicks" class="disabled champpicks">
+                        <input type="text" list="champs" placeholder="First Pick" id="firstpos_firstpick" class="champentrybox">
+                        <input type="text" list="champs" placeholder="Second Pick" id="firstpos_secondpick" class="champentrybox">
+                    </div>
+
+                    <!-- Primary Bans -->
+                    <div id="firstposbans" class="disabled champpicks">
+                        <input type="text" list="champs" placeholder="First Ban" id="firstpos_firstban" class="champentrybox">
+                        <input type="text" list="champs" placeholder="Second Ban" id="firstpos_secondban" class="champentrybox">
+                    </div>
                 </div>
 
                 <div id="secondpick" class="disabled">
@@ -142,12 +154,20 @@
                             <img src="assets/img/positions/icon-position-fill.png" style="width: 23px;">
                         </label>
                     </form>
+                </div>
 
-                    <!-- Secondary Champs and Bans -->
-                    <input type="text" list="champs" placeholder="First Pick" id="secondpos_firstpick" class="champentrybox">
-                    <input type="text" list="champs" placeholder="Second Pick" id="secondpos_secondpick" class="champentrybox">
-                    <input type="text" list="champs" placeholder="First Ban" id="secondpos_firstban" class="champentrybox">
-                    <input type="text" list="champs" placeholder="Second Ban" id="secondpos_secondban" class="champentrybox">
+                <div>
+                    <!-- Secondary Champs -->
+                    <div id="secondpospicks" class="disabled champpicks">
+                        <input type="text" list="champs" placeholder="First Pick" id="secondpos_firstpick" class="champentrybox">
+                        <input type="text" list="champs" placeholder="Second Pick" id="secondpos_secondpick" class="champentrybox">
+                    </div>
+
+                    <!-- Secondary Bans -->
+                    <div id="secondposbans" class="disabled champpicks">
+                        <input type="text" list="champs" placeholder="First Ban" id="secondpos_firstban" class="champentrybox">
+                        <input type="text" list="champs" placeholder="Second Ban" id="secondpos_secondban" class="champentrybox">
+                    </div>
                 </div>
 
                 <div class="status">

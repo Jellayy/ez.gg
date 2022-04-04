@@ -17,12 +17,12 @@ async def get_rune_page(champion):
     runes = []
     # Keystone
     data = r_soup.find_all("div", {"class": "css-1w13bvn e495vw30"}, limit=1)
-    runes.append(str(data).split("img")[1].split("/")[8].split(".")[0])
+    runes.append(str(data).split("img")[1].split("/")[6].split(".")[0])
 
     # Primary and Secondary Tree Perks
     data = r_soup.find_all("div", {"class": "css-l5ga7x e495vw30"}, limit=5)
     for entry in data:
-        runes.append(str(entry).split("img")[1].split("/")[8].split(".")[0])
+        runes.append(str(entry).split("img")[1].split("/")[6].split(".")[0])
 
     # Flex Perk Tree
     data = r_soup.find_all("div", {"class": "css-1my9c6 e14t5af50"}, limit=1)
@@ -37,7 +37,10 @@ async def get_rune_page(champion):
     data = str(data).split("img")
     data.pop(0)
     for entry in data:
-        runes.append(entry.split("/")[8].split(".")[0])
+        runes.append(entry.split("/")[6].split(".")[0])
+
+    # Logging
+    print(f"OP.GG Scraper: {champion} Page: {runes} Generated!")
 
     return runes
 
@@ -58,7 +61,10 @@ async def get_sum_spells(champion):
     data = str(data).split("img")
     data.pop(0)
     for entry in data:
-        spells.append(entry.split("/")[8].split(".")[0])
+        spells.append(entry.split("/")[6].split(".")[0])
+
+    # Logging
+    print(f"OP.GG Scraper: {champion} Spells: {spells} Generated!")
 
     return spells
 
@@ -68,11 +74,11 @@ async def get_sum_spells(champion):
 async def main():
     # Should return ELEVEN perks
     # Example: ['8112', '8126', '8138', '8105', '8226', '8233', '5008', '5008', '5003', '8100', '8200']
-    print(await get_rune_page("Cho'Gath"))
+    await get_rune_page("Cho'Gath")
 
     # Should return TWO perks
     # Example: ['SummonerFlash', 'SummonerDot']
-    print(await get_sum_spells("Cho'Gath"))
+    await get_sum_spells("Cho'Gath")
 
 
 if __name__ == '__main__':

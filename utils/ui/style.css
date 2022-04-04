@@ -322,8 +322,6 @@ input[type=text] {
     border-radius: 50px;
     margin-left: 3px;
     margin-right: 3px;
-    margin-bottom: 5px;
-    margin-top: 15px;
 }
 
 [type=radio] {
@@ -364,6 +362,8 @@ form label {
     opacity: 0;
     width: 0;
     height: 0;
+    display: none;
+    visibility: hidden;
 }
 
 #firstpick {
@@ -382,4 +382,46 @@ form label {
 
 .section {
     margin-bottom: 20px;
+}
+
+.champpicks {
+    width: fit-content;
+    margin: 0;
+    display: inline-block;
+}
+
+.multiselect {
+    width: fit-content;
+}
+
+.selectBox {
+    position: relative;
+}
+
+.selectBox select {
+    display: inline-block;
+    background-color: #202124;
+    color: #ffffff;
+    border-radius: 50px;
+    white-space: nowrap;
+    margin: 3px 0px;
+    user-select: none;
+    transition: all .2s;
+    padding: 8px 12px;
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+}
+
+.overSelect {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+}
+
+#checkboxes {
+    display: none;
+}
+
+#checkboxes label {
+    display: block;
 }

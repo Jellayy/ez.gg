@@ -3,6 +3,7 @@ import asyncio
 import champ_identifier
 from utils import runes, sum_spells, ddragon, summoner_info
 from champselect import websockets
+import threading
 
 
 # Rune Generator Functions
@@ -36,16 +37,27 @@ def get_all_champs():
 def get_summoner_info():
     return asyncio.run(summoner_info.get_summoner())
 
+  
+def worker(loop):
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(websockets.main())
+
 
 @eel.expose
 def run_autopilot():
-    loop = asyncio.get_event_loop()
-    try:
-        loop.run_until_complete(websockets.main())
-    except KeyboardInterrupt:
-        print()
+    pass
+
+
+
+
+
+loop = asyncio.new_event_loop()
+websocket = threading.Thread(name='websocket', target=worker, args=(loop,))
+websocket.daemon = True
+websocket.start()
 
 
 # eel init
 eel.init('utils/ui', allowed_extensions=['.js', '.html'])
+
 eel.start('main.html', size=(1000, 600))

@@ -2,6 +2,7 @@ import asyncio
 from asyncio import sleep
 import eel
 import willump
+import utils
 
 import champselect.preferences as preferences
 
@@ -96,19 +97,14 @@ async def queue(client):
         return True
 
 
+# Sends Queue Accept Request to Client
 async def accept_queue(client):
     call = '/lol-matchmaking/v1/ready-check/accept'
     accept = await client.request('POST', call)
-    response = await accept.json()
-    # message = response.get("message")
-    if accept.status == 500:
-        print("Not only has the ready check not popped, you're not even in queue, and frankly are super lost")
-        # print("Error: ", message)
-    elif accept.status == 404:
-        print("Not in queue")
-        # print("Error: ", message)
+    if accept.status == 204:
+        print(f"Queue Acceptor: Queue Accepted! (status {accept.status})")
     else:
-        print("Queue has been accepted")
+        print(f"ERROR: Queue Acceptor: Queue unable to be accepted with status: {accept.status}")
 
 
 async def is_lobby_leader(client):
