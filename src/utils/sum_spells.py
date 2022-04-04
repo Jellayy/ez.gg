@@ -1,10 +1,10 @@
 import willump
 import asyncio
-import utils.opgg as opgg
-import utils.ddragon as ddragon
+import src.utils.opgg as opgg
+import src.utils.ddragon as ddragon
 
 
-async def set_sum_spells(champion):
+async def set_sum_spells(client, champion):
     # Get spell names from opgg
     spell_names = await opgg.get_sum_spells(champion)
 
@@ -19,18 +19,22 @@ async def set_sum_spells(champion):
         spell_ids.append(ddragon.summoner_name_to_id(spell))
 
     # Set spell IDs
-    client = await willump.start()
     set_sum_spells_result = await client.request('patch', "/lol-champ-select/v1/session/my-selection",
                                                  data={"spell1Id": spell_ids[0], "spell2Id": spell_ids[1]})
-    await client.close()
-    return set_sum_spells_result
+
+    if set_sum_spells_result.status == 204:
+        print(f"Spell Generator: {champion} Spells Set! (Status {set_sum_spells_result.status})")
+    else:
+        print(f"ERROR: Spell Generator: Spell application failed with status {set_sum_spells_result.status}")
 
 
 ########################################################################################################################
 # TESTING
 ########################################################################################################################
 async def main():
-    print(await set_sum_spells("darius"))
+    willup = await willump.start()
+    print(await set_sum_spells(willup, "darius"))
+    willup.close()
 
 
 if __name__ == '__main__':

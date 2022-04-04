@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>EZ.GG Alpha v0.0</title>
+
+        <!-- Expose eel -->
+        <script type="text/javascript" src="/eel.js"></script>
+
+        <!--jQuery Init-->
+        <script src="assets/jquery-3.6.0.min.js"></script>
+
+        <!--Stylesheet-->
+        <link rel="stylesheet" href="style.css">
+
+        <!--Fontawesome icon init-->
+        <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
+
+        <!--Favicon-->
+        <link rel="icon" href="assets/favicon.png">
+    </head>
+    <body class="preload">
+
+        <!--Sidebar-->
+        <div class="sidebar active">
+            <div class="logo_content">
+                <div class="logo">
+                    <div class="logo_name">EZ.GG</div>
+                </div>
+                <i class="fa-solid fa-bars" id="sidebar-btn"></i>
+            </div>
+            <ul class="nav_list">
+                <li>
+                    <a href="#" class="active">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="links_name">Home</span>
+                    </a>
+                    <span class="tooltip">Home</span>
+                </li>
+                <li>
+                    <a href="rune_generator.html">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                        <span class="links_name">Rune Generator</span>
+                    </a>
+                    <span class="tooltip">Rune Generator</span>
+                </li>
+                <li>
+                    <a href="autopilot.html">
+                        <i class="fa-solid fa-compass"></i>
+                        <span class="links_name">Autopilot</span>
+                    </a>
+                    <span class="tooltip">Autopilot</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-terminal"></i>
+                        <span class="links_name">Debug</span>
+                    </a>
+                    <span class="tooltip">Debug</span>
+                </li>
+            </ul>
+        </div>
+
+        <!--Page Content-->
+        <div class="home_content">
+            <div class="wrapper">
+                <p style="text-align: center;">Home page, idk</p>
+                <br>
+                <span id="test"></span>
+            <div class="multiselect">
+                <div class="selectBox" onclick="showCheckboxes()">
+                    <select id="test">
+                        <option>Settings</option>
+                    </select>
+                    <div class="overSelect" id="alsotest"></div>
+                </div>
+                <div id="checkboxes">
+                    <input type="checkbox" id="queueaccept" value="Auto Queue Accept" class="setting">
+                    <label for="queueaccept" class="setting-label">Auto Queue Accept &nbsp;</label>
+                    <input type="checkbox" id="lockin" value="Auto Lock-In" class="setting">
+                    <label for="lockin" class="setting-label">Auto Lock-In</label>
+                    <input type="checkbox" id="ban" value="Auto Lock-In" class="setting">
+                    <label for="ban" class="setting-label">Auto Ban</label>
+                    <input type="checkbox" id="runes" value="Auto Runes + Spells" class="setting">
+                    <label for="runes" class="setting-label">Auto Runes + Spells</label>
+                </div>
+            </div>
+        </div>
+
+        <!--Sidebar Driver JS Init-->
+        <script type="text/javascript" src="sidebar.js"></script>
+
+        <!-- main.js init -->
+        <script type="text/javascript" src="main.js"></script>
+    </body>
+</html>

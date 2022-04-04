@@ -1,9 +1,7 @@
-import asyncio
 from asyncio import sleep
+import eel
 
-import willump
-
-import champselect.preferences as preferences
+import src.champselect.preferences as preferences
 
 
 async def create_lobby(client):
@@ -20,12 +18,14 @@ async def create_lobby(client):
 
 
 async def select_roles(client):
+    gays = eel.get_roles()()
+    print(gays)
     call = '/lol-lobby/v2/lobby/members/localMember/position-preferences'
-    positions = {"firstPreference": preferences.primaryRole,
-                 "secondPreference": preferences.secondaryRole}
+    positions = {"firstPreference": gays[0],
+                 "secondPreference": gays[1]}
     roles = await client.request('PUT', call, data=positions)
     if roles.status == 201:
-        print("Assigned roles, primary:", preferences.primaryRole, " secondary:", preferences.secondaryRole)
+        print("Assigned roles, primary:", gays[0], " secondary:", gays[1])
     else:
         print("Assigning roles failed, primary:", preferences.primaryRole, " secondary:", preferences.secondaryRole)
         print("Error code:", roles.status)
@@ -94,19 +94,14 @@ async def queue(client):
         return True
 
 
+# Sends Queue Accept Request to Client
 async def accept_queue(client):
     call = '/lol-matchmaking/v1/ready-check/accept'
     accept = await client.request('POST', call)
-    response = await accept.json()
-    # message = response.get("message")
-    if accept.status == 500:
-        print("Not only has the ready check not popped, you're not even in queue, and frankly are super lost")
-        # print("Error: ", message)
-    elif accept.status == 404:
-        print("Not in queue")
-        # print("Error: ", message)
+    if accept.status == 204:
+        print(f"Queue Acceptor: Queue Accepted! (status {accept.status})")
     else:
-        print("Queue has been accepted")
+        print(f"ERROR: Queue Acceptor: Queue unable to be accepted with status: {accept.status}")
 
 
 async def is_lobby_leader(client):
@@ -189,37 +184,16 @@ async def is_lobby(client):
         return False
 
 
-async def get_player_id(client):
-    call = '/lol-lobby-team-builder/champ-select/v1/session'
-    lobby = await client.request('GET', call)
-    data = await lobby.json()
-    # print(data)
-    print(data['localPlayerCellId'])
-    user_id = 0
-    for crap in data['actions']:
-        print(crap)
-        for player in crap:
-            print(player)
-            if player['actorCellId'] == data['localPlayerCellId']:
-                print(player['id'])
-                user_id = player['id']
-    print(user_id)
-    return user_id
 
 
-async def get_actor_id(client):
-    call = '/lol-lobby-team-builder/champ-select/v1/session'
-    lobby = await client.request('GET', call)
-    data = await lobby.json()
-    # print(data)
-    print(data['localPlayerCellId'])
-    return data['localPlayerCellId']
 
 
-async def pick_champ(client, actorcellid):
+
+
+async def pick_champ(client, actorcellid, championid):
     call = f'/lol-lobby-team-builder/champ-select/v1/session/actions/{actorcellid}'
     pick = await client.request('PATCH', call, data={
-        "championId": 1,
+        "championId": championid,
         "type": "pick"
     })
     print(await pick.json())
@@ -231,10 +205,10 @@ async def lock_in(client, actorcellid):
     print(await locked.json())
 
 
-async def ban_champ(client, actorcellid):
+async def ban_champ(client, actorcellid, banid):
     call = f'/lol-lobby-team-builder/champ-select/v1/session/actions/{actorcellid}'
     pick = await client.request('PATCH', call, data={
-        "championId": 2,
+        "championId": banid,
         "type": "ban"
     })
     print(await pick.json())
@@ -244,5 +218,16 @@ async def gameflow_session(client):
     call = '/lol-gameflow/v1/session'
     gameflow = await client.request('GET', call)
     data = await gameflow.json()
+    print(data)
+    return data
+
+
+
+
+
+async def get_champ_grid(client, id):
+    call = f'/lol-champ-select/v1/grid-champions/{id}'
+    champ_grid = await client.request('GET', call)
+    data = await champ_grid.json()
     print(data)
     return data
