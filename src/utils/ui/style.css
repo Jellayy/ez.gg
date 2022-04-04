@@ -1,4 +1,4 @@
-@font-face { font-family: Friz-Quadrata; src: url('/src/utils/ui/assets/fonts/friz_quadrata_regular-webfont.woff');}
+@font-face { font-family: Friz-Quadrata; src: url('assets/fonts/friz_quadrata_regular-webfont.woff');}
 
   @keyframes wipe-in-right {
     from {
