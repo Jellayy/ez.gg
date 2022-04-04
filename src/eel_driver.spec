@@ -4,10 +4,10 @@
 block_cipher = None
 
 
-a = Analysis(['src/eel_driver.py'],
+a = Analysis(['eel_driver.py'],
              pathex=[],
              binaries=[],
-             datas=[('src/utils', 'utils')],
+             datas=[('utils', 'utils')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
