@@ -3,6 +3,8 @@ import asyncio
 from src.utils import ddragon, runes, sum_spells, summoner_info, champ_identifier
 from champselect import websockets
 import threading
+import sys
+import platform
 
 
 # Rune Generator Functions
@@ -59,4 +61,11 @@ websocket.start()
 # eel init
 eel.init('utils/ui', allowed_extensions=['.js', '.html'])
 
-eel.start('main.html', size=(1000, 600))
+try:
+    eel.start('main.html', size=(1000, 600))
+except EnvironmentError:
+        # If Chrome isn't found, fallback to Microsoft Edge on Win10 or greater
+        if sys.platform in ['win32', 'win64'] and int(platform.release()) >= 10:
+            eel.start('main.html', mode='edge', size=(1000, 600))
+        else:
+            raise
