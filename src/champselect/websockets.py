@@ -1,7 +1,8 @@
 import eel
-import willump
+
 from utils import runes, sum_spells
 import asyncio
+from dependancies import willump
 from champselect import functions, champ_select_functions
 import logging
 

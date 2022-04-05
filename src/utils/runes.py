@@ -1,4 +1,4 @@
-import willump
+from dependancies import willump
 import asyncio
 import utils.opgg as opgg
 

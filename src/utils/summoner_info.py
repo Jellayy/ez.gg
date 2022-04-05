@@ -1,5 +1,5 @@
 import asyncio
-import willump
+from dependancies import willump
 
 
 async def get_summoner():

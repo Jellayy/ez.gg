@@ -1,5 +1,5 @@
 import asyncio
-import willump
+from dependancies import willump
 import utils.runes as runes
 import utils.ddragon as ddragon
 
