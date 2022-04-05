@@ -3,7 +3,7 @@ import willump
 import champselect.preferences as preferences
 import eel
 
-import src.utils.ddragon
+import utils.ddragon
 
 
 async def get_actor_id(client):
