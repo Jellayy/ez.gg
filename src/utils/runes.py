@@ -1,6 +1,6 @@
 import willump
 import asyncio
-import src.utils.opgg as opgg
+import utils.opgg as opgg
 
 
 # Queries the local LCU API for the ID of the currently selected rune page

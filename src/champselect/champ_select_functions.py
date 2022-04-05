@@ -1,6 +1,6 @@
 import random
 import willump
-import src.champselect.preferences as preferences
+import champselect.preferences as preferences
 import eel
 
 import src.utils.ddragon

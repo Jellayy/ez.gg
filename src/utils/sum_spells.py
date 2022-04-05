@@ -1,7 +1,7 @@
 import willump
 import asyncio
-import src.utils.opgg as opgg
-import src.utils.ddragon as ddragon
+import utils.opgg as opgg
+import utils.ddragon as ddragon
 
 
 async def set_sum_spells(client, champion):

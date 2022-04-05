@@ -1,7 +1,7 @@
 from asyncio import sleep
 import eel
 
-import src.champselect.preferences as preferences
+import champselect.preferences as preferences
 
 
 async def create_lobby(client):
