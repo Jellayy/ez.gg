@@ -1,10 +1,11 @@
+import asyncio
+import logging
+
 import eel
 
-from utils import runes, sum_spells
-import asyncio
-from dependancies import willump
 from champselect import functions, champ_select_functions
-import logging
+from dependancies import willump
+from utils import runes, sum_spells
 
 # Used for testing mode (bypasses ui checks)
 testing = False
@@ -43,15 +44,15 @@ async def queue_acceptor(data):
 
 # TODO: Actually implement auto role selecting properly
 # async def position_listener(data):
-    # try:
-    #     if eel.get_lock_in_preference()():
-    #     # print(data['eventType'] + ' ' + data['uri'])
-    #     # if data['data']['localMember']['firstPositionPreference'] == "UNSELECTED" or data['data']['localMember'][
-    #     #     'secondPositionPreference'] == "UNSELECTED":
-    #         await functions.select_roles(client)
-    #         # await functions.start_queue(client)
-    # except:
-    #     print("at least it's broken and you know it frikkin gays")
+# try:
+#     if eel.get_lock_in_preference()():
+#     # print(data['eventType'] + ' ' + data['uri'])
+#     # if data['data']['localMember']['firstPositionPreference'] == "UNSELECTED" or data['data']['localMember'][
+#     #     'secondPositionPreference'] == "UNSELECTED":
+#         await functions.select_roles(client)
+#         # await functions.start_queue(client)
+# except:
+#     print("at least it's broken and you know it frikkin gays")
 
 
 # Handler for champ select events filter
@@ -72,7 +73,8 @@ async def champ_select(data):
                 print("Champ Select: Not Hovering - Auto Lock-In Not Enabled")
 
         # Banning Stage
-        if data['data']['isSelf'] and data['data']['activeActionType'] == "ban" and data['data']['banIntentSquarePortratPath'] == "":
+        if data['data']['isSelf'] and data['data']['activeActionType'] == "ban" and data['data'][
+            'banIntentSquarePortratPath'] == "":
             print("Champ Select: Banning Stage")
             # Check if Auto Ban enabled or in testing mode
             if testing or eel.get_auto_ban_preference()():
@@ -110,6 +112,7 @@ async def champ_select(data):
     except:
         print("bad things")
 
+
 # async def report_listener(data):
 #     try:
 #         reports = []
@@ -139,10 +142,12 @@ async def main():
     # client.subscription_filter_endpoint(all_events_subscription, '/lol-lobby/v2/lobby', handler=position_listener)
 
     # Queue Pop Filter
-    client.subscription_filter_endpoint(all_events_subscription, '/lol-matchmaking/v1/ready-check', handler=queue_acceptor)
+    client.subscription_filter_endpoint(all_events_subscription, '/lol-matchmaking/v1/ready-check',
+                                        handler=queue_acceptor)
 
     # Champ select event filter
-    client.subscription_filter_endpoint(all_events_subscription, '/lol-champ-select/v1/summoners/', handler=champ_select)
+    client.subscription_filter_endpoint(all_events_subscription, '/lol-champ-select/v1/summoners/',
+                                        handler=champ_select)
 
     # client.subscription_filter_endpoint(all_events_subscription, '/lol-champ-select/v1/session', handler=report_listener)
 

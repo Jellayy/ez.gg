@@ -1,16 +1,18 @@
-import requests
-import bs4
 import asyncio
+
+import bs4
+import requests
 
 
 # Uses BS4 to scrape OP.GG champion pages for recommended rune IDs
 async def get_rune_page(champion):
     # Formatting champion name for url insertion
     champion = champion.lower()
-    champion = champion.replace("'" ,"").replace(" ", "")
+    champion = champion.replace("'", "").replace(" ", "")
 
     # Faking a user agent so that op.gg doesn't give 403 Forbidden on html requests
-    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
     r = requests.get(f'https://na.op.gg/champions/{champion}/', headers=headers)
     r_soup = bs4.BeautifulSoup(r.text, 'html.parser')
 
@@ -52,7 +54,8 @@ async def get_sum_spells(champion):
     champion = champion.replace("'", "").replace(" ", "")
 
     # Faking a user agent so that op.gg doesn't give 403 Forbidden on html requests
-    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
     r = requests.get(f'https://na.op.gg/champions/{champion}/', headers=headers)
     r_soup = bs4.BeautifulSoup(r.text, 'html.parser')
 
@@ -67,6 +70,7 @@ async def get_sum_spells(champion):
     print(f"OP.GG Scraper: {champion} Spells: {spells} Generated!")
 
     return spells
+
 
 ########################################################################################################################
 # TESTING

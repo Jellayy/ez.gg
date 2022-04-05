@@ -1,4 +1,5 @@
 import asyncio
+
 from dependancies import willump
 
 
@@ -7,7 +8,6 @@ async def get_summoner():
     response = await wllp.request('get', '/lol-summoner/v1/current-summoner')
     await wllp.close()
     return await response.json()
-
 
 
 if __name__ == '__main__':

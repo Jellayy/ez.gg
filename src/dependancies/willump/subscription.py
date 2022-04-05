@@ -1,12 +1,14 @@
-from enum import Enum
 import asyncio
-import logging
 import json
+import logging
+from enum import Enum
+
 
 class Event_Code(Enum):
     SUBSCRIBE = 5
     UNSUBSCRIBE = 6
     RESPONSE = 8
+
 
 class EventSubscription:
     async def _default_behavior(self, data):

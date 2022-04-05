@@ -1,14 +1,14 @@
-import aiohttp
 import asyncio
 import json
-from collections import defaultdict
 import logging
+from collections import defaultdict
 
-from dependancies.willump.subscription import Event_Code, EventSubscription
-from dependancies.willump.proc_utils import parse_cmdline_args, find_LCU_process
+import aiohttp
+
 from dependancies.willump.live_events import LiveEvents
 from dependancies.willump.nunu import Nunu
-
+from dependancies.willump.proc_utils import parse_cmdline_args, find_LCU_process
+from dependancies.willump.subscription import Event_Code, EventSubscription
 
 
 class Willump:
@@ -44,10 +44,12 @@ class Willump:
                 if resp.status == 200:
                     logging.info("connected to LCUx server, status: " + str(resp.status))
                 else:
-                    logging.warning("connected to LCUx https server, but got an invalid response for a known uri. Response status code: " + str(resp.status))
+                    logging.warning(
+                        "connected to LCUx https server, but got an invalid response for a known uri. Response status code: " + str(
+                            resp.status))
                 break
             except aiohttp.client_exceptions.ClientConnectorError:
-                logging.warn("can't connect to LCUx server. Retrying...") #this might be too much log spam
+                logging.warn("can't connect to LCUx server. Retrying...")  # this might be too much log spam
                 await asyncio.sleep(0.5)
                 pass
 
@@ -55,7 +57,8 @@ class Willump:
             await self.start_websocket()
 
         if with_nunu:
-            self.start_nunu(Allow_Origin = kwargs['Allow_Origin'], ssl_key_path = kwargs['ssl_key_path'], port=kwargs.get('port', None), host=kwargs.get('host', None))
+            self.start_nunu(Allow_Origin=kwargs['Allow_Origin'], ssl_key_path=kwargs['ssl_key_path'],
+                            port=kwargs.get('port', None), host=kwargs.get('host', None))
 
         logging.info("Willump is fully connected")
         return self
@@ -65,7 +68,8 @@ class Willump:
             logging.warn('rest is already started. dropping out. rest will continue running')
             return self
 
-        self.https_session = aiohttp.ClientSession(auth=aiohttp.BasicAuth('riot', self._auth_key), headers=self._headers)
+        self.https_session = aiohttp.ClientSession(auth=aiohttp.BasicAuth('riot', self._auth_key),
+                                                   headers=self._headers)
         self.rest_alive = True
         return self
 
@@ -84,7 +88,8 @@ class Willump:
             async for msg in self.ws_client:
                 if msg.type == aiohttp.WSMsgType.TEXT:
                     if not msg.data:
-                        logging.info('got websocket message containing no data, probably just server confirming subscription success')
+                        logging.info(
+                            'got websocket message containing no data, probably just server confirming subscription success')
                     else:
                         data = json.loads(msg.data)
 
@@ -118,33 +123,35 @@ class Willump:
         self.nunu_alive = True
 
     async def start_live_events(self, port=None, default_behavior=None, retry_policy=False):
-            if self.live_events_alive:
-                logging.warn('live events is already started. dropping out. live events will continue running')
-                return self
-
-            self.live_events = await LiveEvents.start(port, default_behavior)
-            if not self.live_events and not retry_policy:
-                logging.warn("can't connect to live event server")
-                return self
-
-            while not self.live_events:
-                await asyncio.sleep(0.5)
-                logging.warn("retrying connection to live event server")
-                self.live_events = await LiveEvents.start(port, default_behavior)
-
-            self.live_events_alive = True
+        if self.live_events_alive:
+            logging.warn('live events is already started. dropping out. live events will continue running')
             return self
 
-        #FIXME: make SSL work ya chump
+        self.live_events = await LiveEvents.start(port, default_behavior)
+        if not self.live_events and not retry_policy:
+            logging.warn("can't connect to live event server")
+            return self
+
+        while not self.live_events:
+            await asyncio.sleep(0.5)
+            logging.warn("retrying connection to live event server")
+            self.live_events = await LiveEvents.start(port, default_behavior)
+
+        self.live_events_alive = True
+        return self
+
+    # FIXME: make SSL work ya chump
     async def request(self, method, endpoint, **kwargs):
         if kwargs.get('data', None):
             kwargs['data'] = json.dumps(kwargs['data'])
 
-        return await self.https_session.request(method, f'https://127.0.0.1:{self._port}{endpoint}', ssl=False, **kwargs)
+        return await self.https_session.request(method, f'https://127.0.0.1:{self._port}{endpoint}', ssl=False,
+                                                **kwargs)
 
     async def subscribe(self, event, default_handler=None, subscription=None):
         if default_handler and subscription:
-            logging.warn("passed in pre-existing subscription and a default handler for a new subscription. default_handler will be ignored in favour of the existing subscription")
+            logging.warn(
+                "passed in pre-existing subscription and a default handler for a new subscription. default_handler will be ignored in favour of the existing subscription")
 
         if not self.ws_subscriptions[event]:
             await self.ws_client.send_json([Event_Code.SUBSCRIBE.value, event])

@@ -1,5 +1,5 @@
-$(document).ready(function() {
-    $('#rune_generator_btn').on('click', function() {
+$(document).ready(function () {
+    $('#rune_generator_btn').on('click', function () {
         rune_generator();
     })
 

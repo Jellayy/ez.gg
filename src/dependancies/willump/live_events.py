@@ -40,10 +40,9 @@ class LiveEvents:
         await self.writer.wait_closed()
         await self.listening_task
 
-
-#HOW TO USE:
+# HOW TO USE:
 # in a separate file:
-#from live_events import LiveEvents
-#le = await LiveEvents.start()
-#and this starts dumping incoming packets until you do:
-#le.close()
+# from live_events import LiveEvents
+# le = await LiveEvents.start()
+# and this starts dumping incoming packets until you do:
+# le.close()

@@ -1,9 +1,8 @@
 import random
-from dependancies import willump
-import champselect.preferences as preferences
 import eel
-
+import champselect.preferences as preferences
 import utils.ddragon
+from dependancies import willump
 
 
 async def get_actor_id(client):
@@ -64,7 +63,6 @@ async def get_champ_grid(client, id):
 
 
 async def intent_champ(client, actorcellid, championid):
-
     call = f'/lol-lobby-team-builder/champ-select/v1/session/actions/{actorcellid}'
     pick = await client.request('PATCH', call, data={
         "championId": championid,
@@ -91,13 +89,12 @@ async def hover_ban(client, actorcellid, banid):
     })
     return pick.status
 
+
 # async def report_champ_select(wllp, report_ids):
 #     for id in report_ids:
 #         call = f'/lol-player-report-sender/v1/champ-select-reports/puuid/{id}/category/1'
 #         report = await wllp.request('POST', call, data ={""})
 #         print(await report.json())
-
-
 
 
 async def hover_champ():
@@ -165,6 +162,7 @@ async def ban_champ(client):
             print(f"ERROR: Champ Select: Ban lock in failed with status {result}")
     except Exception as e:
         print(f"ERROR: Champ Select: Got error {e} while banning champion")
+
 
 async def pick_champ():
     try:

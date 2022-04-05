@@ -1,190 +1,194 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>EZ.GG Alpha v0.0</title>
+<head>
+    <title>EZ.GG Alpha v0.0</title>
 
-        <!-- Expose eel -->
-        <script type="text/javascript" src="/eel.js"></script>
+    <!-- Expose eel -->
+    <script src="/eel.js" type="text/javascript"></script>
 
-        <!--jQuery Init-->
-        <script src="assets/jquery-3.6.0.min.js"></script>
+    <!--jQuery Init-->
+    <script src="assets/jquery-3.6.0.min.js"></script>
 
-        <!--Stylesheet-->
-        <link rel="stylesheet" href="style.css">
+    <!--Stylesheet-->
+    <link href="style.css" rel="stylesheet">
 
-        <!--Fontawesome icon init-->
-        <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
+    <!--Fontawesome icon init-->
+    <link href="assets/fontawesome/css/all.min.css" rel="stylesheet">
 
-        <!--Favicon-->
-        <link rel="icon" href="assets/favicon.png">
-    </head>
-    <body class="preload">
+    <!--Favicon-->
+    <link href="assets/favicon.png" rel="icon">
+</head>
+<body class="preload">
 
-        <!--Sidebar-->
-        <div class="sidebar active">
-            <div class="logo_content">
-                <div class="logo">
-                    <div class="logo_name">EZ.GG</div>
-                </div>
-                <i class="fa-solid fa-bars" id="sidebar-btn"></i>
-            </div>
-            <ul class="nav_list">
-                <li>
-                    <a href="main.html">
-                        <i class="fa-solid fa-house"></i>
-                        <span class="links_name">Home</span>
-                    </a>
-                    <span class="tooltip">Home</span>
-                </li>
-                <li>
-                    <a href="rune_generator.html">
-                        <i class="fa-solid fa-arrows-rotate"></i>
-                        <span class="links_name">Rune Generator</span>
-                    </a>
-                    <span class="tooltip">Rune Generator</span>
-                </li>
-                <li>
-                    <a href=href="#" class="active">
-                        <i class="fa-solid fa-compass"></i>
-                        <span class="links_name">Autopilot</span>
-                    </a>
-                    <span class="tooltip">Autopilot</span>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-terminal"></i>
-                        <span class="links_name">Debug</span>
-                    </a>
-                    <span class="tooltip">Debug</span>
-                </li>
-            </ul>
+<!--Sidebar-->
+<div class="sidebar active">
+    <div class="logo_content">
+        <div class="logo">
+            <div class="logo_name">EZ.GG</div>
+        </div>
+        <i class="fa-solid fa-bars" id="sidebar-btn"></i>
+    </div>
+    <ul class="nav_list">
+        <li>
+            <a href="main.html">
+                <i class="fa-solid fa-house"></i>
+                <span class="links_name">Home</span>
+            </a>
+            <span class="tooltip">Home</span>
+        </li>
+        <li>
+            <a href="rune_generator.html">
+                <i class="fa-solid fa-arrows-rotate"></i>
+                <span class="links_name">Rune Generator</span>
+            </a>
+            <span class="tooltip">Rune Generator</span>
+        </li>
+        <li>
+            <a class="active" href=href="#">
+                <i class="fa-solid fa-compass"></i>
+                <span class="links_name">Autopilot</span>
+            </a>
+            <span class="tooltip">Autopilot</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-terminal"></i>
+                <span class="links_name">Debug</span>
+            </a>
+            <span class="tooltip">Debug</span>
+        </li>
+    </ul>
+</div>
+
+<!--Page Content-->
+<div class="home_content">
+    <div class="wrapper">
+        <!-- Champion Datalist -->
+        <datalist id="champs">
+            <option value="None">
+        </datalist>
+
+        <!-- Settings -->
+        <div class="section">
+            <input class="setting" id="queueaccept" type="checkbox" value="Auto Queue Accept">
+            <label class="setting-label" for="queueaccept">Auto Queue Accept &nbsp;</label>
+            <input class="setting" id="lockin" type="checkbox" value="Auto Lock-In">
+            <label class="setting-label" for="lockin">Auto Lock-In</label>
+            <input class="setting" id="ban" type="checkbox" value="Auto Lock-In">
+            <label class="setting-label" for="ban">Auto Ban</label>
+            <input class="setting" id="runes" type="checkbox" value="Auto Runes + Spells">
+            <label class="setting-label" for="runes">Auto Runes + Spells</label>
         </div>
 
-        <!--Page Content-->
-        <div class="home_content">
-            <div class="wrapper">
-                <!-- Champion Datalist -->
-                <datalist id="champs">
-                    <option value="None">
-                </datalist>
+        <div class="disabled" id="firstpick">
+            <!-- Primary Role -->
+            <form id="firstpos">
+                <span>Primary Role</span>
+                <label>
+                    <input name="firstpos" type="radio" value="TOP">
+                    <img src="assets/img/positions/icon-position-top.png" style="width: 23px;">
+                </label>
+                <label>
+                    <input name="firstpos" type="radio" value="JUNGLE">
+                    <img src="assets/img/positions/icon-position-jungle.png" style="width: 23px;">
+                </label>
+                <label>
+                    <input name="firstpos" type="radio" value="MIDDLE">
+                    <img src="assets/img/positions/icon-position-middle.png" style="width: 23px;">
+                </label>
+                <label>
+                    <input name="firstpos" type="radio" value="BOTTOM">
+                    <img src="assets/img/positions/icon-position-bottom.png" style="width: 23px;">
+                </label>
+                <label>
+                    <input name="firstpos" type="radio" value="SUPPORT">
+                    <img src="assets/img/positions/icon-position-utility.png" style="width: 23px;">
+                </label>
+                <label>
+                    <input name="firstpos" type="radio" value="FILL">
+                    <img src="assets/img/positions/icon-position-fill.png" style="width: 23px;">
+                </label>
+            </form>
+        </div>
 
-                <!-- Settings -->
-                <div class="section">
-                    <input type="checkbox" id="queueaccept" value="Auto Queue Accept" class="setting">
-                    <label for="queueaccept" class="setting-label">Auto Queue Accept &nbsp;</label>
-                    <input type="checkbox" id="lockin" value="Auto Lock-In" class="setting">
-                    <label for="lockin" class="setting-label">Auto Lock-In</label>
-                    <input type="checkbox" id="ban" value="Auto Lock-In" class="setting">
-                    <label for="ban" class="setting-label">Auto Ban</label>
-                    <input type="checkbox" id="runes" value="Auto Runes + Spells" class="setting">
-                    <label for="runes" class="setting-label">Auto Runes + Spells</label>
-                </div>
+        <div>
+            <!-- Primary Champs -->
+            <div class="disabled champpicks" id="firstpospicks">
+                <input class="champentrybox" id="firstpos_firstpick" list="champs" placeholder="First Pick" type="text">
+                <input class="champentrybox" id="firstpos_secondpick" list="champs" placeholder="Second Pick"
+                       type="text">
+            </div>
 
-                <div id="firstpick" class="disabled">
-                    <!-- Primary Role -->
-                    <form id="firstpos">
-                        <span>Primary Role</span>
-                        <label>
-                            <input type="radio" name="firstpos" value="TOP">
-                            <img src="assets/img/positions/icon-position-top.png" style="width: 23px;">
-                        </label>
-                        <label>
-                            <input type="radio" name="firstpos" value="JUNGLE">
-                            <img src="assets/img/positions/icon-position-jungle.png" style="width: 23px;">
-                        </label>
-                        <label>
-                            <input type="radio" name="firstpos" value="MIDDLE">
-                            <img src="assets/img/positions/icon-position-middle.png" style="width: 23px;">
-                        </label>
-                        <label>
-                            <input type="radio" name="firstpos" value="BOTTOM">
-                            <img src="assets/img/positions/icon-position-bottom.png" style="width: 23px;">
-                        </label>
-                        <label>
-                            <input type="radio" name="firstpos" value="SUPPORT">
-                            <img src="assets/img/positions/icon-position-utility.png" style="width: 23px;">
-                        </label>
-                        <label>
-                            <input type="radio" name="firstpos" value="FILL">
-                            <img src="assets/img/positions/icon-position-fill.png" style="width: 23px;">
-                        </label>
-                    </form>
-                </div>
-
-                <div>
-                    <!-- Primary Champs -->
-                    <div id="firstpospicks" class="disabled champpicks">
-                        <input type="text" list="champs" placeholder="First Pick" id="firstpos_firstpick" class="champentrybox">
-                        <input type="text" list="champs" placeholder="Second Pick" id="firstpos_secondpick" class="champentrybox">
-                    </div>
-
-                    <!-- Primary Bans -->
-                    <div id="firstposbans" class="disabled champpicks">
-                        <input type="text" list="champs" placeholder="First Ban" id="firstpos_firstban" class="champentrybox">
-                        <input type="text" list="champs" placeholder="Second Ban" id="firstpos_secondban" class="champentrybox">
-                    </div>
-                </div>
-
-                <div id="secondpick" class="disabled">
-                    <!-- Secondary Role -->
-                    <form id="secondpos">
-                        <span>Secondary Role</span>
-                        <label>
-                            <input type="radio" name="secondpos" value="TOP">
-                            <img src="assets/img/positions/icon-position-top.png" style="width: 23px;">
-                        </label>
-                        <label>
-                            <input type="radio" name="secondpos" value="JUNGLE">
-                            <img src="assets/img/positions/icon-position-jungle.png" style="width: 23px;">
-                        </label>
-                        <label>
-                            <input type="radio" name="secondpos" value="MIDDLE">
-                            <img src="assets/img/positions/icon-position-middle.png" style="width: 23px;">
-                        </label>
-                        <label>
-                            <input type="radio" name="secondpos" value="BOTTOM">
-                            <img src="assets/img/positions/icon-position-bottom.png" style="width: 23px;">
-                        </label>
-                        <label>
-                            <input type="radio" name="secondpos" value="SUPPORT">
-                            <img src="assets/img/positions/icon-position-utility.png" style="width: 23px;">
-                        </label>
-                        <label>
-                            <input type="radio" name="secondpos" value="FILL">
-                            <img src="assets/img/positions/icon-position-fill.png" style="width: 23px;">
-                        </label>
-                    </form>
-                </div>
-
-                <div>
-                    <!-- Secondary Champs -->
-                    <div id="secondpospicks" class="disabled champpicks">
-                        <input type="text" list="champs" placeholder="First Pick" id="secondpos_firstpick" class="champentrybox">
-                        <input type="text" list="champs" placeholder="Second Pick" id="secondpos_secondpick" class="champentrybox">
-                    </div>
-
-                    <!-- Secondary Bans -->
-                    <div id="secondposbans" class="disabled champpicks">
-                        <input type="text" list="champs" placeholder="First Ban" id="secondpos_firstban" class="champentrybox">
-                        <input type="text" list="champs" placeholder="Second Ban" id="secondpos_secondban" class="champentrybox">
-                    </div>
-                </div>
-
-                <div class="status">
-                    <span id="autopilot_status">&nbsp</span>
-                    <div class="progress">
-                        <div class="progress__fill"></div>
-                        <span class="progress__text">0%</span>
-                    </div>
-                </div>
-
-                <input type="button" value="START" id="autopilot_btn" class="button" disabled>
+            <!-- Primary Bans -->
+            <div class="disabled champpicks" id="firstposbans">
+                <input class="champentrybox" id="firstpos_firstban" list="champs" placeholder="First Ban" type="text">
+                <input class="champentrybox" id="firstpos_secondban" list="champs" placeholder="Second Ban" type="text">
             </div>
         </div>
 
-        <!--Sidebar Driver JS Init-->
-        <script type="text/javascript" src="sidebar.js"></script>
-        <!--Javascript Init-->
-        <script type="text/javascript" src="autopilot.js"></script>
-    </body>
+        <div class="disabled" id="secondpick">
+            <!-- Secondary Role -->
+            <form id="secondpos">
+                <span>Secondary Role</span>
+                <label>
+                    <input name="secondpos" type="radio" value="TOP">
+                    <img src="assets/img/positions/icon-position-top.png" style="width: 23px;">
+                </label>
+                <label>
+                    <input name="secondpos" type="radio" value="JUNGLE">
+                    <img src="assets/img/positions/icon-position-jungle.png" style="width: 23px;">
+                </label>
+                <label>
+                    <input name="secondpos" type="radio" value="MIDDLE">
+                    <img src="assets/img/positions/icon-position-middle.png" style="width: 23px;">
+                </label>
+                <label>
+                    <input name="secondpos" type="radio" value="BOTTOM">
+                    <img src="assets/img/positions/icon-position-bottom.png" style="width: 23px;">
+                </label>
+                <label>
+                    <input name="secondpos" type="radio" value="SUPPORT">
+                    <img src="assets/img/positions/icon-position-utility.png" style="width: 23px;">
+                </label>
+                <label>
+                    <input name="secondpos" type="radio" value="FILL">
+                    <img src="assets/img/positions/icon-position-fill.png" style="width: 23px;">
+                </label>
+            </form>
+        </div>
+
+        <div>
+            <!-- Secondary Champs -->
+            <div class="disabled champpicks" id="secondpospicks">
+                <input class="champentrybox" id="secondpos_firstpick" list="champs" placeholder="First Pick"
+                       type="text">
+                <input class="champentrybox" id="secondpos_secondpick" list="champs" placeholder="Second Pick"
+                       type="text">
+            </div>
+
+            <!-- Secondary Bans -->
+            <div class="disabled champpicks" id="secondposbans">
+                <input class="champentrybox" id="secondpos_firstban" list="champs" placeholder="First Ban" type="text">
+                <input class="champentrybox" id="secondpos_secondban" list="champs" placeholder="Second Ban"
+                       type="text">
+            </div>
+        </div>
+
+        <div class="status">
+            <span id="autopilot_status">&nbsp</span>
+            <div class="progress">
+                <div class="progress__fill"></div>
+                <span class="progress__text">0%</span>
+            </div>
+        </div>
+
+        <input class="button" disabled id="autopilot_btn" type="button" value="START">
+    </div>
+</div>
+
+<!--Sidebar Driver JS Init-->
+<script src="sidebar.js" type="text/javascript"></script>
+<!--Javascript Init-->
+<script src="autopilot.js" type="text/javascript"></script>
+</body>
 </html>

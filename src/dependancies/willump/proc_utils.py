@@ -1,5 +1,5 @@
+from psutil import process_iter
 
-from psutil import process_iter, Process
 
 def parse_cmdline_args(cmdline_args):
     cmdline_args_parsed = {}
