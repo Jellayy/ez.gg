@@ -21,5 +21,5 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: ez.gg-alpha00.0${{ github.GITHUB_RUN_ATTEMPT }}
+        name: ez.gg-alpha00.0${{ github.RUN_ATTEMPT }}
         path: src/dist/windows
