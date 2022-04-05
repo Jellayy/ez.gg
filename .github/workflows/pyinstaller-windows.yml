@@ -1,5 +1,6 @@
 name: Package Application with Pyinstaller
-
+env:
+  project-name: ez.gg
 on:
   push:
     branches: [ master]
