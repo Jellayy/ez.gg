@@ -1,6 +1,7 @@
-import willump
 import asyncio
+
 import utils.opgg as opgg
+from dependancies import willump
 
 
 # Queries the local LCU API for the ID of the currently selected rune page
@@ -25,7 +26,8 @@ async def set_rune_page(client, champion):
     if set_rune_page_result.status == 201:
         print(f"Rune Generator: {champion} Runes Set! (Status {set_rune_page_result.status})")
     elif set_rune_page_result.status == 404:
-        print(f"ERROR: Rune Generator: Status {set_rune_page_result.status} when setting rune page! (Do you have a non-editable default page selected?)")
+        print(
+            f"ERROR: Rune Generator: Status {set_rune_page_result.status} when setting rune page! (Do you have a non-editable default page selected?)")
     else:
         print(f"ERROR: Rune Generator: Rune page application failed with status {set_rune_page_result.status}")
 

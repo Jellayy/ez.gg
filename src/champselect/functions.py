@@ -1,4 +1,5 @@
 from asyncio import sleep
+
 import eel
 
 import champselect.preferences as preferences
@@ -184,12 +185,6 @@ async def is_lobby(client):
         return False
 
 
-
-
-
-
-
-
 async def pick_champ(client, actorcellid, championid):
     call = f'/lol-lobby-team-builder/champ-select/v1/session/actions/{actorcellid}'
     pick = await client.request('PATCH', call, data={
@@ -220,9 +215,6 @@ async def gameflow_session(client):
     data = await gameflow.json()
     print(data)
     return data
-
-
-
 
 
 async def get_champ_grid(client, id):

@@ -41,5 +41,3 @@ def summoner_name_to_id(summoner_name):
         if summoner[0] == summoner_name:
             return summoner[1]['key']
     return None
-
-

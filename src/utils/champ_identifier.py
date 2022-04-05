@@ -1,7 +1,8 @@
 import asyncio
-import willump
-import utils.runes as runes
+
 import utils.ddragon as ddragon
+import utils.runes as runes
+from dependancies import willump
 
 
 # TODO: Rate limiting champ select check and champion pulling to 1sec reeeealy helped cpu usage a lot(0% pretty much), could probably go even further with a passive mode that only checks for champ select every 30sec-1min or so that can permanently run in the background without worry
@@ -27,7 +28,6 @@ async def get_champion_pick():
 
 
 async def main():
-
     await wait_for_champ_select()
     print("ENTERED CHAMP SELECT")
     pick = await get_champion_pick()
