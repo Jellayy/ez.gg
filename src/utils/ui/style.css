@@ -1,30 +1,33 @@
-@font-face { font-family: Friz-Quadrata; src: url('assets/fonts/friz_quadrata_regular-webfont.woff');}
+@font-face {
+    font-family: Friz-Quadrata;
+    src: url('assets/fonts/friz_quadrata_regular-webfont.woff');
+}
 
-  @keyframes wipe-in-right {
+@keyframes wipe-in-right {
     from {
-      clip-path: inset(0 100% 0 0);
+        clip-path: inset(0 100% 0 0);
     }
     to {
-      clip-path: inset(0 0 0 0);
+        clip-path: inset(0 0 0 0);
     }
-  }
-  
-  [transition-style="in:wipe:right"] {
+}
+
+[transition-style="in:wipe:right"] {
     animation: 2.5s cubic-bezier(.25, 1, .30, 1) wipe-in-right both;
-  }
+}
 
-  @keyframes wipe-out-left {
+@keyframes wipe-out-left {
     from {
-      clip-path: inset(0 0 0 0);
+        clip-path: inset(0 0 0 0);
     }
     to {
-      clip-path: inset(0 100% 0 0);
+        clip-path: inset(0 100% 0 0);
     }
-  }
-  
-  [transition-style="out:wipe:left"] {
+}
+
+[transition-style="out:wipe:left"] {
     animation: 2.5s cubic-bezier(.25, 1, .30, 1) wipe-out-left both;
-  }
+}
 
 * {
     margin: 0;
@@ -42,10 +45,11 @@ body {
     color: #ffffff;
 }
 
-body.preload *{
+body.preload * {
     animation-duration: 0s !important;
     -webkit-animation-duration: 0s !important;
-    transition:background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;}
+    transition: background-color 0s, opacity 0s, color 0s, width 0s, height 0s, padding 0s, margin 0s !important;
+}
 
 .sidebar {
     z-index: 100000;
@@ -415,7 +419,10 @@ form label {
 
 .overSelect {
     position: absolute;
-    left: 0; right: 0; top: 0; bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
 }
 
 #checkboxes {
