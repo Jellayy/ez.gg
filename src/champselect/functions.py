@@ -1,6 +1,5 @@
 from asyncio import sleep
 import eel
-
 import champselect.preferences as preferences
 
 
