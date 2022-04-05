@@ -2,9 +2,7 @@ import asyncio
 import json
 import logging
 from collections import defaultdict
-
 import aiohttp
-
 from dependancies.willump.live_events import LiveEvents
 from dependancies.willump.nunu import Nunu
 from dependancies.willump.proc_utils import parse_cmdline_args, find_LCU_process
