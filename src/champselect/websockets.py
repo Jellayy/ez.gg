@@ -118,8 +118,8 @@ async def champ_select(data):
 
         except TypeError:
             print("ERROR: Champ Select: NO DATA - This should never happen tbh")
-        except:
-            print("bad things")
+        except Exception as e:
+            print(f"ERROR: Champ Select: {e}")
 
 
 # async def report_listener(data):
@@ -132,6 +132,27 @@ async def champ_select(data):
 #         await champ_select_functions.report_champ_select(wllp, reports)
 #     except:
 #         print("something went wrong with report listener")
+
+
+async def gameflow_handler(data):
+    if eel.is_autopilot_ready()():
+        try:
+            if data['data'] == "Matchmaking":
+                eel.update_status_text("In queue...")()
+                eel.update_progressbar(0)()
+                print("Gameflow Handler: In queue")
+            if data['data'] == "Lobby":
+                eel.update_status_text("Autopilot is ready")()
+                eel.update_progressbar(0)()
+                print("Gameflow Handler: In Lobby")
+            if data['data'] == "InProgress":
+                eel.update_status_text("Autopilot is ready")()
+                eel.update_progressbar(0)()
+                print("Gameflow Handler: In Game")
+        except TypeError:
+            print("ERROR: Gameflow Handler: NO DATA")
+        except Exception as e:
+            print(f"ERROR: Gameflow Handler: {e}")
 
 
 async def main():
@@ -157,6 +178,9 @@ async def main():
     # Champ select event filter
     client.subscription_filter_endpoint(all_events_subscription, '/lol-champ-select/v1/summoners/',
                                         handler=champ_select)
+
+    # Gameflow filter
+    client.subscription_filter_endpoint(all_events_subscription, '/lol-gameflow/v1/gameflow-phase', handler=gameflow_handler)
 
     # client.subscription_filter_endpoint(all_events_subscription, '/lol-champ-select/v1/session', handler=report_listener)
 
