@@ -156,12 +156,17 @@ async def ban_champ(client):
         result = await lock_in(client, actor_id)
         if result == 204:
             print(f"Champ Select: {confirmed_ban_list[0]['name']} Banned! (Status {result})")
+            eel.update_status_text(f"{confirmed_ban_list[0]['name']} banned")()
+            eel.update_progressbar(50)()
         elif result == 500:
             print(f"Champ Select: Already banned (Status {result})")
+            eel.update_status_text("Auto-ban failed, check logs for more info")()
         else:
             print(f"ERROR: Champ Select: Ban lock in failed with status {result}")
+            eel.update_status_text("Auto-ban failed, check logs for more info")()
     except Exception as e:
         print(f"ERROR: Champ Select: Got error {e} while banning champion")
+        eel.update_status_text("Auto-ban failed, check logs for more info")()
 
 
 async def pick_champ():

@@ -1,21 +1,12 @@
 $(document).ready(function () {
 
-    $('#autopilot_btn').on('click', function () {
-        autopilot();
-    })
-
-    async function autopilot() {
-        await eel.run_autopilot()();
-    }
-
-    // Populate champion selection fields with all champions
+    // Populate champion selection fields with all champions from python ddragon
     async function get_champs() {
         let champs = await eel.get_all_champs()();
         for (var i = 0; i < champs.length; i++) {
             $('#champs').append("<option value='" + champs[i] + "'>");
         }
     }
-
     get_champs();
 
     // Auto queue accept button handler
@@ -84,6 +75,8 @@ $(document).ready(function () {
         button_ready_check();
     })
 
+    var autopilotReady = false;
+    // State engine for input checks
     function button_ready_check() {
         // Is auto lock-in selected?
         if ($('#lockin').is(':checked')) {
@@ -97,14 +90,17 @@ $(document).ready(function () {
                         if ($('#ban').is(':checked')) {
                             // Are first role bans selected?
                             if ($('#firstpos_firstban').val() && $('#firstpos_secondban').val()) {
-                                // All ok, enable button
-                                $('#autopilot_btn').prop("disabled", false);
+                                // All ok, enable autopilot
+                                autopilotReady = true;
+                                $('#autopilot_status').text('Autopilot is ready');
                             } else {
-                                $('#autopilot_btn').prop("disabled", true);
+                                autopilotReady = false;
+                                $('#autopilot_status').text('Awaiting Ban selections...');
                             }
                         } else {
-                            // All ok, enable button
-                            $('#autopilot_btn').prop("disabled", false);
+                            // All ok, enable autopilot
+                            autopilotReady = true;
+                            $('#autopilot_status').text('Autopilot is ready');
                         }
                     } else {
                         // Is second role selected?
@@ -117,91 +113,113 @@ $(document).ready(function () {
                                     if ($('#ban').is(':checked')) {
                                         // Are all bans selected?
                                         if ($('#firstpos_firstban').val() && $('#firstpos_secondban').val() && $('#secondpos_firstban').val() && $('#secondpos_secondban').val()) {
-                                            // All ok, enable button
-                                            $('#autopilot_btn').prop("disabled", false);
+                                            // All ok, enable autopilot
+                                            autopilotReady = true;
+                                            $('#autopilot_status').text('Autopilot is ready');
                                         } else {
-                                            $('#autopilot_btn').prop("disabled", true);
+                                            autopilotReady = false;
+                                            $('#autopilot_status').text('Awaiting ban selections...');
                                         }
                                     } else {
-                                        // All ok, enable button
-                                        $('#autopilot_btn').prop("disabled", false);
+                                        // All ok, enable autopilot
+                                        autopilotReady = true;
+                                        $('#autopilot_status').text('Autopilot is ready');
                                     }
                                 } else {
-                                    $('#autopilot_btn').prop("disabled", true);
+                                    autopilotReady = false;
+                                    $('#autopilot_status').text('Awaiting secondary role pick selections...');
                                 }
                             } else {
-                                $('#autopilot_btn').prop("disabled", true);
+                                autopilotReady = false;
+                                $('#autopilot_status').text('Secondary role must be different from primary...');
                             }
                         } else {
-                            $('#autopilot_btn').prop("disabled", true);
+                            autopilotReady = false;
+                            $('#autopilot_status').text('Awaiting secondary role selection...');
                         }
                     }
                 } else {
-                    $('#autopilot_btn').prop("disabled", true);
+                    autopilotReady = false;
+                    $('#autopilot_status').text('Awaiting primary role pick selections...');
                 }
             } else {
-                $('#autopilot_btn').prop("disabled", true);
+                autopilotReady = false;
+                $('#autopilot_status').text('Awaiting primary role selection...');
             }
         } else {
             // Is auto ban selected?
             if ($('#ban').is(':checked')) {
                 // Are two bans selected?
                 if ($('#firstpos_firstban').val() && $('#firstpos_secondban').val()) {
-                    // All ok, enable button
-                    $('#autopilot_btn').prop("disabled", false);
+                    // All ok, enable autopilot
+                    autopilotReady = true;
+                    $('#autopilot_status').text('Autopilot is ready');
                 } else {
-                    $('#autopilot_btn').prop("disabled", true);
+                    autopilotReady = false;
+                    $('#autopilot_status').text('Awaiting ban selections...');
                 }
             } else {
                 // Is auto queue accept selected?
                 if ($('#queueaccept').is(':checked')) {
-                    $('#autopilot_btn').prop("disabled", false);
+                    autopilotReady = true;
+                    $('#autopilot_status').text('Autopilot is ready');
                 } else {
-                    $('#autopilot_btn').prop("disabled", true);
+                    autopilotReady = false;
+                    $('#autopilot_status').text('Awaiting selections...');
                 }
             }
         }
     }
 
-    // Expose selections
-    eel.expose(get_queue_preference);
+    // Expose progressbar and status text to python
+    eel.expose(update_progressbar);
+    function update_progressbar(value) {
+        $('.progress__fill').css("width", `${value}%`);
+        $('.progress__text').html(`${value}%`);
+    }
 
+    eel.expose(update_status_text);
+    function update_status_text(value) {
+        $('#autopilot_status').text(value);
+    }
+
+    // Expose selections
+    eel.expose(is_autopilot_ready);
+    function is_autopilot_ready() {
+        return autopilotReady;
+    }
+
+    eel.expose(get_queue_preference);
     function get_queue_preference() {
         return $('#queueaccept').is(':checked');
     }
 
     eel.expose(get_lock_in_preference);
-
     function get_lock_in_preference() {
         return $('#lockin').is(':checked');
     }
 
     eel.expose(get_auto_ban_preference);
-
     function get_auto_ban_preference() {
         return $('#ban').is(':checked');
     }
 
     eel.expose(get_runes_preference);
-
     function get_runes_preference() {
         return $('#runes').is(':checked');
     }
 
     eel.expose(get_roles);
-
     function get_roles() {
         return [$('input[name=firstpos]:checked', '#firstpos').val(), $('input[name=secondpos]:checked', '#secondpos').val()]
     }
 
     eel.expose(get_pick_preferences);
-
     function get_pick_preferences() {
         return [$('#firstpos_firstpick').val(), $('#firstpos_secondpick').val(), $('#secondpos_firstpick').val(), $('#secondpos_secondpick').val()]
     }
 
     eel.expose(get_ban_preferences);
-
     function get_ban_preferences() {
         return [$('#firstpos_firstban').val(), $('#firstpos_secondban').val(), $('#secondpos_firstban').val(), $('#secondpos_secondban').val()]
     }
