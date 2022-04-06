@@ -100,8 +100,11 @@ async def accept_queue(client):
     accept = await client.request('POST', call)
     if accept.status == 204:
         print(f"Queue Acceptor: Queue Accepted! (status {accept.status})")
+        eel.update_status_text("Queue accepted")()
+        eel.update_progressbar(25)()
     else:
         print(f"ERROR: Queue Acceptor: Queue unable to be accepted with status: {accept.status}")
+        eel.update_status_text("Queue accept failed, check logs for more info")()
 
 
 async def is_lobby_leader(client):

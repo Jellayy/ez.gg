@@ -171,6 +171,18 @@ $(document).ready(function () {
         }
     }
 
+    // Expose progressbar and status text to python
+    eel.expose(update_progressbar);
+    function update_progressbar(value) {
+        $('.progress__fill').css("width", `${value}%`);
+        $('.progress__text').html(`${value}%`);
+    }
+
+    eel.expose(update_status_text);
+    function update_status_text(value) {
+        $('#autopilot_status').text(value);
+    }
+
     // Expose selections
     eel.expose(is_autopilot_ready);
     function is_autopilot_ready() {

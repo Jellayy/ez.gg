@@ -1,5 +1,5 @@
 import asyncio
-
+import eel
 import utils.opgg as opgg
 from dependancies import willump
 
@@ -25,11 +25,15 @@ async def set_rune_page(client, champion):
     # Error Handling for non-editable default page selected
     if set_rune_page_result.status == 201:
         print(f"Rune Generator: {champion} Runes Set! (Status {set_rune_page_result.status})")
+        eel.update_status_text(f"{champion} runes set")()
+        eel.update_progressbar(75)()
     elif set_rune_page_result.status == 404:
         print(
             f"ERROR: Rune Generator: Status {set_rune_page_result.status} when setting rune page! (Do you have a non-editable default page selected?)")
+        eel.update_status_text("Cannot set rune page, select an editable rune page")()
     else:
         print(f"ERROR: Rune Generator: Rune page application failed with status {set_rune_page_result.status}")
+        eel.update_status_text("Rune generation failed, check logs for more info")()
 
 
 ########################################################################################################################

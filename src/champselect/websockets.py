@@ -33,6 +33,7 @@ async def queue_acceptor(data):
                 # Check if Auto Queue Accept is enabled or in testing mode
                 if testing or eel.get_queue_preference()():
                     print("Queue Acceptor: Auto Accepting Queue...")
+                    eel.update_status_text("Auto Accepting Queue...")()
                     # Send Queue Accept Request
                     await functions.accept_queue(client)
                 else:
@@ -82,6 +83,7 @@ async def champ_select(data):
                 if testing or eel.get_auto_ban_preference()():
                     # Send Champion Ban Request
                     print("Champ Select: Auto-Banning Champion...")
+                    eel.update_status_text("Auto-Banning Champion...")()
                     await champ_select_functions.ban_champ(client)
                 else:
                     print("Champ Select: Auto-Ban Not Enabled")
@@ -103,10 +105,15 @@ async def champ_select(data):
                 if eel.get_runes_preference()():
                     # Get champion
                     pick = data['data']['championName']
+                    # Set Runes
                     print("Champ Select: Setting Runes...")
+                    eel.update_status_text("Setting Runes...")()
                     await runes.set_rune_page(client, pick)
+                    # Set Spells
                     print("Champ Select: Setting Spells...")
+                    eel.update_status_text("Setting Spells...")()
                     await sum_spells.set_sum_spells(client, pick)
+                    # Update Runes Status
                     runes_set = True
 
         except TypeError:
