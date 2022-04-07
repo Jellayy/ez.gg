@@ -27,7 +27,7 @@ class Willump:
         while not lcu_process:
             lcu_process = find_LCU_process()
             logging.warn("couldn't find LCUx process yet. Re-searching process list...")
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(5)
 
         logging.info("found LCUx process " + lcu_process.name())
         process_args = parse_cmdline_args(lcu_process.cmdline())
