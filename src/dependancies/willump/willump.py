@@ -48,7 +48,7 @@ class Willump:
                 break
             except aiohttp.client_exceptions.ClientConnectorError:
                 logging.warn("can't connect to LCUx server. Retrying...")  # this might be too much log spam
-                await asyncio.sleep(0.5)
+                await asyncio.sleep(5)
                 pass
 
         if with_websocket:
