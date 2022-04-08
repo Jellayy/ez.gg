@@ -1,4 +1,6 @@
 import asyncio
+import logging
+
 import eel
 import utils.ddragon as ddragon
 import utils.opgg as opgg
@@ -24,11 +26,11 @@ async def set_sum_spells(client, champion):
                                                  data={"spell1Id": spell_ids[0], "spell2Id": spell_ids[1]})
 
     if set_sum_spells_result.status == 204:
-        print(f"Spell Generator: {champion} Spells Set! (Status {set_sum_spells_result.status})")
+        logging.debug(f"Spell Generator: {champion} Spells Set! (Status {set_sum_spells_result.status})")
         eel.update_status_text(f"{champion} spells set")()
         eel.update_progressbar(100)()
     else:
-        print(f"ERROR: Spell Generator: Spell application failed with status {set_sum_spells_result.status}")
+        logging.error(f"Spell Generator: Spell application failed with status {set_sum_spells_result.status}")
         eel.update_status_text("Auto spells failed, check logs for more info")()
 
 

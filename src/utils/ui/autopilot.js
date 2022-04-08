@@ -4,13 +4,18 @@ $(document).ready(function () {
     async function get_champs() {
         let champs = await eel.get_all_champs()();
         for (var i = 0; i < champs.length; i++) {
-            $('#champs').append("<option value='" + champs[i] + "'>");
+            $('#champs').append('<option value="' + champs[i] + '">');
         }
     }
     get_champs();
 
     // Auto queue accept button handler
     $('#queueaccept').change(function () {
+        button_ready_check();
+    })
+
+    // Auto runes button handler
+    $('#runes').change(function () {
         button_ready_check();
     })
 
@@ -161,6 +166,10 @@ $(document).ready(function () {
             } else {
                 // Is auto queue accept selected?
                 if ($('#queueaccept').is(':checked')) {
+                    autopilotReady = true;
+                    $('#autopilot_status').text('Autopilot is ready');
+                // Is auto runes enabled?
+                } else if ($('#runes').is(':checked')) {
                     autopilotReady = true;
                     $('#autopilot_status').text('Autopilot is ready');
                 } else {

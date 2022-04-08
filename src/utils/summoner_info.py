@@ -1,12 +1,9 @@
 import asyncio
-
 from dependancies import willump
 
 
-async def get_summoner():
-    wllp = await willump.start()
-    response = await wllp.request('get', '/lol-summoner/v1/current-summoner')
-    await wllp.close()
+async def get_summoner(client):
+    response = await client.request('get', '/lol-summoner/v1/current-summoner')
     return await response.json()
 
 

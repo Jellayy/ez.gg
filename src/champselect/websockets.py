@@ -1,6 +1,5 @@
 import asyncio
 import logging
-
 import eel
 
 from champselect import functions, champ_select_functions
@@ -29,19 +28,19 @@ async def queue_acceptor(data):
         try:
             # Check if Queue is not already accepted
             if data['data']['playerResponse'] == 'None':
-                print("Queue Acceptor: Queue Pop Detected")
+                logging.debug("Queue Acceptor: Queue Pop Detected")
                 # Check if Auto Queue Accept is enabled or in testing mode
                 if testing or eel.get_queue_preference()():
-                    print("Queue Acceptor: Auto Accepting Queue...")
+                    logging.debug("Queue Acceptor: Auto Accepting Queue...")
                     eel.update_status_text("Auto Accepting Queue...")()
                     # Send Queue Accept Request
                     await functions.accept_queue(client)
                 else:
-                    print("Queue Acceptor: Auto Queue Accept Not Enabled")
+                    logging.debug("Queue Acceptor: Auto Queue Accept Not Enabled")
 
         except TypeError:
             # No data given with call
-            print("WARNING: Queue Acceptor called without queue popped (This is normal)")
+            logging.warning("Queue Acceptor: called without queue popped (This is normal)")
 
 
 # TODO: Actually implement auto role selecting properly
@@ -64,38 +63,36 @@ async def champ_select(data):
             # Persistent value for tracking rune page status
             global runes_set
 
-            # TODO: Implement auto champion picks (currently uses old preferences file)
             # Hover Stage
             if data['data']['isSelf'] and data['data']['isPickIntenting']:
-                print("Champ Select: Hovering Stage")
+                logging.debug("Champ Select: Hovering Stage")
                 # Check if Auto Lock In enabled or in testing mode
                 if testing or eel.get_lock_in_preference()():
-                    print("Champ Select: Hovering Champion...")
+                    logging.debug("Champ Select: Hovering Champion...")
                     await champ_select_functions.hover_champ()
                 else:
-                    print("Champ Select: Not Hovering - Auto Lock-In Not Enabled")
+                    logging.debug("Champ Select: Not Hovering - Auto Lock-In Not Enabled")
 
             # Banning Stage
             if data['data']['isSelf'] and data['data']['activeActionType'] == "ban" and data['data'][
                 'banIntentSquarePortratPath'] == "":
-                print("Champ Select: Banning Stage")
+                logging.debug("Champ Select: Banning Stage")
                 # Check if Auto Ban enabled or in testing mode
                 if testing or eel.get_auto_ban_preference()():
                     # Send Champion Ban Request
-                    print("Champ Select: Auto-Banning Champion...")
+                    logging.debug("Champ Select: Auto-Banning Champion...")
                     eel.update_status_text("Auto-Banning Champion...")()
                     await champ_select_functions.ban_champ(client)
                 else:
-                    print("Champ Select: Auto-Ban Not Enabled")
+                    logging.debug("Champ Select: Auto-Ban Not Enabled")
 
-            # TODO: Implement auto champion picks (currently uses old preferences file)
             # Pick Stage
             if data['data']['isSelf'] and data['data']['activeActionType'] == "pick":
-                print("Champ Select: Pick Stage")
+                logging.debug("Champ Select: Pick Stage")
                 if eel.get_lock_in_preference()():
                     await champ_select_functions.pick_champ()
                 else:
-                    print("Champ Select: Not Locking In - Auto Lock-In Not Enabled")
+                    logging.debug("Champ Select: Not Locking In - Auto Lock-In Not Enabled")
 
                 # Reset rune page tracking
                 runes_set = False
@@ -106,20 +103,20 @@ async def champ_select(data):
                     # Get champion
                     pick = data['data']['championName']
                     # Set Runes
-                    print("Champ Select: Setting Runes...")
+                    logging.debug("Champ Select: Setting Runes...")
                     eel.update_status_text("Setting Runes...")()
                     await runes.set_rune_page(client, pick)
                     # Set Spells
-                    print("Champ Select: Setting Spells...")
+                    logging.debug("Champ Select: Setting Spells...")
                     eel.update_status_text("Setting Spells...")()
                     await sum_spells.set_sum_spells(client, pick)
                     # Update Runes Status
                     runes_set = True
 
         except TypeError:
-            print("ERROR: Champ Select: NO DATA - This should never happen tbh")
+            logging.error("Champ Select: NO DATA - This should never happen tbh")
         except Exception as e:
-            print(f"ERROR: Champ Select: {e}")
+            logging.error(f"Champ Select: {e}")
 
 
 # async def report_listener(data):
@@ -140,23 +137,23 @@ async def gameflow_handler(data):
             if data['data'] == "Matchmaking":
                 eel.update_status_text("In queue...")()
                 eel.update_progressbar(0)()
-                print("Gameflow Handler: In queue")
+                logging.debug("Gameflow Handler: In queue")
             if data['data'] == "Lobby":
                 eel.update_status_text("Autopilot is ready")()
                 eel.update_progressbar(0)()
-                print("Gameflow Handler: In Lobby")
+                logging.debug("Gameflow Handler: In Lobby")
             if data['data'] == "InProgress":
                 eel.update_status_text("Autopilot is ready")()
                 eel.update_progressbar(0)()
-                print("Gameflow Handler: In Game")
+                logging.debug("Gameflow Handler: In Game")
         except TypeError:
-            print("ERROR: Gameflow Handler: NO DATA")
+            logging.warning("ERROR: Gameflow Handler: NO DATA")
         except Exception as e:
-            print(f"ERROR: Gameflow Handler: {e}")
+            logging.error(f"ERROR: Gameflow Handler: {e}")
 
 
 async def main():
-    print("Autopilot: Autopilot Enabled")
+    logging.debug("Autopilot: Autopilot Started")
 
     global runes_set
     runes_set = False
@@ -194,8 +191,8 @@ if __name__ == '__main__':
     # Disable UI checks
     testing = True
 
-    # uncomment this line if you want to see willump complain (debug log)
-    logging.basicConfig(level=logging.NOTSET)
+    # # uncomment this line if you want to see willump complain (debug log)
+    # logging.basicConfig(level=logging.NOTSET)
 
     # Open loop and run until keyboard interrupt
     loop = asyncio.get_event_loop()

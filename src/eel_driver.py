@@ -2,6 +2,9 @@ import asyncio
 import platform
 import sys
 import threading
+import logging
+from logging.handlers import RotatingFileHandler
+from pathlib import Path
 
 import eel
 
@@ -36,9 +39,9 @@ def get_all_champs():
     return ddragon.get_all_champs()
 
 
-@eel.expose
-def get_summoner_info():
-    return asyncio.run(summoner_info.get_summoner())
+# @eel.expose
+# def get_summoner_info():
+#     return asyncio.run(summoner_info.get_summoner())
 
 
 def worker(loop):
@@ -51,6 +54,22 @@ def run_autopilot():
     pass
 
 
+# Start Logging
+home_folder = str(Path.home())
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        RotatingFileHandler(f"{home_folder}/ezgg-logs.txt", maxBytes=5000000, backupCount=1),
+        logging.StreamHandler()
+    ]
+)
+logging.getLogger("geventwebsocket.handler").disabled = True
+logging.getLogger("asyncio").disabled = True
+logging.getLogger("urllib3.connectionpool").disabled = True
+logging.info('logging started')
+
+# Start websockets
 loop = asyncio.new_event_loop()
 websocket = threading.Thread(name='websocket', target=worker, args=(loop,))
 websocket.daemon = True
