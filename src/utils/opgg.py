@@ -1,4 +1,5 @@
 import asyncio
+import logging
 
 import bs4
 import requests
@@ -42,7 +43,7 @@ async def get_rune_page(champion):
         runes.append(entry.split("/")[6].split(".")[0])
 
     # Logging
-    print(f"OP.GG Scraper: {champion} Page: {runes} Generated!")
+    logging.debug(f"OP.GG Scraper: {champion} Page: {runes} Generated!")
 
     return runes
 
@@ -67,7 +68,7 @@ async def get_sum_spells(champion):
         spells.append(entry.split("/")[6].split(".")[0])
 
     # Logging
-    print(f"OP.GG Scraper: {champion} Spells: {spells} Generated!")
+    logging.debug(f"OP.GG Scraper: {champion} Spells: {spells} Generated!")
 
     return spells
 

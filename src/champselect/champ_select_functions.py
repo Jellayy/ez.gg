@@ -1,3 +1,4 @@
+import logging
 import random
 import eel
 import champselect.preferences as preferences
@@ -124,7 +125,7 @@ async def ban_champ(client):
 
         # Add none ban in case all bans are hovered
         ban_list.append({'name': 'None', 'id': -1})
-        print(f"Champ Select: Ban List: {ban_list}")
+        logging.debug(f"Champ Select: Ban List: {ban_list}")
 
         # Get Team Picks
         team_picks = []
@@ -132,7 +133,7 @@ async def ban_champ(client):
         result_json = await result.json()
         for player in result_json['myTeam']:
             team_picks.append(player['championPickIntent'])
-        print(f"Champ Select: Team Hovers: {team_picks}")
+        logging.debug(f"Champ Select: Team Hovers: {team_picks}")
 
         # Check if you're banning a teammate pick
         confirmed_ban_list = []
@@ -141,31 +142,31 @@ async def ban_champ(client):
                 print(f"Champ Select: {ban['name']} hovered by teammate, skipping")
             else:
                 confirmed_ban_list.append(ban)
-        print(f"Champ Select: Confirmed Ban List: {confirmed_ban_list}")
+        logging.debug(f"Champ Select: Confirmed Ban List: {confirmed_ban_list}")
 
         # Hover Ban
         result = await hover_ban(client, actor_id, confirmed_ban_list[0]['id'])
         if result == 204:
-            print(f"Champ Select: Ban hovered (Status {result})")
+            logging.debug(f"Champ Select: Ban hovered (Status {result})")
         elif result == 500:
-            print(f"Champ Select: Ban already hovered (Status {result})")
+            logging.warning(f"Champ Select: Ban already hovered (Status {result})")
         else:
-            print(f"ERROR: Champ Select: Ban hover failed with status {result}")
+            logging.error(f"Champ Select: Ban hover failed with status {result}")
 
         # Lock In Ban
         result = await lock_in(client, actor_id)
         if result == 204:
-            print(f"Champ Select: {confirmed_ban_list[0]['name']} Banned! (Status {result})")
+            logging.debug(f"Champ Select: {confirmed_ban_list[0]['name']} Banned! (Status {result})")
             eel.update_status_text(f"{confirmed_ban_list[0]['name']} banned")()
             eel.update_progressbar(50)()
         elif result == 500:
-            print(f"Champ Select: Already banned (Status {result})")
+            logging.warning(f"Champ Select: Already banned (Status {result})")
             eel.update_status_text("Auto-ban failed, check logs for more info")()
         else:
-            print(f"ERROR: Champ Select: Ban lock in failed with status {result}")
+            logging.error(f"Champ Select: Ban lock in failed with status {result}")
             eel.update_status_text("Auto-ban failed, check logs for more info")()
     except Exception as e:
-        print(f"ERROR: Champ Select: Got error {e} while banning champion")
+        logging.error(f"Champ Select: Got error {e} while banning champion")
         eel.update_status_text("Auto-ban failed, check logs for more info")()
 
 

@@ -1,3 +1,4 @@
+import logging
 from asyncio import sleep
 
 import eel
@@ -99,11 +100,11 @@ async def accept_queue(client):
     call = '/lol-matchmaking/v1/ready-check/accept'
     accept = await client.request('POST', call)
     if accept.status == 204:
-        print(f"Queue Acceptor: Queue Accepted! (status {accept.status})")
+        logging.debug(f"Queue Acceptor: Queue Accepted! (status {accept.status})")
         eel.update_status_text("Queue accepted")()
         eel.update_progressbar(25)()
     else:
-        print(f"ERROR: Queue Acceptor: Queue unable to be accepted with status: {accept.status}")
+        logging.error(f"Queue Acceptor: Queue unable to be accepted with status: {accept.status}")
         eel.update_status_text("Queue accept failed, check logs for more info")()
 
 
