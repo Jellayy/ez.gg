@@ -4,7 +4,7 @@ $(document).ready(function () {
     async function get_champs() {
         let champs = await eel.get_all_champs()();
         for (var i = 0; i < champs.length; i++) {
-            $('#champs').append("<option value='" + champs[i] + "'>");
+            $('#champs').append('<option value="' + champs[i] + '">');
         }
     }
     get_champs();

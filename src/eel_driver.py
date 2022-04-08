@@ -39,9 +39,9 @@ def get_all_champs():
     return ddragon.get_all_champs()
 
 
-@eel.expose
-def get_summoner_info():
-    return asyncio.run(summoner_info.get_summoner())
+# @eel.expose
+# def get_summoner_info():
+#     return asyncio.run(summoner_info.get_summoner())
 
 
 def worker(loop):
