@@ -13,6 +13,8 @@ EZ.GG can:
 ## Installation & Usage
  EZ.GG is currently in beta. Some features will be disabled in public releases while we work on them. Features available in the beta will probably have bugs. We greatly encourage you to open up issues for any bugs you experience to help us make the app better! For bug reporting, please see [this section](#bug-reporting).
  <br><br>
+It is highly recommended that you have a chrome/chromium installation to use EZ.GG. While there is a fallback for other browsers, the experience is not good.
+<br><br>
  To use the latest beta, head over to the [releases tab](https://github.com/Jellayy/ez.gg/releases) for exe and dmg releases.
  <br><br>
  If you'd like to access dev versions or want to tinker with the code yourself, clone and run the repo using the commands below:
