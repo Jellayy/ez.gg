@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>EZ.GG Beta v0.1</title>
+    <title>EZ.GG</title>
 
     <!-- Expose eel -->
     <script src="/eel.js" type="text/javascript"></script>
@@ -77,7 +77,22 @@
 
     </div>
 
+    <!-- Update Notifier -->
+    <div class="update-banner" hidden>
+        <div class="update-banner__inner">
+            <div class="update-banner__copy">
+                <div class="update-banner__header">Update Available!</div>
+                <div class="update-banner__description">
+                    <span id="update_description">A new version of EZ.GG is available on GitHub, please update for the latest features and fixes!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!--Sidebar Driver JS Init-->
     <script src="sidebar.js" type="text/javascript"></script>
+
+    <!-- Version Handler Init-->
+    <script src="version_handler.js" type="text/javascript"></script>
 </body>
 </html>
