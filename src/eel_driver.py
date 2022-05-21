@@ -54,6 +54,11 @@ def run_autopilot():
     pass
 
 
+@eel.expose
+def get_version():
+    return "Beta v0.1.1"
+
+
 # Start Logging
 home_folder = str(Path.home())
 logging.basicConfig(
