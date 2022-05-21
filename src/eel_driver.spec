@@ -38,4 +38,4 @@ exe = EXE(pyz,
           target_arch=None,
           codesign_identity=None,
           entitlements_file=None,
-          icon='/utils/ui/assets/favicon.png')
+          icon='/utils/ui/assets/favicon.ico')
