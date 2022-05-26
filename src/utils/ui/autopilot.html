@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>EZ.GG Beta v0.1</title>
+    <title>EZ.GG</title>
 
     <!-- Expose eel -->
     <script src="/eel.js" type="text/javascript"></script>
@@ -15,8 +15,24 @@
     <!--Fontawesome icon init-->
     <link href="assets/fontawesome/css/all.min.css" rel="stylesheet">
 
-    <!--Favicon-->
-    <link href="assets/favicon.png" rel="icon">
+    <!--Themeing and icons-->
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="assets/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="manifest" href="assets/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 </head>
 <body class="preload">
 
@@ -180,11 +196,25 @@
         <input class="button" disabled id="autopilot_btn" type="button" value="START">
         -->
     </div>
+
+    <!-- Update Notifier -->
+    <div class="update-banner" hidden>
+        <div class="update-banner__inner">
+            <div class="update-banner__copy">
+                <div class="update-banner__header">Update Available!</div>
+                <div class="update-banner__description">
+                    <span id="update_description">A new version of EZ.GG is available on GitHub, please update for the latest features and fixes!</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!--Sidebar Driver JS Init-->
 <script src="sidebar.js" type="text/javascript"></script>
 <!--Javascript Init-->
 <script src="autopilot.js" type="text/javascript"></script>
+<!-- Version Handler Init-->
+<script src="version_handler.js" type="text/javascript"></script>
 </body>
 </html>

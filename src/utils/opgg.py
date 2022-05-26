@@ -19,20 +19,18 @@ async def get_rune_page(champion):
 
     runes = []
     # Keystone
-    data = r_soup.find_all("div", {"class": "css-1w13bvn e495vw30"}, limit=1)
+    data = r_soup.find_all("div", {"class": "css-r2m0dx e1o8f101"}, limit=1)
     runes.append(str(data).split("img")[1].split("/")[6].split(".")[0])
 
     # Primary and Secondary Tree Perks
-    data = r_soup.find_all("div", {"class": "css-l5ga7x e495vw30"}, limit=5)
+    data = r_soup.find_all("div", {"class": "css-1rjzcri e1o8f101"}, limit=5)
     for entry in data:
         runes.append(str(entry).split("img")[1].split("/")[6].split(".")[0])
 
     # Flex Perk Tree
-    data = r_soup.find_all("div", {"class": "css-1my9c6 e14t5af50"}, limit=1)
-    data = str(data).split("img")
-    data.pop(0)
+    data = r_soup.find_all("img", {"class": "css-anaetp e1gtrici1"}, limit=9)
     for entry in data:
-        if not entry.__contains__('grayscale'):
+        if 'grayscale' not in str(entry):
             runes.append(str(entry).split("/")[6].split(".")[0])
 
     # Keystone and Secondary Tree
@@ -61,7 +59,7 @@ async def get_sum_spells(champion):
     r_soup = bs4.BeautifulSoup(r.text, 'html.parser')
 
     spells = []
-    data = r_soup.find_all("ul", {"class": "css-wc914 e1jyy41s0"}, limit=1)
+    data = r_soup.find_all("ul", {"class": "css-14r5yga esh6m080"}, limit=1)
     data = str(data).split("img")
     data.pop(0)
     for entry in data:
@@ -79,11 +77,11 @@ async def get_sum_spells(champion):
 async def main():
     # Should return ELEVEN perks
     # Example: ['8112', '8126', '8138', '8105', '8226', '8233', '5008', '5008', '5003', '8100', '8200']
-    await get_rune_page("Cho'Gath")
+    print(await get_rune_page("Cho'Gath"))
 
     # Should return TWO perks
     # Example: ['SummonerFlash', 'SummonerDot']
-    await get_sum_spells("Cho'Gath")
+    print(await get_sum_spells("Cho'Gath"))
 
 
 if __name__ == '__main__':
