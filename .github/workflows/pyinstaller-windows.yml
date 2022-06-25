@@ -2,7 +2,7 @@ name: Package Application with Pyinstaller
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, build-test ]
   pull_request:
     branches: [ master ]
 
