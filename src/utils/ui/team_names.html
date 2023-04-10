@@ -60,13 +60,13 @@
             <span class="tooltip">Autopilot</span>
         </li>
         <li>
-            <a href="team_names.html">
+            <a class="active" href="#">
                 <i class="fa-solid fa-house"></i>
                 <span class="links_name">Team Names</span>
             </a>
         </li>
         <li>
-            <a class="active" href="#">
+            <a href="debug.html">
                 <i class="fa-solid fa-terminal"></i>
                 <span class="links_name">Debug</span>
             </a>
@@ -78,10 +78,13 @@
 <!--Page Content-->
 <div class="home_content">
     <div class="wrapper">
+        <button class="setting-label" id="get-names-btn">Get Ranked Names</button>
+        <div id="names-container">
+            <ul id="names-list"></ul>
+        </div>
 
-        <span id="test">Coming Soon!<br><br> For now logs are located at ~/ezgg-logs.txt</span>
-
-    </div>
+        <button class="setting-label" id="goto-multisearch-btn" hidden>Go to MultiSearch on U.GG</button>
+    </div>    
 
     <!-- Update Notifier -->
     <div class="update-banner" hidden>
@@ -98,7 +101,13 @@
     <!--Sidebar Driver JS Init-->
     <script src="sidebar.js" type="text/javascript"></script>
 
+    <!-- main.js init -->
+    <script src="main.js" type="text/javascript"></script>
+
     <!-- Version Handler Init-->
     <script src="version_handler.js" type="text/javascript"></script>
+
+    <!-- Get Ranked Names Init-->
+    <script src="get_names.js" type="text/javascript"></script>
 </body>
 </html>
