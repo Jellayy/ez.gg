@@ -14,32 +14,11 @@ import base64
 import eel
 
 from champselect import websockets
-from utils import ddragon, runes, sum_spells, summoner_info, champ_identifier
+from utils import ddragon, runes, sum_spells, summoner_info, champ_identifier, ranked_names
 
 @eel.expose
 def get_ranked_names():
-    # Find the LeagueClient.exe process and extract the required information
-    for process in psutil.process_iter():
-        if process.name() == 'LeagueClient.exe':
-            port = process.cmdline()[2].split('=')[1]
-            auth_key = process.cmdline()[1].split('=')[1]
-            break
-
-    # Create URL and headers for the request
-    url = f'https://127.0.0.1:{port}/chat/v5/participants/champ-select'
-    headers = {
-        'Authorization': f"Basic {base64.b64encode(f'riot:{auth_key}'.encode()).decode()}",
-        'Accept': 'application/json'
-    }
-
-    # Get the response from the server
-    response = requests.get(url=url, headers=headers, verify=r"{}\riotgames.pem".format(os.getcwd()))
-
-    # Parse the JSON response and extract the names
-    response_data = json.loads(''.join(chunk.decode() for chunk in response))
-    names = [participant['name'] for participant in response_data['participants']]
-
-    return names
+    return asyncio.run(ranked_names.get_ranked_names())
 
 # Rune Generator Functions
 @eel.expose

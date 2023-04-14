@@ -1,44 +1,41 @@
 $(document).ready(function () {
-    document.getElementById("get-names-btn").addEventListener("click", async function () {
+    $("#get-names-btn").on("click", async function () {
         const names = await eel.get_ranked_names()();
-        const namesList = document.getElementById("names-list");
-        namesList.innerHTML = ""; // Clear the list before adding new names
+        const namesList = $("#names-list");
+        namesList.empty(); // Clear the list before adding new names
     
         names.forEach((name) => {
-            const listItem = document.createElement("li");
-            listItem.textContent = name;
-            namesList.appendChild(listItem);
+            const listItem = $("<li>").text(name);
+            namesList.append(listItem);
         });
-    });    
+    });
 
-    document.getElementById("get-names-btn").addEventListener("click", async function () {
+    $("#get-names-btn").on("click", async function () {
         const names = await eel.get_ranked_names()();
-        const namesList = document.getElementById("names-list");
-        namesList.innerHTML = ""; // Clear the list before adding new names
+        const namesList = $("#names-list");
+        namesList.empty(); // Clear the list before adding new names
     
         names.forEach((name) => {
-            const listItem = document.createElement("li");
-            listItem.textContent = name;
-            namesList.appendChild(listItem);
+            const listItem = $("<li>").text(name);
+            namesList.append(listItem);
         });
     
         // Show the button and set the redirection URL
-        const gotoMultisearchBtn = document.getElementById("goto-multisearch-btn");
+        const gotoMultisearchBtn = $("#goto-multisearch-btn");
         const namesUrl = names.map((name) => name.replace(/ /g, "%20")).join(",");
-        gotoMultisearchBtn.setAttribute("hidden", false);
-        gotoMultisearchBtn.onclick = function () {
+        gotoMultisearchBtn.attr("hidden", false);
+        gotoMultisearchBtn.on("click", function () {
             window.open(`https://u.gg/multisearch?summoners=${namesUrl}&region=na1`, "_blank");
-        };
-    });    
+        });
+    });
 
     function displayNames(names) {
-        const container = document.getElementById("names-container");
-        container.innerHTML = ""; // Clear the container before displaying new names
+        const container = $("#names-container");
+        container.empty(); // Clear the container before displaying new names
 
         names.forEach((name) => {
-            const nameDiv = document.createElement("div");
-            nameDiv.textContent = name;
-            container.appendChild(nameDiv);
+            const nameDiv = $("<div>").text(name);
+            container.append(nameDiv);
         });
     }
 });
