@@ -4,9 +4,8 @@ from dependancies import willump
 
 async def get_ranked_names():
     client = await willump.start()
-    call = f'/chat/v5/participants/champ-select'
+    team_names = await client.request('get', '/chat/v5/participants/champ-select')
     await willump.Willump.close(client)
-    team_names = await client.request('GET', call)
     data = await team_names.json()
     print(data)
     return data
