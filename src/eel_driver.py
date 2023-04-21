@@ -5,20 +5,12 @@ import threading
 import logging
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
-import json
-import requests
-import os
-import psutil
-import base64
 
 import eel
 
 from champselect import websockets
 from utils import ddragon, runes, sum_spells, summoner_info, champ_identifier, ranked_names
 
-@eel.expose
-def get_ranked_names():
-    return asyncio.run(ranked_names.get_ranked_names())
 
 # Rune Generator Functions
 @eel.expose

@@ -1,18 +1,23 @@
 import asyncio
-import requests
+import eel
 from dependancies import willump
 
-async def get_ranked_names():
+async def get_ranked_names_async():
     client = await willump.start()
-    team_names = await client.request('get', '/chat/v5/participants/champ-select')
-    await willump.Willump.close(client)
-    data = await team_names.json()
+    response = await client.request('get', '/chat/v5/participants/champ-select')
+    print(f"Response status: {response.status}")
+    print(f"Response text: {response.text}")
+    data = await response.json()
     print(data)
+    await willump.Willump.close(client)
     return data
 
+@eel.expose
+def get_ranked_names():
+    return asyncio.run(get_ranked_names_async())
+
 async def main():
-    willup = await willump.start()
-    await willup.close()
+    await get_ranked_names_async()
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
