@@ -1,6 +1,7 @@
 import webview
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect
+from bristle import Bristle
 
 from bristle_instance import lcu
 
@@ -9,11 +10,23 @@ base_routes = Blueprint('base', __name__)
 
 
 @base_routes.route("/")
-async def hello_world():
-    r = lcu.get('lol-summoner/v1/current-summoner')
-    print(r.status_code)
-    print(r.text)
-    return render_template('index.html')
+async def home():
+    if lcu.lcu_found:
+        profile = lcu.get('lol-summoner/v1/current-summoner')
+        print(profile.text)
+        return render_template(
+            'index.html',
+            profile=profile.json()
+        )
+    else:
+        return render_template('no_lcu.html')
+
+
+@base_routes.route("/re_search_lcu", methods=['POST'])
+async def re_search_lcu():
+    global lcu
+    lcu = Bristle()
+    return redirect("/")
 
 
 @base_routes.route('/exit', methods=['POST'])
