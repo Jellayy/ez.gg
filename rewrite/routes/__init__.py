@@ -1,4 +1,4 @@
-from .base import base_routes
+from .base_routes import base_routes
 
 
 def register_routes(app):
