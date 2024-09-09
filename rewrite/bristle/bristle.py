@@ -13,7 +13,7 @@ MAX_LCUX_SEARCH_RETRIES = 3
 
 
 class Bristle:
-    def __init__(self):
+    async def __init__(self):
         # Search for LCU Process
         self.lcu_found = False
         lcu_process = find_LCU_process()
@@ -32,10 +32,8 @@ class Bristle:
             self._lcu_port = process_args['app-port']
             self._lcu_token = process_args['remoting-auth-token']
             self._lcu_auth = HTTPBasicAuth('riot', self._lcu_token)
-
-            self.websocket = self.__connect_ws()
     
-    async def __connect_ws(self):
+    async def connect_ws(self):
         uri = f"wss://riot:{self._lcu_token}@127.0.0.1:{self._lcu_port}"
 
         ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
