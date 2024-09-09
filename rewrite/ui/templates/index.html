@@ -1,33 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="flex w-full items-center justify-between space-x-6 p-6">
-        <div class="relative w-16 h-16">
-            <!-- Background Circle -->
-            <div class="absolute inset-0 rounded-full bg-[#010a13]"></div>
-            
-            <!-- Progress Indicator -->
-            <svg class="absolute -inset-1 w-[calc(100%+0.5rem)] h-[calc(100%+0.5rem)]" viewBox="0 0 36 36">
-                <!-- Outer Outline Circle -->
-                <circle cx="18" cy="18" r="17" stroke="currentColor" stroke-width="0.5" fill="none" class="text-[#c89b3c]" />
-                <!-- Progress Circle -->
-                <circle cx="18" cy="18" r="16" stroke="currentColor" stroke-width="2" fill="none" class="text-blue-200" 
-                        stroke-dasharray="100" stroke-dashoffset="{{ 100 - profile['percentCompleteForNextLevel'] }}" pathLength="100" transform="rotate(90 18 18)"></circle>
-                <!-- Inner Outline Circle -->
-                <circle cx="18" cy="18" r="15" stroke="currentColor" stroke-width="0.5" fill="none" class="text-[#c89b3c]" />
-            </svg>
-            
-            <!-- Profile Image -->
-            <img src="https://ddragon.leagueoflegends.com/cdn/14.17.1/img/profileicon/{{ profile['profileIconId'] }}.png" alt="Profile" class="absolute inset-0 w-[94%] h-[94%] m-auto rounded-full object-cover z-10">
-            
-            <!-- Level Indicator -->
-            <div class="absolute -bottom-0.5 left-1/2 transform -translate-x-1/2 bg-[#010a13] text-[#c89b3c] px-1 py-px rounded-full text-[0.8rem] leading-none font-bold border border-[#c89b3c] z-20">
-                {{ profile['summonerLevel'] }}
-            </div>
-        </div>
-        <div class="flex-1 truncate">
-            <h3 class="truncate text-sm font-medium text-white">{{ profile['gameName'] }}#{{ profile['tagLine'] }}</h3>
-            <p class="mt-1 truncate text-sm text-gray-400">{{ profile['displayName'] }} | {{ profile['accountId'] }}</p>
-        </div>
-    </div>
+    <!-- Lobby Members -->
+    {% if in_lobby %}
+    <p class="text-[#CBBC8F] font-semibold mx-5 mt-3">PARTY MEMBERS</p>
+    <ul role="list" class="divide-y divide-gray-800 mx-5">
+        {% for member in lobby_members['players'].values() %}
+            <li class="flex justify-between gap-x-6 py-3">
+                <div class="flex min-w-0 gap-x-4">
+                    <img class="h-12 w-12 flex-none rounded-full bg-gray-800"
+                        src="https://ddragon.leagueoflegends.com/cdn/14.17.1/img/profileicon/1.png"
+                        alt="">
+                    <div class="min-w-0 flex-auto">
+                        <p class="text-sm font-semibold leading-6 text-white">{{ member['gameName'] }}#{{ member['tagLine'] }}</p>
+                        <p class="mt-1 truncate text-xs leading-5 text-gray-400">{{ member['displayName'] }} | {{ member['summonerId'] }}</p>
+                    </div>
+                </div>
+                <div class="shrink-0 flex flex-col items-end">
+                    <p class="text-sm leading-6 text-gray-400">{{ member['role'] }}</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 {% endblock %}

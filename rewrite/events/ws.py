@@ -17,7 +17,6 @@ async def connect_ws(lcu):
 
 async def main():
     if lcu.lcu_found:
-        print(lcu._lcu_auth)
         uri, ssl_context = await connect_ws(lcu)
 
         async with connect(uri, ssl=ssl_context, max_size=None) as rito_ws:

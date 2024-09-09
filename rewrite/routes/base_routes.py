@@ -14,9 +14,14 @@ base_routes = Blueprint('base', __name__)
 async def home():
     if lcu.lcu_found:
         profile = lcu.get('lol-summoner/v1/current-summoner')
+        in_lobby = lcu.get('lol-lobby/v2/party-active')
+        lobby_members = lcu.get('lol-lobby/v2/comms/members')
+        logging.info(lobby_members.json())
         return render_template(
             'index.html',
-            profile=profile.json()
+            profile=profile.json(),
+            in_lobby = in_lobby.json(),
+            lobby_members=lobby_members.json()
         )
     else:
         return render_template('no_lcu.html')

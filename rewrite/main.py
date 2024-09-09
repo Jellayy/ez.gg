@@ -13,4 +13,4 @@ register_routes(server)
 
 if __name__ == '__main__':
     webview.create_window('EZ.GG Experimental', server, frameless=True, height=760, width=500)
-    webview.start(user_agent='EZ.GG Experimental')
+    webview.start(user_agent='EZ.GG Experimental', debug=True)
