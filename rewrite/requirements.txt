@@ -39,6 +39,7 @@ rich==13.8.0
 setuptools==72.1.0
 typing_extensions==4.12.2
 urllib3==2.2.2
+websockets==13.0.1
 Werkzeug==3.0.4
 wheel==0.43.0
 wsproto==1.2.0

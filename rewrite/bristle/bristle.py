@@ -1,15 +1,12 @@
 import requests
 import logging
 import time
-import asyncio
-import base64
 import ssl
-import json
 
 from requests.auth import HTTPBasicAuth
 from websockets.asyncio.client import connect
 
-from utils import find_LCU_process, parse_cmdline_args
+from .utils import find_LCU_process, parse_cmdline_args
 
 
 MAX_LCUX_SEARCH_RETRIES = 3
