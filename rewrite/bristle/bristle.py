@@ -1,10 +1,15 @@
 import requests
 import logging
 import time
+import asyncio
+import base64
+import ssl
+import json
 
 from requests.auth import HTTPBasicAuth
+from websockets.asyncio.client import connect
 
-from .utils import find_LCU_process, parse_cmdline_args
+from utils import find_LCU_process, parse_cmdline_args
 
 
 MAX_LCUX_SEARCH_RETRIES = 3
@@ -28,8 +33,20 @@ class Bristle:
         if self.lcu_found:
             process_args = parse_cmdline_args(lcu_process.cmdline())
             self._lcu_port = process_args['app-port']
-            lcu_token = process_args['remoting-auth-token']
-            self._lcu_auth = HTTPBasicAuth('riot', lcu_token)
+            self._lcu_token = process_args['remoting-auth-token']
+            self._lcu_auth = HTTPBasicAuth('riot', self._lcu_token)
+
+            self.websocket = self.__connect_ws()
+    
+    async def __connect_ws(self):
+        uri = f"wss://riot:{self._lcu_token}@127.0.0.1:{self._lcu_port}"
+
+        ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+        ssl_context.check_hostname = False
+        ssl_context.verify_mode = ssl.CERT_NONE
+
+        async with connect(uri, ssl=ssl_context) as websocket:
+            return websocket
     
     def get(self, endpoint: str) -> requests.Response:
         return requests.get(

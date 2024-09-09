@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{url_for('static',filename='dist/css/output.css')}}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>EZ.GG Experimental</title>
+    </head>
+
+    <body class="bg-[#000A13] h-screen">
+        <!-- Navbar -->
+        <div class="flex flex-col">
+            <div class="h-0.5 bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-600"></div>
+            <nav class="bg-[#000A13] text-gray-300 p-2 flex justify-between items-center">
+                <div class="text-sm font-semibold text-yellow-500">EZ.GG</div>
+                <div class="flex space-x-5 items-center">
+                    <button id="minimizeButton" class="text-gray-400 hover:text-yellow-500 focus:outline-none transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus"><path d="M5 12h14"></path></svg>
+                    </button>
+                    <button class="text-gray-400 hover:text-yellow-500 focus:outline-none transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
+                    <button id="exitButton" class="text-gray-400 hover:text-yellow-500 focus:outline-none transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Page Content -->
+        {% block content %}{% endblock %}
+    </body>
+
+    <script>
+        // Base Script
+        document.getElementById('exitButton').addEventListener('click', function() {
+            fetch('/exit', { method: 'POST' })
+                .then(() => console.log('Exit request sent'))
+                .catch(error => console.error('Error:', error));
+        });
+        document.getElementById('minimizeButton').addEventListener('click', function() {
+            fetch('/minimize', { method: 'POST' })
+                .then(() => console.log('Minimize request sent'))
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+    <!-- Page Scripts -->
+    {% block postscripts %}{% endblock %}
+</html>

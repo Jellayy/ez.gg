@@ -31,14 +31,14 @@ async def re_search_lcu():
 
 
 @base_routes.route('/exit', methods=['POST'])
-def exit():
+async def exit():
     logging.info("Exited via UI POST call")
     webview.windows[0].destroy()
     return '', 204
 
 
 @base_routes.route('/minimize', methods=['POST'])
-def minimize():
+async def minimize():
     logging.info("Minimized via UI POST call")
     webview.windows[0].minimize()
     return '', 204
