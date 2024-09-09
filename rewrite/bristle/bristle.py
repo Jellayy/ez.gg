@@ -49,3 +49,11 @@ class Bristle:
             verify=False,
             auth=self._lcu_auth
         )
+    
+    def post(self, endpoint: str, data: dict = None) -> requests.Response:
+        return requests.post(
+            url=f'https://127.0.0.1:{self._lcu_port}/{endpoint}',
+            verify=False,
+            auth=self._lcu_auth,
+            json=data
+        )

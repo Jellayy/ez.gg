@@ -8,7 +8,7 @@ from bristle import Bristle
 
 # We init logging here since this is the first thing that gets initialized on run
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format="%(message)s",
     datefmt="[%X]",
     handlers=[
