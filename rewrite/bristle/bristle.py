@@ -13,7 +13,7 @@ MAX_LCUX_SEARCH_RETRIES = 3
 
 
 class Bristle:
-    async def __init__(self):
+    def __init__(self):
         # Search for LCU Process
         self.lcu_found = False
         lcu_process = find_LCU_process()
