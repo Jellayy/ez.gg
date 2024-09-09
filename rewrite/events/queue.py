@@ -12,7 +12,7 @@ class Queue:
         if response.status_code == 200:
             response_json = response.json()
             if response_json.get("state") == "InProgress" and response_json.get("playerResponse") == "None":
-                logging.debug(f"Queue Popped: {response.text}")
+                logging.info("Queue Popped!")
                 return True
         return False
     
@@ -21,7 +21,7 @@ class Queue:
         response = self.client.post(uri)
         logging.debug(f"Queue Acceptor: {response.text}")
         if response.status_code == 204:
-            logging.debug(f"Queue Acceptor: Queue Accepted! (status {response.status_code})")
+            logging.info("Queue Acceptor: Queue Accepted! (status %s)", response.status_code)
             return True
         else:
             logging.error(f"Queue Acceptor: Queue unable to be accepted with status: {response.status_code}")

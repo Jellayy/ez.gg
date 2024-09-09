@@ -3,7 +3,7 @@ import json
 from websockets.asyncio.client import connect
 import websockets
 import ssl
-from rito_client.queue import queue_handler
+from .queue import queue_handler
 import logging
 
 async def connect_ws(lcu):
@@ -15,7 +15,8 @@ async def connect_ws(lcu):
 
     return uri, ssl_context
 
-async def main():
+async def websocket_handler():
+    logging.info("Websocket handler initialized")
     if lcu.lcu_found:
         uri, ssl_context = await connect_ws(lcu)
 

@@ -16,7 +16,6 @@ async def home():
         profile = lcu.get('lol-summoner/v1/current-summoner')
         in_lobby = lcu.get('lol-lobby/v2/party-active')
         lobby_members = lcu.get('lol-lobby/v2/comms/members')
-        logging.info(lobby_members.json())
         return render_template(
             'index.html',
             profile=profile.json(),
