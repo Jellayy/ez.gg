@@ -4,7 +4,7 @@ import threading
 
 from flask import Flask
 
-from events.ws import websocket_handler
+from events.lcu_ws import websocket_handler
 from routes import register_routes
 from initialize import lcu
 

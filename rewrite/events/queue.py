@@ -1,6 +1,5 @@
-import json
-import requests
 import logging
+
 
 class Queue:
     def __init__(self, client):
@@ -26,8 +25,6 @@ class Queue:
         else:
             logging.error(f"Queue Acceptor: Queue unable to be accepted with status: {response.status_code}")
             return False
-        
-
 
 
 async def queue_handler(message, client):
@@ -37,4 +34,7 @@ async def queue_handler(message, client):
         logging.debug("Queue Handler: Queue Popped")
         await queue.queue_accept()
         logging.debug("Queue Handler: Queue Accepted")
-    
+
+
+async def search_state_handler(message, client):
+    logging.info("Queue Search State Changed: %s", message[2].get("data").get("searchState"))

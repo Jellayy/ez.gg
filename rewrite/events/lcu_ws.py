@@ -3,8 +3,9 @@ import json
 from websockets.asyncio.client import connect
 import websockets
 import ssl
-from .queue import queue_handler
+from .queue import queue_handler, search_state_handler
 import logging
+
 
 async def connect_ws(lcu):
     uri = f"wss://riot:{lcu._lcu_token}@127.0.0.1:{lcu._lcu_port}"
@@ -15,8 +16,9 @@ async def connect_ws(lcu):
 
     return uri, ssl_context
 
+
 async def websocket_handler():
-    logging.info("Websocket handler initialized")
+    logging.info("LCU Websocket handler initialized")
     if lcu.lcu_found:
         uri, ssl_context = await connect_ws(lcu)
 
@@ -39,8 +41,11 @@ async def websocket_handler():
                     else:
                         message = json.loads(message)
                         # handle queue pop
-                        if message[2].get("uri") == "/lol-matchmaking/v1/ready-check":
-                            await queue_handler(message, lcu)
+                        match message[2].get("uri"):
+                            case "/lol-matchmaking/v1/ready-check":
+                                await queue_handler(message, lcu)
+                            case "/lol-lobby/v2/lobby/matchmaking/search-state":
+                                await search_state_handler(message, lcu)
 
                 except websockets.exceptions.ConnectionClosedOK:
                     print("Connection closed normally.")
