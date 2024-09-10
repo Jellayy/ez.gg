@@ -1,5 +1,7 @@
 import logging
 
+from sse import send_event_to_ui
+
 
 class Queue:
     def __init__(self, client):
@@ -21,6 +23,14 @@ class Queue:
         logging.debug(f"Queue Acceptor: {response.text}")
         if response.status_code == 204:
             logging.info("Queue Acceptor: Queue Accepted! (status %s)", response.status_code)
+            send_event_to_ui({
+                "event": "display_message",
+                "data": {
+                    "title": "Queue Accepted!",
+                    "message": "",
+                    "type": "success"
+                }
+            })
             return True
         else:
             logging.error(f"Queue Acceptor: Queue unable to be accepted with status: {response.status_code}")
@@ -38,3 +48,9 @@ async def queue_handler(message, client):
 
 async def search_state_handler(message, client):
     logging.info("Queue Search State Changed: %s", message[2].get("data").get("searchState"))
+    send_event_to_ui({
+        "event": "queue_status_update",
+        "data": {
+            "status": message[2].get("data").get("searchState")
+        }
+    })
