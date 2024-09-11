@@ -1,6 +1,7 @@
 import logging
 
 from sse import send_event_to_ui
+from initialize import scuttle
 
 
 class Queue:
@@ -18,23 +19,34 @@ class Queue:
         return False
     
     async def queue_accept(self) -> bool:
-        uri = "lol-matchmaking/v1/ready-check/accept"
-        response = self.client.post(uri)
-        logging.debug(f"Queue Acceptor: {response.text}")
-        if response.status_code == 204:
-            logging.info("Queue Acceptor: Queue Accepted! (status %s)", response.status_code)
+        if scuttle.get_config_field('autopilot', 'auto_queue_accept'):
+            uri = "lol-matchmaking/v1/ready-check/accept"
+            response = self.client.post(uri)
+            logging.debug(f"Queue Acceptor: {response.text}")
+            if response.status_code == 204:
+                logging.info("Queue Acceptor: Queue Accepted! (status %s)", response.status_code)
+                send_event_to_ui({
+                    "event": "display_message",
+                    "data": {
+                        "title": "Queue Accepted!",
+                        "message": "",
+                        "type": "success"
+                    }
+                })
+                return True
+            else:
+                logging.error(f"Queue Acceptor: Queue unable to be accepted with status: {response.status_code}")
+                return False
+        else:
+            logging.info("Queue Acceptor: Not accepting queue due to setting disabled")
             send_event_to_ui({
                 "event": "display_message",
                 "data": {
-                    "title": "Queue Accepted!",
-                    "message": "",
-                    "type": "success"
+                    "title": "Queue Not Accepted",
+                    "message": "Auto Queue Accept was disabled in Autopilot settings",
+                    "type": "info"
                 }
             })
-            return True
-        else:
-            logging.error(f"Queue Acceptor: Queue unable to be accepted with status: {response.status_code}")
-            return False
 
 
 async def queue_handler(message, client):
