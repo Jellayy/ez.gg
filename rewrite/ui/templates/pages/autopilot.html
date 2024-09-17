@@ -1,0 +1,93 @@
+<script type="text/javascript" src="{{url_for('static',filename='js/autopilot.js')}}"></script>
+
+<form id="championForm" class="space-y-12 mx-auto max-w-7xl px-8">
+    <div class="space-y-6">
+        <div class="flex gap-x-3">
+            <div class="flex h-6 items-center">
+                <input id="auto_queue_accept" name="auto_queue_accept" type="checkbox"
+                    class="h-4 w-4 rounded border-white/10 bg-white/5 text-indigo-600 focus:ring-indigo-600 focus:ring-offset-gray-900">
+            </div>
+            <div class="text-sm leading-6">
+                <label for="auto_queue_accept" class="font-medium text-white">Auto Queue Accept</label>
+            </div>
+        </div>
+
+        <div class="flex gap-x-3">
+            <div class="flex h-6 items-center">
+                <input id="auto_champion_ban" name="auto_champion_ban" type="checkbox"
+                    class="h-4 w-4 rounded border-white/10 bg-white/5 text-indigo-600 focus:ring-indigo-600 focus:ring-offset-gray-900">
+            </div>
+            <div class="text-sm leading-6">
+                <label for="auto_champion_ban" class="font-medium text-white">Auto Ban</label>
+            </div>
+        </div>
+
+        <div class="flex gap-x-3">
+            <div class="flex h-6 items-center">
+                <input id="auto_champion_lock_in" name="auto_champion_lock_in" type="checkbox"
+                    class="h-4 w-4 rounded border-white/10 bg-white/5 text-indigo-600 focus:ring-indigo-600 focus:ring-offset-gray-900">
+            </div>
+            <div class="text-sm leading-6">
+                <label for="auto_champion_lock_in" class="font-medium text-white">Auto Lock-In</label>
+            </div>
+        </div>
+    </div>
+
+    <div id="roles" class="space-y-12">
+        <!-- Roles will be dynamically added here -->
+    </div>
+</form>
+
+<template id="roleTemplate">
+    <div class="role-section space-y-6">
+        <h2 class="text-2xl font-bold text-white"></h2>
+        <div class="bans space-y-4">
+            <h3 class="text-xl font-semibold text-white">Bans</h3>
+            <div class="ban-list space-y-2"></div>
+            <button type="button" class="add-ban px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Add Ban</button>
+        </div>
+        <div class="picks space-y-4">
+            <h3 class="text-xl font-semibold text-white">Picks</h3>
+            <div class="pick-list space-y-4"></div>
+            <button type="button" class="add-pick px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Add Pick</button>
+        </div>
+    </div>
+</template>
+
+<template id="banTemplate">
+    <div class="ban-item flex items-center space-x-2">
+        <input type="text" class="champion-input block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" placeholder="Champion name">
+        <button type="button" class="remove-ban px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700">Remove</button>
+    </div>
+</template>
+
+<template id="pickTemplate">
+    <div class="pick-item space-y-2">
+        <div class="flex items-center space-x-2">
+            <input type="text" class="champion-input block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" placeholder="Champion name">
+            <button type="button" class="remove-pick px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700">Remove</button>
+        </div>
+        <div class="summoner-spells flex space-x-2">
+            <select class="summoner-spell block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 [&_*]:text-black">
+                <option value="">Select Spell</option>
+                <option value="Flash">Flash</option>
+                <option value="Ghost">Ghost</option>
+                <option value="Heal">Heal</option>
+                <option value="Smite">Smite</option>
+                <option value="Teleport">Teleport</option>
+                <option value="Exhaust">Exhaust</option>
+                <option value="Ignite">Ignite</option>
+            </select>
+            <select class="summoner-spell block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 [&_*]:text-black">
+                <option value="">Select Spell</option>
+                <option value="Flash">Flash</option>
+                <option value="Ghost">Ghost</option>
+                <option value="Heal">Heal</option>
+                <option value="Smite">Smite</option>
+                <option value="Teleport">Teleport</option>
+                <option value="Exhaust">Exhaust</option>
+                <option value="Ignite">Ignite</option>
+            </select>
+        </div>
+    </div>
+</template>

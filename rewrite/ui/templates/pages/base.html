@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{url_for('static',filename='dist/css/output.css')}}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>EZ.GG Experimental</title>
+    </head>
+
+    <script type="text/javascript" src="{{url_for('static',filename='js/base/window_control.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/base/nav.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/base/messages.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/base/lcu_poller.js')}}"></script>
+
+    <body class="bg-[#000A13] z-50">
+        <!-- Navbar -->
+        <div class="bg-[#000A13] fixed top-0 left-0 w-full">
+            <!-- OS Actions -->
+            <div class="flex flex-col">
+                <div class="h-0.5 bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-600"></div>
+                <nav class="bg-[#000A13] text-gray-300 p-2 flex justify-between items-center">
+                    <div class="text-sm font-semibold text-[#CBBC8F]">EZ.GG</div>
+                    <div class="flex space-x-5 items-center">
+                        <button id="minimizeButton" class="text-gray-400 hover:text-[#CBBC8F] focus:outline-none transition-colors duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus"><path d="M5 12h14"></path></svg>
+                        </button>
+                        <button class="text-gray-400 hover:text-[#CBBC8F] focus:outline-none transition-colors duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                        <button id="exitButton" class="text-gray-400 hover:text-[#CBBC8F] focus:outline-none transition-colors duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                        </button>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Header -->
+            <div class="border-b border-gray-700">
+                <nav class="mx-auto flex max-w-7xl items-center justify-around lg:px-8 pt-px pb-5">
+                    <div class="flex gap-x-20 text-[#CBBC8F]">
+                        <a page="index" class="navButton text-sm font-bold leading-6">HOME</a>
+                        <a page="autopilot" class="navButton text-sm font-bold leading-6">AUTOPILOT</a>
+                        <a page="int_list" class="navButton text-sm font-bold leading-6">INT LIST</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="fixed bottom-0 left-0 w-full flex flex-col z-50">
+            <!-- Queue Status -->
+            <div id="queue-status-background" class="flex w-full justify-around bg-gray-900">
+                <p id="queue-status-text" class="text-gray-300 text-sm">Idle</p>
+            </div>
+            <!-- Real Bottom Bar -->
+            <div class="bg-[#000A13] flex w-full items-center justify-between space-x-6 p-4 border-t border-gray-700">
+                <div id="profile" class="flex items-center justify-between space-x-3"></div>
+                <div class="w-px"><p>&nbsp;</p></div>
+                <div>
+                    <p class="text-sm text-gray-500">Experimental</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pages -->
+        <div class="mt-24 pb-32 z-0">
+            <div class="page hidden" page="index">
+                {% include 'pages/index.html' %}
+            </div>
+            <div class="page hidden" page="autopilot">
+                {% include 'pages/autopilot.html' %}
+            </div>
+            <div class="page hidden" page="int_list">
+                <p class="text-white">Not yet implemented.</p>
+            </div>
+        </div>
+
+        <!-- System Message Area -->
+        <div aria-live="assertive" class="pointer-events-none fixed inset-0 flex items-end px-4 py-6 items-start p-6">
+            <div id="system-message-area" class="flex w-full flex-col items-center space-y-4 items-end mb-24"></div>
+        </div>
+    </body>
+</html>

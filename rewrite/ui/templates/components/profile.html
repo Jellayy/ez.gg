@@ -1,0 +1,27 @@
+<div class="relative w-12 h-12">
+    <!-- Background Circle -->
+    <div class="absolute inset-0 rounded-full bg-[#010a13]"></div>
+    
+    <!-- Progress Indicator -->
+    <svg class="absolute -inset-1 w-[calc(100%+0.5rem)] h-[calc(100%+0.5rem)]" viewBox="0 0 36 36">
+        <!-- Outer Outline Circle -->
+        <circle cx="18" cy="18" r="17" stroke="currentColor" stroke-width="0.5" fill="none" class="text-[#c89b3c]" />
+        <!-- Progress Circle -->
+        <circle cx="18" cy="18" r="16" stroke="currentColor" stroke-width="2" fill="none" class="text-blue-200" 
+                stroke-dasharray="100" stroke-dashoffset="{{ 100 - profile['percentCompleteForNextLevel'] }}" pathLength="100" transform="rotate(90 18 18)"></circle>
+        <!-- Inner Outline Circle -->
+        <circle cx="18" cy="18" r="15" stroke="currentColor" stroke-width="0.5" fill="none" class="text-[#c89b3c]" />
+    </svg>
+    
+    <!-- Profile Image -->
+    <img src="https://ddragon.leagueoflegends.com/cdn/14.17.1/img/profileicon/{{ profile['profileIconId'] }}.png" alt="Profile" class="absolute inset-0 w-[94%] h-[94%] m-auto rounded-full object-cover z-10">
+    
+    <!-- Level Indicator -->
+    <div class="absolute -bottom-0.5 left-1/2 transform -translate-x-1/2 bg-[#010a13] text-[#c89b3c] px-1 py-px rounded-full text-[0.8rem] leading-none font-bold border border-[#c89b3c] z-20">
+        {{ profile['summonerLevel'] }}
+    </div>
+</div>
+<div class="flex-1 truncate">
+    <h3 class="truncate text-sm font-medium text-white">{{ profile['gameName'] }}#{{ profile['tagLine'] }}</h3>
+    <p class="mt-1 truncate text-sm text-gray-400">{{ profile['displayName'] }} | {{ profile['summonerId'] }}</p>
+</div>

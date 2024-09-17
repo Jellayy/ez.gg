@@ -1,7 +1,7 @@
 import webview
 import logging
 
-from flask import Blueprint, render_template, redirect
+from flask import Blueprint, render_template, redirect, jsonify
 from bristle import Bristle
 
 from initialize import lcu
@@ -12,18 +12,12 @@ base_routes = Blueprint('base', __name__)
 
 @base_routes.route("/")
 async def home():
-    if lcu.lcu_found:
-        profile = lcu.get('lol-summoner/v1/current-summoner')
-        in_lobby = lcu.get('lol-lobby/v2/party-active')
-        lobby_members = lcu.get('lol-lobby/v2/comms/members')
-        return render_template(
-            'index.html',
-            profile=profile.json(),
-            in_lobby = in_lobby.json(),
-            lobby_members=lobby_members.json()
-        )
-    else:
-        return render_template('no_lcu.html')
+    return render_template('pages/base.html')
+
+
+@base_routes.route("/lcu_detect")
+async def lcu_detect():
+    return jsonify(lcu.lcu_found)
 
 
 @base_routes.route("/re_search_lcu", methods=['POST'])

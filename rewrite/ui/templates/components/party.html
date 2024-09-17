@@ -1,15 +1,10 @@
-{% extends "base.html" %}
-
-{% block content %}
-    <!-- Lobby Members -->
-    {% if in_lobby %}
-    <p class="text-[#CBBC8F] font-semibold mx-5 mt-3">PARTY MEMBERS</p>
+{% if in_party %}
     <ul role="list" class="divide-y divide-gray-800 mx-5">
         {% for member in lobby_members['players'].values() %}
             <li class="flex justify-between gap-x-6 py-3">
                 <div class="flex min-w-0 gap-x-4">
                     <img class="h-12 w-12 flex-none rounded-full bg-gray-800"
-                        src="https://ddragon.leagueoflegends.com/cdn/14.17.1/img/profileicon/1.png"
+                        src="https://ddragon.leagueoflegends.com/cdn/14.17.1/img/profileicon/{{ member['icon_id'] }}.png"
                         alt="">
                     <div class="min-w-0 flex-auto">
                         <p class="text-sm font-semibold leading-6 text-white">{{ member['gameName'] }}#{{ member['tagLine'] }}</p>
@@ -22,5 +17,8 @@
             </li>
         {% endfor %}
     </ul>
-    {% endif %}
-{% endblock %}
+{% else %}
+    <div class="flex w-full justify-around my-5">
+        <p class="text-sm text-gray-500">Not in a party</p>
+    </div>
+{% endif %}
