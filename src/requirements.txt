@@ -9,7 +9,6 @@ cffi==1.17.1
 charset-normalizer==3.4.6
 Eel==0.18.2
 frozenlist==1.8.0
-future==1.0.0
 gevent==25.9.1
 gevent-websocket==0.10.1
 greenlet==3.3.2
