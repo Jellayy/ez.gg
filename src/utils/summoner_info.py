@@ -8,8 +8,7 @@ async def get_summoner(client):
 
 
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    summoner = loop.run_until_complete(get_summoner())
+    summoner = asyncio.run(get_summoner())
     print(f"Account Name: {summoner['displayName']}\n"
           f"Level: {summoner['summonerLevel']}\n"
           f"Percent to next level: {summoner['percentCompleteForNextLevel']}\n"

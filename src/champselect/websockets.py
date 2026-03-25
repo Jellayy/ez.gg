@@ -195,7 +195,7 @@ if __name__ == '__main__':
     # logging.basicConfig(level=logging.NOTSET)
 
     # Open loop and run until keyboard interrupt
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
     try:
         loop.run_until_complete(main())
     except KeyboardInterrupt:
