@@ -88,7 +88,7 @@ func (c *Client) ChampNameToID(name string) (string, error) {
 			return champ.Key, nil
 		}
 	}
-	return "-1", nil
+	return "", fmt.Errorf("champion %q not found in Data Dragon", name)
 }
 
 // AllChampionNames returns a sorted list of all champion display names.

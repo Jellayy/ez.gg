@@ -22,10 +22,13 @@ type Client struct {
 
 // NewClient creates an authenticated LCU client for the given port and token.
 func NewClient(port int, authToken string) *Client {
-	// The LCU uses a self-signed certificate, so TLS verification must be skipped.
-	transport := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, //nolint:gosec
-	}
+	// The League Client (LCU) serves its local REST and WebSocket APIs on 127.0.0.1
+	// using a per-installation self-signed TLS certificate.  There is no practical
+	// way to verify this certificate without bundling or dynamically extracting it
+	// from the client's installation directory.  All connections are loopback-only
+	// (127.0.0.1), so the risk of a MITM attack is negligible.
+	tlsCfg := &tls.Config{InsecureSkipVerify: true} //nolint:gosec // required for LCU loopback API
+	transport := &http.Transport{TLSClientConfig: tlsCfg}
 	auth := base64.StdEncoding.EncodeToString([]byte("riot:" + authToken))
 	return &Client{
 		port:       port,
@@ -77,8 +80,9 @@ func (c *Client) RequestJSON(method, endpoint string, body, out interface{}) (in
 
 // DialWebSocket opens an authenticated WebSocket connection to the LCU.
 func (c *Client) DialWebSocket() (*websocket.Conn, error) {
+	// See NewClient for why InsecureSkipVerify is necessary here.
 	dialer := websocket.Dialer{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, //nolint:gosec
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, //nolint:gosec // required for LCU loopback API
 	}
 	url := fmt.Sprintf("wss://127.0.0.1:%d", c.port)
 	headers := http.Header{

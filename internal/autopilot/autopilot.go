@@ -275,12 +275,13 @@ func (a *Autopilot) handleGameflow(evt *lcu.Event) {
 // ---------- Champion Select ----------
 
 type champSelectSummonerData struct {
-	IsSelf                    bool   `json:"isSelf"`
-	IsPickIntenting           bool   `json:"isPickIntenting"`
-	IsDonePicking             bool   `json:"isDonePicking"`
-	ActiveActionType          string `json:"activeActionType"`
+	IsSelf           bool   `json:"isSelf"`
+	IsPickIntenting  bool   `json:"isPickIntenting"`
+	IsDonePicking    bool   `json:"isDonePicking"`
+	ActiveActionType string `json:"activeActionType"`
+	// BanIntentSquarePortratPath is intentionally misspelled to match the LCU API's own typo.
 	BanIntentSquarePortratPath string `json:"banIntentSquarePortratPath"`
-	ChampionName              string `json:"championName"`
+	ChampionName               string `json:"championName"`
 }
 
 func (a *Autopilot) handleChampSelect(client *lcu.Client, evt *lcu.Event) {
@@ -380,8 +381,8 @@ func (a *Autopilot) getPlayerActionID(client *lcu.Client) (int, error) {
 
 func (a *Autopilot) hoverChamp(client *lcu.Client, champName string) {
 	champID, err := a.ddragonCli.ChampNameToID(champName)
-	if err != nil || champID == "-1" {
-		log.Printf("autopilot: champion %q not found in DDragon", champName)
+	if err != nil {
+		log.Printf("autopilot: champion %q not found in DDragon: %v", champName, err)
 		return
 	}
 	id, _ := strconv.Atoi(champID)
@@ -407,8 +408,8 @@ func (a *Autopilot) hoverChamp(client *lcu.Client, champName string) {
 
 func (a *Autopilot) lockIn(client *lcu.Client, champName string) error {
 	champID, err := a.ddragonCli.ChampNameToID(champName)
-	if err != nil || champID == "-1" {
-		return fmt.Errorf("champion %q not found", champName)
+	if err != nil {
+		return fmt.Errorf("champion %q not found: %w", champName, err)
 	}
 	id, _ := strconv.Atoi(champID)
 
@@ -476,7 +477,8 @@ func (a *Autopilot) banChamp(client *lcu.Client, banList []string) error {
 			continue
 		}
 		idStr, err := a.ddragonCli.ChampNameToID(banName)
-		if err != nil || idStr == "-1" {
+		if err != nil {
+			log.Printf("autopilot: skipping ban %q: %v", banName, err)
 			continue
 		}
 		id, _ := strconv.Atoi(idStr)
