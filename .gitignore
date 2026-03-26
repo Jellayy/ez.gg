@@ -1,3 +1,7 @@
 /venv/
 .idea
 
+# Go build artifacts
+ezgg
+ezgg.exe
+
