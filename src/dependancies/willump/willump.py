@@ -26,7 +26,7 @@ class Willump:
         lcu_process = None
         while not lcu_process:
             lcu_process = find_LCU_process()
-            logging.warn("couldn't find LCUx process yet. Re-searching process list...")
+            logging.warning("couldn't find LCUx process yet. Re-searching process list...")
             await asyncio.sleep(5)
 
         logging.info("found LCUx process " + lcu_process.name())
@@ -47,7 +47,7 @@ class Willump:
                             resp.status))
                 break
             except aiohttp.client_exceptions.ClientConnectorError:
-                logging.warn("can't connect to LCUx server. Retrying...")  # this might be too much log spam
+                logging.warning("can't connect to LCUx server. Retrying...")  # this might be too much log spam
                 await asyncio.sleep(5)
                 pass
 
@@ -63,7 +63,7 @@ class Willump:
 
     def start_rest(self):
         if self.rest_alive:
-            logging.warn('rest is already started. dropping out. rest will continue running')
+            logging.warning('rest is already started. dropping out. rest will continue running')
             return self
 
         self.https_session = aiohttp.ClientSession(auth=aiohttp.BasicAuth('riot', self._auth_key),
@@ -73,7 +73,7 @@ class Willump:
 
     async def start_websocket(self):
         if self.websocket_alive:
-            logging.warn('websocket is already started. dropping out. websocket will continue running')
+            logging.warning('websocket is already started. dropping out. websocket will continue running')
             return self
         # TODO: catch exceptions that I'm sure fall out of these IO calls
         self.ws_session = aiohttp.ClientSession(auth=aiohttp.BasicAuth('riot', self._auth_key), headers=self._headers)
@@ -114,7 +114,7 @@ class Willump:
 
     def start_nunu(self, Allow_Origin, ssl_key_path, port=None, host=None):
         if self.nunu_alive:
-            logging.warn('nunu is already started. dropping out. Nunu will continue running')
+            logging.warning('nunu is already started. dropping out. Nunu will continue running')
             return self
 
         self.nunu = Nunu(self, Allow_Origin, ssl_key_path, port, host)
@@ -122,17 +122,17 @@ class Willump:
 
     async def start_live_events(self, port=None, default_behavior=None, retry_policy=False):
         if self.live_events_alive:
-            logging.warn('live events is already started. dropping out. live events will continue running')
+            logging.warning('live events is already started. dropping out. live events will continue running')
             return self
 
         self.live_events = await LiveEvents.start(port, default_behavior)
         if not self.live_events and not retry_policy:
-            logging.warn("can't connect to live event server")
+            logging.warning("can't connect to live event server")
             return self
 
         while not self.live_events:
             await asyncio.sleep(0.5)
-            logging.warn("retrying connection to live event server")
+            logging.warning("retrying connection to live event server")
             self.live_events = await LiveEvents.start(port, default_behavior)
 
         self.live_events_alive = True
@@ -148,7 +148,7 @@ class Willump:
 
     async def subscribe(self, event, default_handler=None, subscription=None):
         if default_handler and subscription:
-            logging.warn(
+            logging.warning(
                 "passed in pre-existing subscription and a default handler for a new subscription. default_handler will be ignored in favour of the existing subscription")
 
         if not self.ws_subscriptions[event]:
